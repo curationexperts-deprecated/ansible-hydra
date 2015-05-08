@@ -1,0 +1,11 @@
+- name: provision basic vagrant box
+  hosts: vagrant
+#  sudo: true
+#  sudo: false
+  roles:
+    - { role: sudo-prereqs, sudo: yes }
+    - { role: prereqs, sudo: yes }
+    - { role: ruby-rails, sudo: yes }
+    - { role: app-config, sudo: no }
+    - { role: hydra-jetty, sudo: yes }
+    - { role: services, sudo: yes }

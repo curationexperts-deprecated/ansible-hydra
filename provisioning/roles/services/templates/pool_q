@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# This script created by combining 2 others, both licensed under Apache2
+# https://github.com/ualbertalib/sufia-ansible-vagrant/blob/master/roles/resque/templates/pool_q
+# https://github.com/psu-stewardship/scholarsphere/blob/develop/script/restart_resque.sh
+
+# To use this script:
+# (CentOS) sudo copy to /etc/rc.d/init.d/, add to chkconfig
+# (Ubuntu) sudo copy to /etc/init.d/
+#
+# Start/stop script for resque-pool for hydradam
+# chkconfig: 345 95 20
+# description: resque workers handle transcoding jobs
+# processname: resque-pool
+#
+
+NAME=resque-pool
+KILL=/bin/kill
+APP_ROOT={{ project_dir }}
+PIDFILE=$APP_ROOT/tmp/pids/$NAME.pid
+OUTLOG=$APP_ROOT/log/$NAME.stdout.log
+ERRLOG=$APP_ROOT/log/$NAME.stderr.log
+ENV={{ rails_env }}
+PATH=$PATH:/usr/local/bin
+USER={{ deploy_user }}
+
+# wait for the process to actually be dead
+function anywait {
+    for pid in "$@"; do
+        # kill -0 reports an error when the process has died; silence it
+        while kill -0 "$pid" > /dev/null 2>&1; do
+            sleep 0.5
+        done
+    done
+}
+
+function banner {
+    echo -e "$0 ↠ $1"
+}
+
+if [ $ENV != "production" ] && [ $ENV != "development" ]; then
+    echo -e "ERROR: environment must be either [production|development]"
+    exit 1
+fi
+
+case "$1" in
+    start)
+        banner "starting resque-pool"
+        cd $APP_ROOT
+        su $USER -c "bundle exec resque-pool --daemon --environment $ENV start"
+
+        if [ "$?" != 0 ]; then
+                echo "$NAME failed to start"
+        else
+                echo "$NAME running, pool master started"
+        fi
+    ;;
+    stop)
+        banner "killing resque-pool"
+        [ -f $PIDFILE ] && {
+            PID=$(cat $PIDFILE)
+            kill -2 $PID && anywait $PID
+        }
+    ;;
+    restart)
+        $0 stop
+        $0 start
+    ;;
+    status)
+        if [ -f $PIDFILE ]; then
+            PID=$(cat $PIDFILE)
+            echo "$NAME is running with pid $PID"
+        else
+            echo "$NAME is stopped"
+        fi
+    ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+    ;;
+esac
+
+exit 0

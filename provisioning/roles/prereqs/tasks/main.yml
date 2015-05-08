@@ -1,0 +1,21 @@
+---
+- name: download fits zip
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip dest=/home/vagrant/
+
+- name: unpack fits
+  unarchive: src=/home/vagrant/fits-0.8.5.zip sudo=yes dest=/usr/local/bin/ creates=/usr/local/bin/fits-0.8.5 copy=no
+
+- name: make fits executable
+  file: path=/usr/local/bin/fits-0.8.5/fits.sh sudo=yes mode=0755
+
+- name: download phantomjs tarball (for testing)
+  get_url: url=https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 dest=/home/vagrant/
+  when: rails_env == "development"
+
+- name: unpack phantomjs
+  unarchive: src=~/phantomjs-1.9.7-linux-x86_64.tar.bz2 dest=/home/vagrant creates=~/phantomjs-1.9.7-linux-x86_64/bin/phantomjs copy=no
+  when: rails_env == "development"
+
+- name: copy phantomjs executable onto path
+  shell: cp ~/phantomjs-1.9.7-linux-x86_64/bin/phantomjs sudo=yes /usr/local/bin/
+  when: rails_env == "development"

@@ -1,0 +1,24 @@
+---
+- name: update apt cache
+  sudo: true
+  apt: update_cache=yes
+
+- name: upgrade apt packages
+  sudo: true
+  apt: upgrade=full
+
+- name: sufia / general server prerequisites
+  apt: name={{ item}} state=latest
+  with_items:
+    - imagemagick
+    - redis-server
+    #- libsqlite3-dev
+    #- sqlite3
+    - git
+    - nodejs
+    - unzip
+    #- poppler-utils # not mentioned in sufia; ualberta uses
+    #- libreoffice-headless # not mentioned in sufia; ualberta uses
+    #- libreoffice # not mentioned in sufia; ualberta uses
+    #- GraphicsMagick # not mentioned in sufia; ualberta uses
+
