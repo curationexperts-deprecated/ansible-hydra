@@ -1,11 +1,15 @@
 ---
 - name: update apt cache
-  sudo: true
   apt: update_cache=yes
 
 - name: upgrade apt packages
-  sudo: true
   apt: upgrade=full
+
+- name: chown /opt
+  file: owner=vagrant group=vagrant state=directory path=/opt
+
+- name: create install directory
+  file: owner=vagrant group=vagrant state=directory path=/opt/install
 
 - name: sufia / general server prerequisites
   apt: name={{ item}} state=latest
