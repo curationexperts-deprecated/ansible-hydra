@@ -1,0 +1,52 @@
+---
+#- name: check ruby {{ ruby_version }} installed
+#  shell: "ruby -v | grep {{ ruby_version }}"
+#  register: ruby_installed
+#  changed_when: false
+#  ignore_errors: yes # failure means our ruby version isn't installed yet
+#  always_run: yes
+
+- name: remove package ruby
+  sudo: yes
+  apt: name=ruby state=absent
+
+- name: check ruby file
+  sudo: no
+  stat: path=/opt/install/ruby-2.2.2.tar.gz
+  register: ruby_file
+
+- name: download ruby
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz group=vagrant owner=vagrant dest=/opt/install/
+  when: ruby_file.stat.exists == False
+  
+- name: unzip ruby file
+  unarchive: src=/opt/install/ruby-2.2.2.tar.gz dest=/opt/install/ copy=no
+
+- name: configure ruby
+  shell: cd {{ install_path }}/ruby-2.2.2 && ./configure --enable-shared creates={{ install_path }}/ruby-2.2.2/Makefile
+
+- name: make ruby
+  shell: cd {{ install_path }}/ruby-2.2.2 && make 
+
+- name: install ruby
+  sudo: yes
+  shell: cd {{ install_path }}/ruby-2.2.2 && make install creates=/usr/local/bin/ruby
+
+
+#- name: configure ruby
+#  command: ./configure --enable-shared path=/opt/install/ruby-2.2.2/
+
+#- name: make ruby
+#  command: make path=/opt/install/ruby-2.2.2
+
+#- name: install ruby
+#  sudo: yes
+#  command: make install path=/opt/install/ruby-2.2.2
+ 
+- name: install bundler
+  sudo: yes
+  gem: name=bundler user_install=no state=present
+
+- name: install passenger
+  sudo: yes
+  gem: name=passenger user_install=no state=present

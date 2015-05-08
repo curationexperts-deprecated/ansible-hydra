@@ -1,0 +1,39 @@
+---
+- name: development tools and libraries
+  apt: name={{ item}} state=latest
+  with_items:
+    - build-essential
+    - git
+    - git-core
+    - curl
+    - openssl
+    - libreadline6
+    - libreadline6-dev
+    - zlib1g
+    - zlib1g-dev
+    - libssl-dev
+    - libyaml-dev
+    - libxml2-dev
+    - libxslt-dev
+    - autoconf
+    - libc6-dev
+    - ncurses-dev
+    - automake
+    - libtool
+    - bison
+    - subversion
+    - pkg-config
+    - libmagickwand-dev
+    - imagemagick
+    - libcurl4-openssl-dev
+    - apache2-prefork-dev
+    - libxvidcore-dev
+    - redis-server
+    #- libsqlite3-dev
+    #- sqlite3
+    # included in build-essential? - nodejs
+    # included in build-essential?- unzip
+    #- poppler-utils # not mentioned in sufia; ualberta uses
+    #- libreoffice-headless # not mentioned in sufia; ualberta uses
+    #- libreoffice # not mentioned in sufia; ualberta uses
+    #- GraphicsMagick # not mentioned in sufia; ualberta uses

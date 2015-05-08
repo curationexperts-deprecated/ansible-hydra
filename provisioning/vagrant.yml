@@ -1,8 +1,10 @@
 - name: provision basic vagrant box
   hosts: vagrant
   roles:
-    - { role: sudo-prereqs, sudo: yes }
-    - { role: prereqs, sudo: yes }
-    - { role: ruby-rails, sudo: yes }
-    - { role: app-config, sudo: no }
-    - { role: services, sudo: yes }
+    - { role: housekeeping, sudo: yes }
+#    - { role: environment }
+    - { role: tools, sudo: yes }
+    - { role: ruby }
+#    - { role: tomcat, sudo: yes }
+#    - { role: fedora }
+#    - { role: solr }

@@ -1,0 +1,19 @@
+---
+- name: check if fits file exists
+  stat: path=/home/vagrant/fits-0.8.5.zip
+  sudo: no
+  register: fits_file
+
+- name: download fits zip
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip group=vagrant owner=vagrant dest=/home/vagrant/ 
+  sudo: no
+  when: fits_file.stat.exists == False
+
+- name: unpack fits
+  sudo: yes
+  unarchive: src=/home/vagrant/fits-0.8.5.zip dest=/usr/local/bin/ creates=/usr/local/bin/fits-0.8.5 copy=no
+
+- name: make fits executable
+  sudo: yes
+  file: path=/usr/local/bin/fits-0.8.5/fits.sh mode=0755
+
