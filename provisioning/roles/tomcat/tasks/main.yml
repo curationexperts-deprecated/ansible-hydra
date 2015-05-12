@@ -1,0 +1,38 @@
+---
+- name: install package tomcat
+  sudo: yes
+  apt: name=tomcat7 state=present
+
+- name: check fedora file
+  sudo: no
+  stat: path={{ install_path }}/fcrepo-webapp-4.1.0.war
+  register: fedora_file
+
+- name: download fedora
+  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war group=vagrant owner=vagrant dest={{ install_path }}/
+  when: fedora_file.stat.exists == False
+
+- name: check fedora data dir
+  sudo: no
+  stat: path=/opt/fedora-data
+  register: fedora_dir
+
+- name: make fedora data dir
+  file: owner=tomcat7 group=tomcat7 state=directory path=/opt/fedora-data
+  sudo: yes
+  when: fedora_dir.stat.exists == False
+
+- name: create tomcat config and java options
+  sudo: yes
+  template: src=templates/tomcat7.conf dest=/etc/default/tomcat7 backup=yes 
+
+#- name: configure ruby
+#  command: ./configure --enable-shared path=/opt/install/ruby-2.2.2/
+
+#- name: make ruby
+#  command: make path=/opt/install/ruby-2.2.2
+
+#- name: install ruby
+#  sudo: yes
+#  command: make install path=/opt/install/ruby-2.2.2
+ 
