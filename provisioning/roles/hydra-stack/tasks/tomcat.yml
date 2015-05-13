@@ -1,0 +1,5 @@
+---
+- name: install package tomcat
+  sudo: yes
+  apt: name=tomcat7 state=present
+
