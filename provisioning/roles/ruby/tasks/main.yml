@@ -33,9 +33,6 @@
   stat: path=/usr/local/bin/ruby
   register: ruby
 
-- name: what is in this variable
-  debug: var=ruby
-
 - name: configure ruby
   shell: cd {{ install_path }}/ruby-2.2.2 && ./configure --enable-shared creates={{ install_path }}/ruby-2.2.2/Makefile
   when: ruby.stat.exists == False
