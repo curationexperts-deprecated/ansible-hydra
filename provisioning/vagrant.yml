@@ -6,5 +6,5 @@
     - { role: tools, sudo: yes }
     - { role: ruby }
     - { role: tomcat }
-#    - { role: fedora }
-#    - { role: solr }
+    - { role: fits }
+#    - { role: redis }

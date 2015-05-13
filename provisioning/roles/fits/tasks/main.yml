@@ -1,19 +1,30 @@
 ---
+- name: install zip utility
+  apt: name=unzip state=present
+
 - name: check if fits file exists
-  stat: path=/home/vagrant/fits-0.8.5.zip
+  stat: path=/opt/install/fits-0.8.5.zip
   sudo: no
   register: fits_file
 
 - name: download fits zip
-  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip group=vagrant owner=vagrant dest=/home/vagrant/ 
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip group=vagrant owner=vagrant dest=/opt/install/ 
   sudo: no
   when: fits_file.stat.exists == False
 
 - name: unpack fits
-  sudo: yes
-  unarchive: src=/home/vagrant/fits-0.8.5.zip dest=/usr/local/bin/ creates=/usr/local/bin/fits-0.8.5 copy=no
+  sudo: no
+  unarchive: src=/opt/install/fits-0.8.5.zip dest=/opt/install/ copy=no
 
 - name: make fits executable
+  sudo: no
+  file: path=/opt/install/fits-0.8.5/fits.sh mode=0755
+
+- name: copy fits
   sudo: yes
-  file: path=/usr/local/bin/fits-0.8.5/fits.sh mode=0755
+  shell: cp -r /opt/install/fits-0.8.5/* /usr/local/bin/
+
+- name: symlink fits
+  sudo: yes
+  file: src=/usr/local/bin//fits.sh dest=/usr/local/bin/fits state=link
 
