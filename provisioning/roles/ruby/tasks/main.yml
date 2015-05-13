@@ -29,22 +29,25 @@
   when: ruby_dir.stat.exists == False
 
 - name: check if ruby is installed
-  sudo: no
-  command: which ruby
-  register: ruby_installed
+  sudo: yes
+  stat: path=/usr/local/bin/ruby
+  register: ruby
+
+- name: what is in this variable
+  debug: var=ruby
 
 - name: configure ruby
   shell: cd {{ install_path }}/ruby-2.2.2 && ./configure --enable-shared creates={{ install_path }}/ruby-2.2.2/Makefile
-  when: ruby_installed.stdout != "/usr/local/bin/ruby"
+  when: ruby.stat.exists == False
 
 - name: make ruby
   shell: cd {{ install_path }}/ruby-2.2.2 && make 
-  when: ruby_installed.stdout != "/usr/local/bin/ruby"
+  when: ruby.stat.exists == False
 
 - name: install ruby
   sudo: yes
   shell: cd {{ install_path }}/ruby-2.2.2 && make install creates=/usr/local/bin/ruby
-  when: ruby_installed.stdout != "/usr/local/bin/ruby"
+  when: ruby.stat.exists == False
 
 #- name: configure ruby
 #  command: ./configure --enable-shared path=/opt/install/ruby-2.2.2/
