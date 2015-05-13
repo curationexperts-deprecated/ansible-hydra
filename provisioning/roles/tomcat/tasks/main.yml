@@ -22,10 +22,28 @@
   sudo: yes
   when: fedora_dir.stat.exists == False
 
+- name: check fedora.ware
+  sudo: no
+  stat: path=/var/lib/tomcat7/webapps/fedora.war
+  register: fedora_war
+
+- name: copy over fedora.war
+  sudo: yes
+  command: cp {{ install_path }}/fcrepo-webapp-4.1.0.war /var/lib/tomcat7/webapps/fedora.war
+  when: fedora_war.stat.exists == False
+
 - name: create tomcat config and java options
   sudo: yes
   template: src=tomcat7.j2 dest=/etc/default/tomcat7 backup=yes 
 # TODO: make Java options configurable at the time of the ansible run
+
+- name: create velocity log
+  sudo: yes
+  file: path=/var/log/tomcat7/velocity.log state=touch owner=tomcat7 group=tomcat7 mode=0644
+
+- name: symlink velocity log
+  sudo: yes
+  file: src=/var/log/tomcat7/velocity.log dest=/var/lib/tomcat7/velocity.log state=link
 
 - name: check solr file
   sudo: no
@@ -69,11 +87,15 @@
   sudo: yes
   shell: cp {{ install_path }}/solr-4.10.3/example/lib/ext/*.jar /usr/share/tomcat7/lib/
 
+- name: set ownership and group for solr
+  sudo: yes
+  shell: chown -R tomcat7:tomcat7 /opt/solr
+
 - name: copy log4j properties file
   sudo: yes
   shell: cp {{ install_path }}/solr-4.10.3/example/resources/log4j.properties /usr/share/tomcat7/
 
-- name: set ownership and group
+- name: set ownership and group for tomcat
   sudo: yes
   shell: chown -R tomcat7:tomcat7 /usr/share/tomcat7
 
