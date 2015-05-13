@@ -5,6 +5,6 @@
 #    - { role: environment }
     - { role: tools, sudo: yes }
     - { role: ruby }
-    - { role: tomcat }
-    - { role: fits }
+    - { role: hydra-stack }
+#    - { role: fits }
 #    - { role: redis }
