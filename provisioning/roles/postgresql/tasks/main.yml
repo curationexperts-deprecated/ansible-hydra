@@ -1,0 +1,33 @@
+---
+- name: install package postgresql
+  sudo: yes
+  apt: name=postgresql state=present
+
+- name: install dev package
+  sudo: yes
+  apt: name=libpq-dev state=present
+
+- name: install python psql adapter
+  sudo: yes
+  apt: name=python-psycopg2 state=present
+
+- name: create database 
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name=hydra 
+
+- name: add chf user for postgres
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: db=hydra name=chf password=mypass priv=ALL state=present 
+
+#- name: set postgres password 
+#  postgresql_user: 
+
+#- name: configure postgres for md5 security
+#  sudo: yes
+#  lineinfile: 
+
+- name: restart postgres server
+  sudo: yes
+  service: name=postgresql enabled=yes state=restarted

@@ -6,5 +6,6 @@
     - { role: tools, sudo: yes }
     - { role: ruby }
     - { role: hydra-stack }
+    - { role: postgresql }
 #    - { role: fits }
 #    - { role: redis }
