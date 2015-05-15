@@ -21,12 +21,14 @@
   sudo_user: postgres
   postgresql_user: db=hydra name=chf password=mypass priv=ALL state=present 
 
-#- name: set postgres password 
-#  postgresql_user: 
+- name: set postgres password 
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name=postgres password=newpass
 
-#- name: configure postgres for md5 security
-#  sudo: yes
-#  lineinfile: 
+- name: configure postgres for md5 security
+  sudo: yes
+  template: src=pg_hba.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
 
 - name: restart postgres server
   sudo: yes
