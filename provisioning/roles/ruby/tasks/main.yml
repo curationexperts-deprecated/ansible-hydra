@@ -45,16 +45,6 @@
   sudo: yes
   shell: cd {{ install_path }}/ruby-2.2.2 && make install creates=/usr/local/bin/ruby
   when: ruby.stat.exists == False
-
-#- name: configure ruby
-#  command: ./configure --enable-shared path=/opt/install/ruby-2.2.2/
-
-#- name: make ruby
-#  command: make path=/opt/install/ruby-2.2.2
-
-#- name: install ruby
-#  sudo: yes
-#  command: make install path=/opt/install/ruby-2.2.2
  
 - name: install bundler
   sudo: yes
