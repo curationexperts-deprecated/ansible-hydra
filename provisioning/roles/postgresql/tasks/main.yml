@@ -29,6 +29,8 @@
 - name: configure postgres for md5 security
   sudo: yes
   template: src=pg_hba.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
+# TODO - Earlier tasks fail on the second run b/c passwordless logins don't work after
+# configuring for md5 security - can this be fixed?
 
 - name: restart postgres server
   sudo: yes
