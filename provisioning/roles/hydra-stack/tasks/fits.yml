@@ -4,26 +4,26 @@
   apt: name=unzip state=present
 
 - name: check if fits file exists
-  stat: path={{ install_path }}/fits-0.8.5.zip
+  stat: path={{ install_path }}/fits-0.8.4.zip
   sudo: no
   register: fits_file
 
 - name: download fits zip
-  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip group=vagrant owner=vagrant dest={{ install_path }}/ 
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.4.zip group=vagrant owner=vagrant dest={{ install_path }}/ 
   sudo: no
   when: fits_file.stat.exists == False
 
 - name: unpack fits
   sudo: no
-  unarchive: src={{ install_path }}/fits-0.8.5.zip dest={{ install_path }}/ copy=no
+  unarchive: src={{ install_path }}/fits-0.8.4.zip dest={{ install_path }}/ copy=no
 
 - name: make fits executable
   sudo: no
-  file: path={{ install_path }}/fits-0.8.5/fits.sh mode=0755
+  file: path={{ install_path }}/fits-0.8.4/fits.sh mode=0755
 
 - name: copy fits
   sudo: yes
-  shell: cp -r {{ install_path }}/fits-0.8.5/* /usr/local/bin/
+  shell: cp -r {{ install_path }}/fits-0.8.4/* /usr/local/bin/
 
 - name: symlink fits
   sudo: yes
