@@ -7,14 +7,14 @@
   sudo: yes
   file: src=/var/log/tomcat7/velocity.log dest=/var/lib/tomcat7/velocity.log state=link
 
-- name: check solr file
-  sudo: no
-  stat: path={{ install_path }}/solr-4.10.3.tgz
-  register: solr_tarball
+#- name: check solr file
+#  sudo: no
+#  stat: path={{ install_path }}/solr-4.10.3.tgz
+#  register: solr_tarball
 
 - name: download solr tarball
-  get_url: url=http://archive.apache.org/dist/lucene/solr/4.10.3/solr-4.10.3.tgz dest={{ install_path }}/
-  when: solr_tarball.stat.exists == False
+  get_url: url=http://archive.apache.org/dist/lucene/solr/4.10.3/solr-4.10.3.tgz dest={{ install_path }}/ force=no
+#  when: solr_tarball.stat.exists == False
 
 - name: untar solr tarball
   unarchive: src={{ install_path }}/solr-4.10.3.tgz dest=/opt/install/ copy=no
