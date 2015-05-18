@@ -2,10 +2,8 @@
   hosts: vagrant
   roles:
     - { role: housekeeping, sudo: yes }
-#    - { role: environment }
     - { role: tools, sudo: yes }
     - { role: ruby }
     - { role: hydra-stack }
     - { role: postgresql }
-#    - { role: fits }
-#    - { role: redis }
+#    - { role: passenger, sudo: yes }
