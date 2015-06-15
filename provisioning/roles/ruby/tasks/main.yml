@@ -10,23 +10,11 @@
   sudo: yes
   apt: name=ruby state=absent
 
-- name: check ruby file
-  sudo: no
-  stat: path=/opt/install/ruby-2.2.2.tar.gz
-  register: ruby_file
-
-- name: check ruby dir
-  sudo: no
-  stat: path=/opt/install/ruby-2.2.2
-  register: ruby_dir
-
 - name: download ruby
-  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz group=vagrant owner=vagrant dest=/opt/install/
-  when: ruby_file.stat.exists == False
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz group=vagrant owner=vagrant dest={{ install_path }}/ruby-2.2.2.tar.gz
   
 - name: unzip ruby file
-  unarchive: src=/opt/install/ruby-2.2.2.tar.gz dest=/opt/install/ copy=no
-  when: ruby_dir.stat.exists == False
+  unarchive: src=/opt/install/ruby-2.2.2.tar.gz dest={{ install_path }}/ creates={{ install_path }}/ruby-2.2.2/compile.c copy=no
 
 - name: check if ruby is installed
   sudo: yes
@@ -35,8 +23,7 @@
 
 - name: configure ruby
   shell: cd {{ install_path }}/ruby-2.2.2 && ./configure --enable-shared creates={{ install_path }}/ruby-2.2.2/Makefile
-  when: ruby.stat.exists == False
-
+  
 - name: make ruby
   shell: cd {{ install_path }}/ruby-2.2.2 && make 
   when: ruby.stat.exists == False

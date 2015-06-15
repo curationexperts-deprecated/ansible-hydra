@@ -11,26 +11,32 @@
   sudo: yes
   apt: name=python-psycopg2 state=present
 
+- name: check if postgresql has changed
+  service: name=postgresql state=started
+  register: postgresql_status
+
 - name: create database 
   sudo: yes
   sudo_user: postgres
-  postgresql_db: name=hydra 
+  postgresql_db: name=hydra state=present
+  when: postgresql_status.changed == true
 
 - name: add chf user for postgres
   sudo: yes
   sudo_user: postgres
   postgresql_user: db=hydra name=chf password=mypass priv=ALL state=present 
+  when: postgresql_status.changed == true
 
 - name: set postgres password 
   sudo: yes
   sudo_user: postgres
   postgresql_user: name=postgres password=newpass
+  when: postgresql_status.changed == true
 
 - name: configure postgres for md5 security
   sudo: yes
   template: src=pg_hba.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
-# TODO - Earlier tasks fail on the second run b/c passwordless logins don't work after
-# configuring for md5 security - can this be fixed?
+  when: postgresql_status.changed == true
 
 - name: restart postgres server
   sudo: yes
