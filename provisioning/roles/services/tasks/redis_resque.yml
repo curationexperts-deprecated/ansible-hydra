@@ -1,7 +1,8 @@
 ---
 - name: run redis-server
   service: name=redis-server state=started
-
+  sudo: yes
+  
 - name: copy resque init script
   template: src=pool_q dest=/etc/init.d/resque-pool mode=0755
 
