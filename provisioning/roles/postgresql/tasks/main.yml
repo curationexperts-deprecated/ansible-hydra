@@ -1,15 +1,12 @@
 ---
-- name: install package postgresql
+# install database, dev library, and python psql adapter
+- name: install postgresql packages
+  apt: name={{ item}} state=present
   sudo: yes
-  apt: name=postgresql state=present
-
-- name: install dev package
-  sudo: yes
-  apt: name=libpq-dev state=present
-
-- name: install python psql adapter
-  sudo: yes
-  apt: name=python-psycopg2 state=present
+  with_items:
+  - postgresql
+  - libpq-dev
+  - python-psycopg2
 
 - name: check if postgresql has changed
   service: name=postgresql state=started
