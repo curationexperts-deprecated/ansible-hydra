@@ -6,7 +6,7 @@
   gem: name=passenger state=present # version=$passenger_ver
 
 - name: install apache packages
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=present
   with_items:
     - apache2-prefork-dev
     - apache2-mpm-worker
