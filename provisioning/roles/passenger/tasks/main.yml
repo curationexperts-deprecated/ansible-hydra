@@ -3,7 +3,7 @@
 # https://github.com/akishin/ansible-playbooks/blob/master/lokka/roles/passenger/tasks/main.yml
 
 - name: install passenger gem
-  gem: name=passenger state=present # version=$passenger_ver
+  gem: name=passenger state=present version={{ passenger_ver }}
 
 - name: install apache packages
   apt: name={{ item }} state=present
@@ -13,13 +13,13 @@
 
 - name: install passenger-install-apache2-module
   sudo: yes
-  shell: passenger-install-apache2-module --auto creates=/usr/lib/ruby/gems/2.2.0/gems/passenger-{{ passenger_ver }}/buildout/apache2/mod_passenger.so
+  shell: passenger-install-apache2-module --auto creates=/usr/local/lib/ruby/gems/{{ ruby_ver }}/gems/passenger-{{ passenger_ver }}/buildout/apache2/mod_passenger.so #/etc/apache2/conf-available/passenger.conf
 
 - name: generate passenger.conf file
-  shell: passenger-install-apache2-module --snippet > /etc/apache2/conf-available/passenger.conf
+  shell: passenger-install-apache2-module --snippet > /etc/apache2/conf-available/passenger.conf creates=/etc/apache2/conf-available/passenger.conf
   
 - name: symlink passenger config
-  shell: ln -s /etc/apache2/conf-available/passenger.conf /etc/apache2/conf-enabled/passenger.conf
+  file: src=/etc/apache2/conf-available/passenger.conf path=/etc/apache2/conf-enabled/passenger.conf state=link
   sudo: yes
   
 - name: restart apache
