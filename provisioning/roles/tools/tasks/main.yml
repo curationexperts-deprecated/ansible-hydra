@@ -26,7 +26,6 @@
     - libmagickwand-dev
     - imagemagick
     - libcurl4-openssl-dev
-    - apache2-prefork-dev
     - libxvidcore-dev
     - redis-server
     #- libsqlite3-dev
