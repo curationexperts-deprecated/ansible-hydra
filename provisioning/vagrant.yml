@@ -5,5 +5,6 @@
     - { role: tools, sudo: yes }
     - { role: ruby }
     - { role: hydra-stack }
+    - { role: services }
     - { role: postgresql }
-#    - { role: passenger, sudo: yes }
+    - { role: passenger, sudo: yes }
