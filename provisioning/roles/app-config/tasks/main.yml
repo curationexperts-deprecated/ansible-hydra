@@ -1,9 +1,36 @@
 ---
-- name: install all the gems
-  sudo: no
-  remote_user: "{{ deploy_user }}"
+- name: create the cap directories
+  file: path={{ item }} state=directory owner={{ deploy_user }} group={{ deploy_group }} 
+  with_items:
+      /opt/sufia
+      /opt/sufia/shared
+      /opt/sufia/shared/config
+      /opt/sufia/releases
+
+- name: create shared config files
+  template: src={{ item }} dest=/opt/sufia/shared/config/{{ item }} owner={{ deploy_user }} group={{ deploy_group }} backup=yes
+  with_items:
+      database.yml
+      fedora.yml
+      redis.yml
+      resque-pool.yml
+      solr.yml
+
+# from here on out, use capistrano? 
+# deploy the code, generate a secret, migrate the database, restart apache
+
+#- name: generate a secret
+  # run rake secret, direct output to environment variable SECRET_KEY_BASE
+  
+  # https://github.com/acozine/sufiafc4
+  # git: repo=https://github.com/curationexperts/mira.git clone=yes dest=/opt/mira 
+  # git: repo=https://github.com/chemheritage/chf-sufia.git clone=yes dest=/opt/chf-sufia 
+
+#- name: install all the gems
+#  sudo: no
+#  remote_user: deploy #"{{ deploy_user }}"
   # TODO: this is for development; look into bundle --deployment
-  shell: cd {{ project_dir }}; bundle install --path={{ bundle_path }}
+#  shell: cd /opt/mira; RAILS_ENV=production bundle install# {{ project_dir }}; bundle install --path={{ bundle_path }}
 
 #TODO: manage env variables for this separately
 #- name: make sure blacklight has a key
@@ -12,13 +39,14 @@
 #  copy: src=secrets.yml dest={{ project_dir }}/config/secrets.yml
 
 # note db:migrate is natively idempotent
-- name: dbmigrate
-  sudo: no
-  remote_user: "{{ deploy_user }}"
-  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV={{ rails_env }}
 
-- name: migrate test db in development installs
-  sudo: no
-  remote_user: "{{ deploy_user }}"
-  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV=test
-  when: rails_env == "development"
+#- name: dbmigrate
+#  sudo: no
+#  remote_user: "{{ deploy_user }}"
+#  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV={{ rails_env }}
+
+#- name: migrate test db in development installs
+#  sudo: no
+#  remote_user: "{{ deploy_user }}"
+#  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV=test
+#  when: rails_env == "development"
