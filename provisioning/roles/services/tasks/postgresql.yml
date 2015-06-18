@@ -21,7 +21,7 @@
 - name: add chf user for postgres
   sudo: yes
   sudo_user: postgres
-  postgresql_user: db=hydra name=chf password=mypass priv=ALL state=present 
+  postgresql_user: db=hydra name=pg-hydra password=pg-hydra-pass priv=ALL state=present 
   when: postgresql_status.changed == true
 
 - name: set postgres password 

@@ -1,3 +1,4 @@
 ---
 - include: fits.yml
 - include: redis_resque.yml
+- include: postgresql.yml
