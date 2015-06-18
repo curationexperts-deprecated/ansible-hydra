@@ -1,5 +1,5 @@
 ---
-- name: development tools and libraries
+- name: install dev tools and libraries
   apt: name={{ item}} state=latest
   with_items:
     - build-essential
@@ -28,11 +28,3 @@
     - libcurl4-openssl-dev
     - libxvidcore-dev
     - redis-server
-    #- libsqlite3-dev
-    #- sqlite3
-    # included in build-essential? - nodejs
-    # included in build-essential?- unzip
-    #- poppler-utils # not mentioned in sufia; ualberta uses
-    #- libreoffice-headless # not mentioned in sufia; ualberta uses
-    #- libreoffice # not mentioned in sufia; ualberta uses
-    #- GraphicsMagick # not mentioned in sufia; ualberta uses

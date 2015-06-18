@@ -1,0 +1,20 @@
+---
+- name: update apt cache
+  apt: update_cache=yes
+
+- name: upgrade apt packages
+  apt: upgrade=full
+
+- name: create deploy group
+  sudo: yes
+  group: name={{ deploy_group }} state=present
+
+- name: create deploy user
+  sudo: yes
+  user: name={{ deploy_user }} group={{ deploy_group }} shell=/bin/bash createhome=yes state=present
+
+- name: chown /opt
+  file: owner={{ deploy_user }} group={{ deploy_group }} state=directory path=/opt
+
+- name: create install directory
+  file: owner={{ deploy_user }} group={{ deploy_group }} state=directory path=/opt/install
