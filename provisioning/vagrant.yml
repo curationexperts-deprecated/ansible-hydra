@@ -6,4 +6,4 @@
     - { role: hydra-stack }
     - { role: services }
     - { role: passenger, sudo: yes }
-#    - { role: app-config }
+    - { role: app-config }
