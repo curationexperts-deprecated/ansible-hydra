@@ -1,20 +1,18 @@
 ---
-- name: create the cap directories
+- name: create cap shared directories
   file: path={{ item }} state=directory owner={{ deploy_user }} group={{ deploy_group }} 
   with_items:
-      /opt/sufia
-      /opt/sufia/shared
-      /opt/sufia/shared/config
-      /opt/sufia/releases
+    - /opt/sufia/shared/config
+    - /opt/sufia/releases
 
 - name: create shared config files
   template: src={{ item }} dest=/opt/sufia/shared/config/{{ item }} owner={{ deploy_user }} group={{ deploy_group }} backup=yes
   with_items:
-      database.yml
-      fedora.yml
-      redis.yml
-      resque-pool.yml
-      solr.yml
+    - database.yml
+    - fedora.yml
+    - redis.yml
+    - resque-pool.yml
+    - solr.yml
 
 # from here on out, use capistrano? 
 # deploy the code, generate a secret, migrate the database, restart apache
