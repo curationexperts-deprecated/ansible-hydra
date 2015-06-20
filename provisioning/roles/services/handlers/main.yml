@@ -1,4 +1,6 @@
-# Handlers:
+---
+# These tasks should only be run once, when postgresql is first installed
+
 - name: set postgres password 
   sudo: yes
   sudo_user: postgres
@@ -13,8 +15,6 @@
   service: name=postgresql enabled=yes state=restarted
 
 - name: create database 
-  #sudo: yes
-  #sudo_user: postgres
   postgresql_db: name=hydra state=present login_user=postgres login_password=newpass
 
 - name: add pg hydra user
