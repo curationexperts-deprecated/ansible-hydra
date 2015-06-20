@@ -4,7 +4,7 @@
   sudo: yes
   
 - name: copy resque init script
-  template: src=pool_q dest=/etc/init.d/resque-pool mode=0755
+  file: src=pool_q dest=/etc/init.d/resque-pool mode=0755
   sudo: yes
 
 - name: start resque
