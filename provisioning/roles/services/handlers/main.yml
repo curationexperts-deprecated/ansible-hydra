@@ -1,0 +1,23 @@
+# Handlers:
+- name: set postgres password 
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: name=postgres password=newpass
+
+- name: configure postgres for md5 security
+  sudo: yes
+  template: src=pg_hba.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
+
+- name: restart postgres server
+  sudo: yes
+  service: name=postgresql enabled=yes state=restarted
+
+- name: create database 
+  #sudo: yes
+  #sudo_user: postgres
+  postgresql_db: name=hydra state=present login_user=postgres login_password=newpass
+
+- name: add pg hydra user
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: db=hydra name=pg-hydra password=pg-hydra-pass priv=ALL state=present login_user=postgres login_password=newpass

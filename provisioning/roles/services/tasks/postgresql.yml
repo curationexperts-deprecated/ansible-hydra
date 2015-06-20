@@ -1,40 +1,18 @@
 ---
 # install database, dev library, and python psql adapter
+
+#Tasks:
 - name: install postgresql packages
-  apt: name={{ item}} state=present
+  apt: name={{ item }} state=present
   sudo: yes
   with_items:
   - postgresql
   - libpq-dev
   - python-psycopg2
+  notify:
+  - set postgres password
+  - configure md5 security
+  - restart postgres server
+  - create database
+  - add pg hydra user
 
-- name: check if postgresql has changed
-  service: name=postgresql state=started
-  register: postgresql_status
-
-- name: create database 
-  sudo: yes
-  sudo_user: postgres
-  postgresql_db: name=hydra state=present
-  when: postgresql_status.changed == true
-
-- name: add chf user for postgres
-  sudo: yes
-  sudo_user: postgres
-  postgresql_user: db=hydra name=pg-hydra password=pg-hydra-pass priv=ALL state=present 
-  when: postgresql_status.changed == true
-
-- name: set postgres password 
-  sudo: yes
-  sudo_user: postgres
-  postgresql_user: name=postgres password=newpass
-  when: postgresql_status.changed == true
-
-- name: configure postgres for md5 security
-  sudo: yes
-  template: src=pg_hba.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
-  when: postgresql_status.changed == true
-
-- name: restart postgres server
-  sudo: yes
-  service: name=postgresql enabled=yes state=restarted
