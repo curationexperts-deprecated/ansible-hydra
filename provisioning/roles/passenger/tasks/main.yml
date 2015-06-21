@@ -3,7 +3,7 @@
 # https://github.com/akishin/ansible-playbooks/blob/master/lokka/roles/passenger/tasks/main.yml
 
 - name: install passenger gem
-  gem: name=passenger state=present version={{ passenger_ver }}
+  gem: name=passenger user_install=no state=present version={{ passenger_ver }}
 
 - name: install apache packages
   apt: name={{ item }} state=present
@@ -13,7 +13,7 @@
 
 - name: install passenger-install-apache2-module
   sudo: yes
-  shell: passenger-install-apache2-module --auto creates=/usr/local/lib/ruby/gems/{{ ruby_ver }}/gems/passenger-{{ passenger_ver }}/buildout/apache2/mod_passenger.so #/etc/apache2/conf-available/passenger.conf
+  shell: passenger-install-apache2-module --auto creates=/usr/local/lib/ruby/gems/{{ ruby_ver }}/gems/passenger-{{ passenger_ver }}/buildout/apache2/mod_passenger.so 
 
 - name: generate passenger.conf file
   shell: passenger-install-apache2-module --snippet > /etc/apache2/conf-available/passenger.conf creates=/etc/apache2/conf-available/passenger.conf
