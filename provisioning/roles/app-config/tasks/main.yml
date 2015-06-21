@@ -1,5 +1,15 @@
 ---
+
+- name: create deploy group
+  sudo: yes
+  group: name={{ deploy_group }} state=present
+
+- name: create deploy user
+  sudo: yes
+  user: name={{ deploy_user }} group={{ deploy_group }} shell=/bin/bash createhome=yes state=present
+
 - name: create cap shared directories
+  sudo: yes
   file: path={{ item }} state=directory owner={{ deploy_user }} group={{ deploy_group }} 
   with_items:
     - /opt/sufia/shared/config
