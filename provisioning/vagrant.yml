@@ -1,5 +1,6 @@
 - name: provision basic vagrant box
   hosts: vagrant
+  remote_user: vagrant
   roles:
 #    - { role: whole_hydra }
     - { role: housekeeping, sudo: yes }
