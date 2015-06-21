@@ -8,13 +8,15 @@
   file: src=/var/log/tomcat7/velocity.log dest=/var/lib/tomcat7/velocity.log state=link
 
 - name: download solr tarball
+  become: yes
   get_url: url=http://archive.apache.org/dist/lucene/solr/4.10.3/solr-4.10.3.tgz dest={{ install_path }}/solr-4.10.3.tgz force=no
 
 - name: untar solr tarball
+  become: yes
   unarchive: src={{ install_path }}/solr-4.10.3.tgz dest={{ install_path }}/ creates={{ install_path }}/solr-4.10.3/bin/solr copy=no
 
 - name: check solr dir
-  sudo: no
+  become: yes
   stat: path=/opt/solr/lib
   register: solr_dir
 
@@ -66,4 +68,3 @@
 - name: restart tomcat
   sudo: yes
   service: name=tomcat7 enabled=yes state=restarted
-  

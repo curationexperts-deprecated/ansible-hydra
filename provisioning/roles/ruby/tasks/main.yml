@@ -11,9 +11,11 @@
   apt: name=ruby state=absent
 
 - name: download ruby
-  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz owner={{ deploy_user }} group={{ deploy_group }} dest={{ install_path }}/ruby-2.2.2.tar.gz
+  become: yes
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/ruby-2.2.2.tar.gz
   
 - name: unzip ruby file
+  become: yes
   unarchive: src=/opt/install/ruby-2.2.2.tar.gz dest={{ install_path }}/ creates={{ install_path }}/ruby-2.2.2/compile.c copy=no
 
 - name: check if ruby is installed
@@ -22,9 +24,11 @@
   register: ruby
 
 - name: configure ruby
+  become: yes
   shell: cd {{ install_path }}/ruby-2.2.2 && ./configure --enable-shared creates={{ install_path }}/ruby-2.2.2/Makefile
   
 - name: make ruby
+  become: yes
   shell: cd {{ install_path }}/ruby-2.2.2 && make 
   when: ruby.stat.exists == False
 

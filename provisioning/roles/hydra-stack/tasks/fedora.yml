@@ -1,15 +1,16 @@
 ---
 - name: check fedora file
-  sudo: no
+  become: yes
   stat: path={{ install_path }}/fcrepo-webapp-4.1.0.war
   register: fedora_file
 
 - name: download fedora
-  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war group=vagrant owner=vagrant dest={{ install_path }}/
+  become: yes
+  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/
   when: fedora_file.stat.exists == False
 
 - name: check fedora data dir
-  sudo: no
+  become: yes
   stat: path=/opt/fedora-data
   register: fedora_dir
 
@@ -19,7 +20,7 @@
   when: fedora_dir.stat.exists == False
 
 - name: check fedora.war
-  sudo: no
+  become: yes
   stat: path=/var/lib/tomcat7/webapps/fedora.war
   register: fedora_war
 
@@ -36,4 +37,3 @@
 - name: restart tomcat
   sudo: yes
   service: name=tomcat7 enabled=yes state=restarted
-  
