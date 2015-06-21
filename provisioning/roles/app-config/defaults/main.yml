@@ -1,4 +1,3 @@
 ---
-install_path: /opt/install
 deploy_user: deploy
 deploy_group: deploy
