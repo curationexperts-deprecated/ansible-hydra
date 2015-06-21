@@ -4,15 +4,15 @@
   apt: name=unzip state=present
 
 - name: download fits zip
-  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.4.zip group=vagrant owner=vagrant dest={{ install_path }}/fits-0.8.4.zip
-  sudo: no
-
+  become: yes
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.4.zip owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fits-0.8.4.zip
+  
 - name: unpack fits
-  sudo: no
+  become: yes
   unarchive: src={{ install_path }}/fits-0.8.4.zip dest={{ install_path }}/ creates={{ install_path }}/fits-0.8.4/fits.sh copy=no
 
 - name: make fits executable
-  sudo: no
+  become: yes
   file: path={{ install_path }}/fits-0.8.4/fits.sh mode=0755
 
 - name: copy fits
