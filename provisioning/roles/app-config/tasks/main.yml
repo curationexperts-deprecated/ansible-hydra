@@ -1,5 +1,4 @@
 ---
-
 - name: create deploy group
   group: name={{ deploy_group }} state=present
 
