@@ -6,7 +6,7 @@
   sudo_user: postgres
   postgresql_user: name=postgres password=newpass
 
-- name: configure postgres for md5 security
+- name: configure md5 security
   sudo: yes
   copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
 
