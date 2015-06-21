@@ -1,22 +1,26 @@
 ---
-- name: create deploy group
+- name: create cap group
   sudo: yes
-  group: name={{ deploy_group }} state=present
+  group: name={{ capistrano_group }} state=present
 
-- name: create deploy user
+- name: create cap user
   sudo: yes
-  user: name={{ deploy_user }} group={{ deploy_group }} shell=/bin/bash createhome=yes state=present
+  user: name={{ capistrano_user }} group={{ capistrano_group }} shell=/bin/bash createhome=yes state=present
+  register: user
+  
+- name: show content of user var
+  debug: var=user
 
 - name: create cap shared directories
   sudo: yes
-  file: path={{ item }} state=directory owner={{ deploy_user }} group={{ deploy_group }} 
+  file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }} 
   with_items:
     - /opt/sufia/shared/config
     - /opt/sufia/releases
 
 - name: create shared config files
   sudo: yes
-  template: src={{ item }} dest=/opt/sufia/shared/config/{{ item }} owner={{ deploy_user }} group={{ deploy_group }} backup=yes
+  template: src={{ item }} dest=/opt/sufia/shared/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=yes
   with_items:
     - database.yml
     - fedora.yml
