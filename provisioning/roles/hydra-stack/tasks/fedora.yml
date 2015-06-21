@@ -1,23 +1,22 @@
 ---
-- name: check fedora file
-  become: yes
-  stat: path={{ install_path }}/fcrepo-webapp-4.1.0.war
-  register: fedora_file
+#- name: check fedora file
+#  become: yes
+#  stat: path={{ install_path }}/fcrepo-webapp-4.1.0.war
+#  register: fedora_file
 
 - name: download fedora
   become: yes
-  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/
-  when: fedora_file.stat.exists == False
+  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fcrepo-webapp-4.1.0.war
 
-- name: check fedora data dir
-  become: yes
-  stat: path=/opt/fedora-data
-  register: fedora_dir
+#- name: check fedora data dir
+#  become: yes
+#  stat: path=/opt/fedora-data
+#  register: fedora_dir
 
 - name: make fedora data dir
   file: owner=tomcat7 group=tomcat7 state=directory path=/opt/fedora-data
   sudo: yes
-  when: fedora_dir.stat.exists == False
+#  when: fedora_dir.stat.exists == False
 
 - name: check fedora.war
   become: yes
