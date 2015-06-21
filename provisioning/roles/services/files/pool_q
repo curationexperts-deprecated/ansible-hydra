@@ -22,7 +22,7 @@ OUTLOG=$APP_ROOT/log/$NAME.stdout.log
 ERRLOG=$APP_ROOT/log/$NAME.stderr.log
 ENV={{ rails_env }}
 PATH=$PATH:/usr/local/bin
-USER={{ deploy_user }}
+USER={{ capistrano_user }}
 
 # wait for the process to actually be dead
 function anywait {
