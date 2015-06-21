@@ -40,7 +40,3 @@
 - name: install bundler
   sudo: yes
   gem: name=bundler user_install=no state=present
-
-- name: install passenger
-  sudo: yes
-  gem: name=passenger user_install=no state=present
