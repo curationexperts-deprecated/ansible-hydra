@@ -1,7 +1,4 @@
 ---
-# install database, dev library, and python psql adapter
-
-#Tasks:
 - name: install postgresql packages
   apt: name={{ item }} state=present
   sudo: yes
@@ -16,3 +13,6 @@
   - create database
   - add pg hydra user
 
+- meta: flush_handlers
+
+# installs database, dev library, and python psql adapter
