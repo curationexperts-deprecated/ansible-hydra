@@ -1,4 +1,4 @@
 ---
 install_path: /opt/install
-deploy_user: vagrant
-deploy_group: vagrant
+deploy_user: deploy
+deploy_group: deploy
