@@ -2,3 +2,5 @@
 install_path: /opt/install
 install_user: install
 install_group: install
+capistrano_user: deploy
+capistrano_group: deploy
