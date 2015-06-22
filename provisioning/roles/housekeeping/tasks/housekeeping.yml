@@ -6,11 +6,9 @@
   apt: upgrade=full
 
 - name: create install group
-  sudo: yes
   group: name={{ install_group }} state=present
 
 - name: create install user
-  sudo: yes
   user: name={{ install_user }} group={{ install_group }} shell=/bin/bash createhome=yes state=present
 
 - name: chown /opt
@@ -20,20 +18,17 @@
   file: owner={{ install_user }} group={{ install_group }} state=directory path=/opt/install
 
 - name: create cap group
-  sudo: yes
   group: name={{ capistrano_group }} state=present
 
 - name: create cap user
-  sudo: yes
   user: name={{ capistrano_user }} group={{ capistrano_group }} shell=/bin/bash createhome=yes state=present
 
-- name: create cap shared directories
-  sudo: yes
+- name: create cap directories
   file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }} 
   with_items:
     - /opt/sufia/shared/config
     - /opt/sufia/releases
+    - /home/{{ capistrano_user }}/.ssh
 
 - name: add keys for capistrano user
-  sudo: yes
   copy: src=team_keys dest=/home/{{ capistrano_user }}/.ssh/authorized_keys owner={{ capistrano_user }} group={{ capistrano_group }} mode=0644
