@@ -1,8 +1,0 @@
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: hydra
-  pool: 5
-  username: pg-hydra
-  password: pg-hydra-pass
-

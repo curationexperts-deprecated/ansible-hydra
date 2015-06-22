@@ -2,7 +2,7 @@
 - name: set postgres password
   sudo: yes
   sudo_user: postgres
-  postgresql_user: name=postgres password=newpass
+  postgresql_user: name=postgres password={{ pg_pass }}
 
 - name: configure md5 security
   sudo: yes
@@ -13,9 +13,9 @@
   service: name=postgresql enabled=yes state=restarted
 
 - name: create database
-  postgresql_db: name=hydra state=present login_user=postgres login_password=newpass
+  postgresql_db: name={{ hydra_db }} state=present login_user=postgres login_password={{ pg_pass }}
 
 - name: add pg hydra user
-  sudo: yes
-  sudo_user: postgres
-  postgresql_user: db=hydra name=pg-hydra password=pg-hydra-pass priv=ALL state=present login_user=postgres login_password=newpass
+#  sudo: yes
+#  sudo_user: postgres
+  postgresql_user: db={{ hydra_db }} name={{ hydra_pg_user }} password={{ hydra_pg_pass }} priv=ALL state=present login_user=postgres login_password={{ pg_pass }}
