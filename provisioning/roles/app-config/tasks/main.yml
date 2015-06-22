@@ -6,10 +6,6 @@
 - name: create cap user
   sudo: yes
   user: name={{ capistrano_user }} group={{ capistrano_group }} shell=/bin/bash createhome=yes state=present
-  register: user
-  
-- name: show content of user var
-  debug: var=user
 
 - name: create cap shared directories
   sudo: yes
