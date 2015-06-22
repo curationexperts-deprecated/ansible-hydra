@@ -1,7 +1,27 @@
 ---
+- name: update ssh config
+  sudo: yes
+  template: src=ssh_config dest=/etc/ssh/sshd_config backup=yes
+  notify:
+  - restart ssh service
+
+- meta: flush_handlers
+
+- name: add log rotation for production logs
+  sudo: yes
+  template: src=logrotate-rails.j2 dest=/etc/logrotate.d/rails
+    
+- name: add log rotation for catalina.out (tomcat/fedora/solr logs)
+  sudo: yes
+  template: src=logrotate-tomcat dest=/etc/logrotate.d/tomcat7 backup=yes
+
 - name: create apache vhosts file
   sudo: yes
-  template: src=sufia.j2 dest=/etc/apache2/conf-available/sufia.conf owner=apache2 group=apache2 backup=no
+  template: src=apache_config.j2 dest=/etc/apache2/conf-available/{{ project_name }}.conf owner=root group=root backup=no
+
+- name: symlink apache config
+  sudo: yes
+  file: src=/etc/apache2/conf-available/{{ project_name }}.conf dest=/etc/apache2/conf-enabled/{{ project_name }}.conf state=link
 
 # use capistrano to deploy the code, migrate the database, restart apache
 # but how to generate secrets for the config files that need them???

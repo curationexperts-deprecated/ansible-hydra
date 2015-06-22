@@ -1,0 +1,4 @@
+---
+- name: restart sshd
+  sudo: yes
+  service: name=sshd enabled=yes state=restarted 
