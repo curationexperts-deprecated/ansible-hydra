@@ -12,7 +12,7 @@
   sudo: yes
   service: name=postgresql enabled=yes state=restarted
 
-- name: create database
+- name: create pg hydra database
   postgresql_db: name={{ hydra_db }} state=present login_user=postgres login_password={{ pg_pass }}
 
 - name: add pg hydra user
