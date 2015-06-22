@@ -1,0 +1,8 @@
+/opt/{ project_name }/shared/log/production.log {
+    copytruncate
+    daily
+    rotate 30
+    compress
+    missingok
+    create 0644 { capistrano_user } { capistrano_group }
+}

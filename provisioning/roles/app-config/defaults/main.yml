@@ -1,0 +1,5 @@
+---
+project_name: sufia
+capistrano_user: deploy
+capistrano_group: deploy
+
