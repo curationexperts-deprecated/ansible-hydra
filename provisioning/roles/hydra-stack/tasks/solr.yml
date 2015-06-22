@@ -64,7 +64,3 @@
 - name: symlink solr xml file to tomcat
   sudo: yes
   file: src=/opt/solr/{{ solr_context }}.xml dest=/etc/tomcat7/Catalina/localhost/{{ solr_context }}.xml state=link
-
-- name: restart tomcat
-  sudo: yes
-  service: name=tomcat7 enabled=yes state=restarted
