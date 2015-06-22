@@ -59,11 +59,11 @@
 
 - name: create solr xml file
   sudo: yes
-  template: src=hydra_xml.j2 dest=/opt/solr/hydra.xml group=tomcat7 owner=tomcat7
+  template: src=hydra_xml.j2 dest=/opt/solr/{{ solr_context }}.xml group=tomcat7 owner=tomcat7
 
 - name: symlink solr xml file to tomcat
   sudo: yes
-  file: src=/opt/solr/hydra.xml dest=/etc/tomcat7/Catalina/localhost/hydra.xml state=link
+  file: src=/opt/solr/{{ solr_context }}.xml dest=/etc/tomcat7/Catalina/localhost/{{ solr_context }}.xml state=link
 
 - name: restart tomcat
   sudo: yes
