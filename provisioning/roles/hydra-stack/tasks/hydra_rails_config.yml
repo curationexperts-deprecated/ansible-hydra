@@ -1,0 +1,7 @@
+---
+- name: create shared config files
+  sudo: yes
+  template: src={{ item }} dest=/opt/sufia/shared/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=yes
+  with_items:
+    - fedora.yml
+    - solr.yml
