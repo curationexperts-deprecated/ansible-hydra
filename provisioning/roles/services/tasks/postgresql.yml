@@ -10,7 +10,7 @@
   - set postgres password
   - configure md5 security
   - restart postgres server
-  - create database
+  - create pg hydra database
   - add pg hydra user
 
 - meta: flush_handlers
