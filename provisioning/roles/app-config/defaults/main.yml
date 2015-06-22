@@ -1,5 +1,0 @@
----
-capistrano_user: deploy
-capistrano_group: deploy
-#deploy_user: deploy
-#deploy_group: deploy
