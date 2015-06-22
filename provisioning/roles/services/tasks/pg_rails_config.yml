@@ -1,4 +1,0 @@
----
-- name: create rails database.yml
-  sudo: yes
-  template: src=rails_database_yml.j2 dest=/opt/sufia/shared/config/template_db.yml owner={{ capistrano_user }} group={{ capistrano_group }} backup=no
