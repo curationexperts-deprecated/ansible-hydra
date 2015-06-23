@@ -2,4 +2,4 @@
 project_name: sufia
 capistrano_user: deploy
 capistrano_group: deploy
-
+server_name: 127.0.0.1
