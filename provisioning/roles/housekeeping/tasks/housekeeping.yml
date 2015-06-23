@@ -26,7 +26,7 @@
 - name: create cap directories
   file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }} 
   with_items:
-    - /opt/{{ project_name }}/shared/config
+    - /opt/{{ project_name }}/shared/config/initializers
     - /opt/{{ project_name }}/releases
     - /home/{{ capistrano_user }}/.ssh
 
