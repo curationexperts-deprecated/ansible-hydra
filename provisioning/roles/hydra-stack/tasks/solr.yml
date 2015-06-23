@@ -39,7 +39,7 @@
 
 - name: copy over example collection
   sudo: yes
-  command: cp -r {{ install_path }}/solr-4.10.3/example/solr/collection1 /opt/solr/
+  command: cp -r --remove-destination {{ install_path }}/solr-4.10.3/example/solr/collection1 /opt/solr/
 
 - name: copy logging jars
   sudo: yes
