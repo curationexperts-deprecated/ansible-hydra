@@ -4,4 +4,4 @@ install_user: install
 install_group: install
 capistrano_user: deploy
 capistrano_group: deploy
-become_user: deploy
+project_name: sufia-project

@@ -26,8 +26,8 @@
 - name: create cap directories
   file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }} 
   with_items:
-    - /opt/sufia/shared/config
-    - /opt/sufia/releases
+    - /opt/{{ project_name }}/shared/config
+    - /opt/{{ project_name }}/releases
     - /home/{{ capistrano_user }}/.ssh
 
 - name: add keys for capistrano user
