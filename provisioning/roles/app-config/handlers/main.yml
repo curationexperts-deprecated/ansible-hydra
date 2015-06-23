@@ -1,4 +1,8 @@
 ---
 - name: restart ssh service
   sudo: yes
-  service: name=ssh state=restarted 
+  command: service ssh restart
+  # service module has a bug related to ssh
+  # see http://stackoverflow.com/questions/30162528/ansible-service-restart-failed
+  # will be fixed in ansible v 2.0
+  #service: name=ssh state=restarted 
