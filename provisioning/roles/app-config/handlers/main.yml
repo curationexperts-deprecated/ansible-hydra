@@ -1,4 +1,4 @@
 ---
 - name: restart ssh service
   sudo: yes
-  service: name=sshd enabled=yes state=restarted 
+  service: name=ssh enabled=yes state=restarted 
