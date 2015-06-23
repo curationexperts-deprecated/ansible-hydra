@@ -1,7 +1,7 @@
 ---
-- name: create shared config files
+- name: create shared fedora and solr configs
   sudo: yes
-  template: src={{ item }} dest=/opt/sufia/shared/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=yes
+  template: src={{ item }}.j2 dest=/opt/sufia/shared/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=yes
   with_items:
     - fedora.yml
-    - solr_yml.j2
+    - solr.yml
