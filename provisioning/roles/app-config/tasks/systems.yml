@@ -1,0 +1,42 @@
+---
+- name: update ssh config
+  template: src=ssh_config dest=/etc/ssh/sshd_config backup=yes
+  notify:
+  - restart ssh service
+
+- meta: flush_handlers
+
+- name: add log rotation for production logs
+  template: src=logrotate-rails.j2 dest=/etc/logrotate.d/rails
+    
+- name: add log rotation for catalina.out (tomcat/fedora/solr logs)
+  template: src=logrotate-tomcat dest=/etc/logrotate.d/tomcat7 backup=yes
+
+# use capistrano to deploy the code, migrate the database, restart apache
+# but how to generate secrets for the config files that need them???
+
+#- name: generate a secret
+  # run rake secret, direct output to environment variable SECRET_KEY_BASE
+  
+  # https://github.com/acozine/sufiafc4
+  # git: repo=https://github.com/curationexperts/mira.git clone=yes dest=/opt/mira 
+  # git: repo=https://github.com/chemheritage/chf-sufia.git clone=yes dest=/opt/chf-sufia 
+
+#TODO: manage env variables for this separately
+#- name: make sure blacklight has a key
+#  sudo: no
+#  remote_user: "{{ deploy_user }}"
+#  copy: src=secrets.yml dest={{ project_dir }}/config/secrets.yml
+
+# note db:migrate is natively idempotent
+
+#- name: dbmigrate
+#  sudo: no
+#  remote_user: "{{ deploy_user }}"
+#  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV={{ rails_env }}
+
+#- name: migrate test db in development installs
+#  sudo: no
+#  remote_user: "{{ deploy_user }}"
+#  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV=test
+#  when: rails_env == "development"
