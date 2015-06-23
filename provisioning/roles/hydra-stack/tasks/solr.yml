@@ -64,3 +64,11 @@
 - name: symlink solr xml file to tomcat
   sudo: yes
   file: src=/opt/solr/{{ solr_context }}.xml dest=/etc/tomcat7/Catalina/localhost/{{ solr_context }}.xml state=link
+
+- name: symlink schema from code to solr
+  sudo: yes
+  file: src=/opt/{{ project_name }}/current/solr_conf/conf/schema.xml dest=/opt/solr/collection1/conf/schema.xml state=link force=yes
+
+- name: symlink solrconfig from code to solr
+  sudo: yes
+  file: src=/opt/{{ project_name }}/current/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes
