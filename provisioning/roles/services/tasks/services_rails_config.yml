@@ -6,3 +6,4 @@
       - database.yml
       - redis.yml
       - resque-pool.yml
+      - secrets.yml

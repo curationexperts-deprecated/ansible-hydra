@@ -3,3 +3,5 @@ pg_pass: f3d4j8k9
 hydra_db: hydra
 hydra_pg_user: pg-hydra
 hydra_pg_pass: gr0k_ansible
+# paste the results of "rake secret" or "openssl rand -base64 64" here
+rails_secret_key_base: 
