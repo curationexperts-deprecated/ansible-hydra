@@ -1,7 +1,7 @@
 ---
 - name: create apache vhosts file
-  template: src=apache_config.j2 dest=/etc/apache2/conf-available/{{ project_name }}.conf owner=root group=root backup=no
+  template: src=apache_config.j2 dest=/etc/apache2/sites-available/{{ project_name }}.conf owner=root group=root backup=no
 
 - name: symlink apache config
-  file: src=/etc/apache2/conf-available/{{ project_name }}.conf dest=/etc/apache2/conf-enabled/{{ project_name }}.conf state=link
+  file: src=/etc/apache2/sites-available/{{ project_name }}.conf dest=/etc/apache2/sites-enabled/{{ project_name }}.conf state=link
 
