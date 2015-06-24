@@ -5,3 +5,4 @@
   with_items:
     - fedora.yml
     - solr.yml
+    - blacklight.yml
