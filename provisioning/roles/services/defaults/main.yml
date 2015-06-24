@@ -3,4 +3,6 @@ install_path: /opt/install
 install_user: install
 install_group: install
 become_user: install
+capistrano_user: deploy
 project_name: sufia-project
+rails_env: production
