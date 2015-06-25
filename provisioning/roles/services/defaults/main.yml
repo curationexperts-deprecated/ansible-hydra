@@ -6,3 +6,5 @@ become_user: install
 capistrano_user: deploy
 project_name: sufia-project
 rails_env: production
+rails_secret_key_base: eaa4e23ab500b77c8c2064780b4f41b83b0b0e7ec13036d55b72d87d8cc8d9ec9183230b7b3ccab7bc6387c73317b0fbb3c637f98b6ad265b99e7304b5e47292
+
