@@ -15,12 +15,15 @@
   - add pg hydra user
 
 - name: create pg_backups directory
+  sudo: yes
   file: owner=postgres group=postgres state=directory path=/opt/pg_backups
 
 - name: add pg_backups script
+  sudo: yes
   template: src=pg_backups.j2 dest=/opt/pg_backups/pg_daily_double owner=root group=root mode=0755
 
 - name: add pg_backups cron job
+  sudo: yes
   cron: name="backup pg db" user=postgres job="bash /opt/pg_backups/pg_daily_double" minute="0" hour="1" state=present
 
 - meta: flush_handlers
