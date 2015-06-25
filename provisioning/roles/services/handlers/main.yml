@@ -16,6 +16,4 @@
   postgresql_db: name={{ hydra_db }} state=present login_user=postgres login_password={{ pg_pass }}
 
 - name: add pg hydra user
-#  sudo: yes
-#  sudo_user: postgres
   postgresql_user: db={{ hydra_db }} name={{ hydra_pg_user }} password={{ hydra_pg_pass }} priv=ALL state=present login_user=postgres login_password={{ pg_pass }}
