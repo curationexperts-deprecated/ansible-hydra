@@ -8,10 +8,14 @@
 - name: install PPA for ec2-consistent-snapshot
   apt_repository: repo='ppa:alestic'
   
-- name: update apt cache for PPA
+- name: install PPA for ec2-api-tools
+  apt_repository: repo='ppa:alestic'
+
+- name: update apt cache for PPAs
   apt: update_cache=yes
   
 - name: install ec2-consistent-snapshot
   apt: name=ec2-consistent-snapshot state=present
 
-  
+- name: install ec2-api-tools
+  apt: name=ec2-api-tools state=present
