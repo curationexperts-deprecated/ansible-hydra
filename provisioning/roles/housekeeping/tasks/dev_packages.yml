@@ -28,3 +28,4 @@
     - libcurl4-openssl-dev
     - libxvidcore-dev
     - redis-server
+    - xfsprogs
