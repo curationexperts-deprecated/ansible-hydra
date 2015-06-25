@@ -9,7 +9,7 @@
   apt_repository: repo='ppa:alestic'
   
 - name: install PPA for ec2-api-tools
-  apt_repository: repo='ppa:alestic'
+  apt_repository: repo='ppa:awstools-dev/awstools'
 
 - name: update apt cache for PPAs
   apt: update_cache=yes
