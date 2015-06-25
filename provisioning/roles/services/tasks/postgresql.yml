@@ -1,4 +1,5 @@
 ---
+# installs database, dev library, and python psql adapter
 - name: install postgresql packages
   apt: name={{ item }} state=present
   sudo: yes
@@ -16,6 +17,11 @@
 - name: create pg_backups directory
   file: owner=postgres group=postgres state=directory path=/opt/pg_backups
 
+- name: add pg_backups script
+  template: src=pg_backups.j2 dest=/opt/pg_backups/pg_daily_double owner=root group=root mode=0755
+
+- name: add pg_backups cron job
+  cron: name="backup pg db" user=postgres job="bash /opt/pg_backups/pg_daily_double" minute="0" hour="1" state=present
+
 - meta: flush_handlers
 
-# installs database, dev library, and python psql adapter
