@@ -1,0 +1,44 @@
+#!/bin/bash
+# Script to delete snapshots based on date
+# Adapted from a script written by Star Dot Hosting
+# www.stardothosting.com
+
+# Establishes necessary variables for ec2-api-tools
+export EC2_HOME=/usr
+
+# Provides ec2 credentials 
+my_access_key=$(cat /home/{{ deploy_user }}/ec2/delete_key)
+my_secret_key=$(cat /home/{{ deploy_user }}/ec2/delete_secret)
+
+# Creates a cutoff date - currently 1 month ago - in Epoch time
+cutoff_date_1m=`date -d "-1 month" +%Y-%m-%d`
+echo "Today is" `date +%Y-%m-%d`
+echo "The cutoff date is" $cutoff_date_1m
+echo "Reviewing current snapshots . . . "
+
+# Creates snap_info.txt with a list of snapshots with "Prod" in the description
+ec2-describe-snapshots -O $my_access_key -W $my_secret_key --filter "description=*{{ backup_key }}*" > /tmp/snap_info.txt 2>&1
+
+# Loops through the snap_info.txt file
+while read line
+
+do
+#       pulls the snapshot id (2nd element in the array) from the file
+                snapshot_name=`echo "$line" | awk '{print $2}'`
+
+#       pulls the snapshot timestamp in the format YYYY-MM-DD from the file
+                snapshot_date=`echo "$line" | awk '{print $5}' | awk -F "T" '{printf "%s", $1}'`
+                echo "Snapshot $snapshot_name is dated  $snapshot_date"
+
+#       compares the snapshot timestamp to the cutoff timestamp
+                if [[ $snapshot_date < $cutoff_date_1m ]];
+                        then
+#       deletes snapshots older than the cutoff
+                                echo "Deleting" $snapshot_name "because it's more than 1 month old"
+                                ec2-delete-snapshot -O $my_access_key -W $my_secret_key $snapshot_name
+                        else
+#       retains more recent snapshots
+                                echo "Keeping snapshot $snapshot_name because it's less than 1 month old"
+                fi
+#       provides pointer to the snap_info.txt file
+done < /tmp/snap_info.txt
