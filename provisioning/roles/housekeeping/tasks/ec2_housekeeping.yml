@@ -11,7 +11,7 @@
 - name: update apt cache for PPA
   apt: update_cache=yes
   
-- name: install ec2-consistent-snapshots
-  apt: name=ec2-consistent-snapshots state=present
+- name: install ec2-consistent-snapshot
+  apt: name=ec2-consistent-snapshot state=present
 
   
