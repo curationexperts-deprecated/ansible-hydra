@@ -1,7 +1,0 @@
----
-- name: format volume for /opt
-  filesystem: fstype=xfs dev=/dev/xvdf
-
-- name: mount volume at /opt
-  mount: name=/opt src=/dev/xvdf fstype=xfs state=present
-

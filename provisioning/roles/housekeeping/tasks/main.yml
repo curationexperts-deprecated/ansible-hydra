@@ -1,4 +1,4 @@
 ---
 - include: dev_packages.yml
-- include: volumes.yml
+- include: ec2_housekeeping.yml
 - include: housekeeping.yml
