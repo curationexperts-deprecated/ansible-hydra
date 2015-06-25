@@ -5,7 +5,7 @@
 - name: mount volume at /opt
   mount: name=/opt src=/dev/xvdf fstype=xfs state=mounted
 
-- name: install PPA for ec2-consistent-snapshots
+- name: install PPA for ec2-consistent-snapshot
   apt_repository: repo='ppa:alestic'
   
 - name: update apt cache for PPA
