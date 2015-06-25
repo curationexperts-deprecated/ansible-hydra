@@ -1,0 +1,62 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+      - include: ec2_variables.yml
+  tasks: 
+
+  - name: provision an ec2 instance
+    ec2:
+      key_name: {{ ec2_key }} 
+      region: {{ ec2_region }}
+      aws_access_key: {{ ec2_access_key }}
+      aws_secret_key: {{ ec2_secret_key }}
+      group_id: {{ ec2_security_group }}
+      instance_type: {{ ec2_instance_type }}
+      image: {{ ec2_image }}
+      wait: true
+      count: 1
+      state: present
+      count_tag:
+        Name: ansible demo
+      instance_tags: 
+        Name: ansible demo 
+    register: ec2
+
+  - name: check ec2 variable
+    debug: var=ec2
+
+  - name: attach volume to new instance
+    ec2_vol:
+        instance: "{{ ec2.instance_ids }}"
+        region: {{ ec2_region }}
+        device_name: /dev/sdf
+        volume_size: 40
+        aws_access_key: {{ ec2_access_key }}
+        aws_secret_key: {{ ec2_secret_key }}
+    register: ec2_vol
+
+  - name: check ec2_vol variable
+    debug: var=ec2_vol
+
+  # first stab at dynamic inventory management on ec2
+  # finishing this is out of scope for current project
+  - name: Add all instance public IPs to host group
+    add_host: hostname={{ item.public_ip }} groups=ec2hosts
+    with_items: ec2.instances
+
+  - name: give ssh time to come up
+    pause: minutes=2
+
+- hosts: ec2hosts
+  name: configuration
+  user: ubuntu
+  gather_facts: true   
+  roles:
+    - { role: housekeeping, sudo: yes }
+    - { role: ruby }
+    - { role: hydra-stack }
+    - { role: services }
+    - { role: passenger, sudo: yes }
+    - { role: app-config, sudo: yes }
+    - { role: ec2, sudo: yes }
