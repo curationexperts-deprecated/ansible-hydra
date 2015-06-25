@@ -1,2 +1,2 @@
 #! /bin/bash
-ec2-consistent-snapshot --description {{ backup_key }}_opt --aws-credentials-file /home/{{ deploy_user }}/ec2/backup_creds --freeze-filesystem /opt {{ ec2_vol.results.volume_id }}
+ec2-consistent-snapshot --description {{ backup_key }}_opt --aws-credentials-file /home/{{ deploy_user }}/ec2/backup_creds --freeze-filesystem /opt {{ ec2_vol.volume_id }}
