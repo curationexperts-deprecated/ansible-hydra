@@ -1,8 +1,9 @@
 ---
 ec2_key: devtest 
-ec2_region: us-east-1
 ec2_access_key: AKIAJCQMPED2B2BQWQMQ
 ec2_secret_key: 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
 ec2_security_group: sg-d1242cb5
-ec2_instance_type: m3.medium
-ec2_image: ami-b9c525d2
+# override default variables here:
+# ec2_region: # not us-east-1
+# ec2_instance_type: # not m3.medium
+# ec2_image: # not ami-b9c525d2
