@@ -1,4 +1,6 @@
-This ansible project was created by Data Curation Experts and sponsored by Chemical Heritage Foundation. It builds a production-style hydra head on an Ubuntu 14.04 Amazon EC2 instance. 
+This ansible project was created by Data Curation Experts and sponsored by Chemical Heritage Foundation. It builds a production-style hydra head on an Ubuntu 14.04 Amazon EC2 instance.
+
+To use this project, you must have Ansible installed. See http://docs.ansible.com/intro_installation.html for instructions.
 
 To create an ec2 instance:
 1. add your AWS credentials in the vars/main.yml files in the launch_ec2 and ec2 roles
