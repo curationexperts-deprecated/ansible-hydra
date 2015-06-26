@@ -25,7 +25,8 @@
     - /home/{{ capistrano_user }}/.ssh
 
 - name: add keys for capistrano user
-  authorized_key: user={{ capistrano_user }} key=
-  https://github.com/hackmastera.keys
-  https://github.com/acozine.keys
+  authorized_key: user={{ capistrano_user }} key="{{ item }}" 
+  with_items:
+      - https://github.com/hackmastera.keys
+      - https://github.com/acozine.keys
   #copy: src=team_keys dest=/home/{{ capistrano_user }}/.ssh/authorized_keys owner={{ capistrano_user }} group={{ capistrano_group }} mode=0644
