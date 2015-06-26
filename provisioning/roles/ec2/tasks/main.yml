@@ -18,7 +18,6 @@
   template: src=snapshot_creds.j2 dest=/etc/ec2-backups/snapshot_creds owner=root group=root mode=0600
 
 - name: add snapshot create (backup) script
-  sudo: yes
   template: src=snapshot_backup.j2 dest=/etc/ec2-backups/backup_opt.sh owner=root group=root mode=0744
 
 - name: add snapshot cleanup cron job
