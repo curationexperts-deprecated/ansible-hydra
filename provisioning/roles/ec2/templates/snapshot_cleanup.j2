@@ -7,8 +7,8 @@
 export EC2_HOME=/usr
 
 # Provides ec2 credentials 
-my_access_key=$(cat /home/{{ deploy_user }}/ec2/delete_key)
-my_secret_key=$(cat /home/{{ deploy_user }}/ec2/delete_secret)
+my_access_key=$(cat /etc/ec2-backups/delete_key)
+my_secret_key=$(cat /etc/ec2-backups/delete_secret)
 
 # Creates a cutoff date - currently 1 month ago - in Epoch time
 cutoff_date_1m=`date -d "-1 month" +%Y-%m-%d`
@@ -17,7 +17,7 @@ echo "The cutoff date is" $cutoff_date_1m
 echo "Reviewing current snapshots . . . "
 
 # Creates snap_info.txt with a list of snapshots with "Prod" in the description
-ec2-describe-snapshots -O $my_access_key -W $my_secret_key --filter "description=*{{ backup_key }}*" > /tmp/snap_info.txt 2>&1
+ec2-describe-snapshots -O $my_access_key -W $my_secret_key --filter "description=*{{ backup_name }}*" > /tmp/snap_info.txt 2>&1
 
 # Loops through the snap_info.txt file
 while read line

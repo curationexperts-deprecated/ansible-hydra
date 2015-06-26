@@ -1,10 +1,4 @@
 ---
-key_name: devtest 
-region: us-east-1
-aws_access_key: AKIAJCQMPED2B2BQWQMQ
-aws_secret_key: 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
-group_id: sg-d1242cb5
-instance_type: m3.medium
-image: ami-b9c525d2
-deploy_user: deploy
-backup_key: chf
+ec2_access_key: AKIAJCQMPED2B2BQWQMQ
+ec2_secret_key: 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
+backup_name: chf
