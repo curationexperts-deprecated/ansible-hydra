@@ -6,4 +6,4 @@ hydra_pg_pass: gr0k_ansible
 # for anything other than temporary use
 # generate a secret key with "rake secret" or "openssl rand -base64 64"
 # use it as the rails_secret_key_base here
-# rails_secret_key_base: 
+# rails_secret_key_base: your_random_string_here_xxxxxxxxx
