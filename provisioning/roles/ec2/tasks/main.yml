@@ -3,25 +3,26 @@
 # add backup and cleanup scripts to crontab
 # be sure backup_opt runs at least an hour after the postgres backups
 - name: add ec2 directory
-  file: owner={{ deploy_user }} group={{ deploy_user }} path=/home/{{ deploy_user }}/ec2 state=directory
+  file: owner=root group=root path=/etc/ec2-backups state=directory
 
 - name: add snapshot delete key
-  template: src=delete_key.j2 dest=/home/{{ deploy_user }}/ec2/delete_key owner=root group=root mode=0600
+  template: src=delete_key.j2 dest=/etc/ec2-backups/delete_key owner=root group=root mode=0600
 
 - name: add snapshot delete secret
-  template: src=delete_secret.j2 dest=/home/{{ deploy_user }}/ec2/delete_secret owner=root group=root mode=0600
+  template: src=delete_secret.j2 dest=/etc/ec2-backups/delete_secret owner=root group=root mode=0600
 
 - name: add snapshot cleanup (delete) script
-  template: src=snapshot_cleanup.j2 dest=/home/{{ deploy_user }}/ec2/clean_up_snapshots owner=root group=root mode=0744
-
-- name: add snapshot cleanup cron job
-  cron: name="delete ec2 old snapshots" user=root job="bash /home/{{ deploy_user }}/ec2/clean_up_snapshots" minute="5" hour="2" state=present
+  template: src=snapshot_cleanup.j2 dest=/etc/ec2-backups/clean_up_snapshots.sh owner=root group=root mode=0744
 
 - name: add snapshot create credentials
-  template: src=snapshot_creds.j2 dest=/home/{{ deploy_user }}/ec2/backup_creds owner=root group=root mode=0600
+  template: src=snapshot_creds.j2 dest=/etc/ec2-backups/backup_creds owner=root group=root mode=0600
 
 - name: add snapshot create (backup) script
-  template: src=snapshot_backup.j2 dest=dest=/home/{{ deploy_user }}/ec2/backup_opt owner=root group=root mode=0744
+  sudo: yes
+  template: src=snapshot_backup.j2 dest=/etc/ec2-backups/backup_opt.sh owner=root group=root mode=0744
 
-- name: add snapshot createp cron job
-  cron: name="ec2 snapshot backup" user=root job="bash /home/{{ deploy_user }}/ec2/backup_opt" minute="15" hour="1" state=present
+- name: add snapshot cleanup cron job
+  cron: name="delete ec2 old snapshots" user=root job="bash /etc/ec2-backups/clean_up_snapshots" minute="5" hour="2" state=present
+
+- name: add snapshot create cron job
+  cron: name="ec2 snapshot backup" user=root job="bash /etc/ec2-backups/backup_opt" minute="15" hour="1" state=present
