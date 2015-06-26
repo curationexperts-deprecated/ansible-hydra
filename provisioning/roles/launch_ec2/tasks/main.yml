@@ -16,9 +16,6 @@
       Name: ansible demo 
   register: ec2
 
-- name: check ec2 variable
-  debug: var=ec2
-
 - name: attach volume to new instance
   ec2_vol:
     instance: "{{ ec2.instance_ids }}"
@@ -29,9 +26,6 @@
     aws_secret_key: "{{ ec2_secret_key }}"
   register: ec2_vol
 
-- name: check ec2_vol variable
-  debug: var=ec2_vol
-
   # first stab at dynamic inventory management on ec2
   # finishing this is out of scope for current project
 - name: Add all instance public IPs to host group
@@ -40,16 +34,3 @@
 
 - name: give ssh time to come up
   pause: minutes=2
-
-#- hosts: ec2hosts
-#  name: configuration
-#  user: ubuntu
-#  gather_facts: true   
-#  roles:
-#    - { role: housekeeping, sudo: yes }
-#    - { role: ruby }
-#    - { role: hydra-stack }
-#    - { role: services }
-#    - { role: passenger, sudo: yes }
-#    - { role: app-config, sudo: yes }
-#    - { role: ec2, sudo: yes }
