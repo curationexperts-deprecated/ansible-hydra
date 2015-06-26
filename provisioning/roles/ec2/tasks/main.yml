@@ -15,7 +15,7 @@
   template: src=snapshot_cleanup.j2 dest=/etc/ec2-backups/clean_up_snapshots.sh owner=root group=root mode=0744
 
 - name: add snapshot create credentials
-  template: src=snapshot_creds.j2 dest=/etc/ec2-backups/backup_creds owner=root group=root mode=0600
+  template: src=snapshot_creds.j2 dest=/etc/ec2-backups/snapshot_creds owner=root group=root mode=0600
 
 - name: add snapshot create (backup) script
   sudo: yes
