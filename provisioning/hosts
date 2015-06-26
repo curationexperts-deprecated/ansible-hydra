@@ -1,0 +1,26 @@
+# Ansible Inventory
+
+# sample inventory
+
+[remote:children]
+production
+staging
+
+[servers:children]
+production
+staging
+local
+
+[production]
+www.myproject.com nickname=production vm=0 branch=master
+
+[staging]
+staging.myproject.com nickname=staging vm=0 branch=master
+
+[local]
+local.myproject.com nickname=local vm=1 branch=develop
+
+# EC2 boxes
+[ec2hosts]	
+
+
