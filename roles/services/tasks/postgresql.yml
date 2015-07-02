@@ -24,7 +24,7 @@
 
 - name: add pg_backups cron job
   sudo: yes
-  cron: name="backup pg db" user=postgres job="bash /opt/pg_backups/pg_daily_double" minute="0" hour="1" state=present
+  cron: name="backup pg db" user=postgres job="/opt/pg_backups/pg_daily_double" minute="0" hour="1" state=present
 
 - meta: flush_handlers
 
