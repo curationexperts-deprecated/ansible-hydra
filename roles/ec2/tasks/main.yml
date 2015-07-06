@@ -21,7 +21,7 @@
   template: src=snapshot_backup.j2 dest=/etc/ec2-backups/backup_opt.sh owner=root group=root mode=0744
 
 - name: add snapshot cleanup cron job
-  cron: name="delete ec2 old snapshots" user=root job="/etc/ec2-backups/clean_up_snapshots" minute="5" hour="2" state=present
+  cron: name="delete ec2 old snapshots" user=root job="/etc/ec2-backups/clean_up_snapshots.sh" minute="5" hour="2" state=present
 
 - name: add snapshot create cron job
-  cron: name="ec2 snapshot backup" user=root job="/etc/ec2-backups/backup_opt" minute="15" hour="1" state=present
+  cron: name="ec2 snapshot backup" user=root job="/etc/ec2-backups/backup_opt.sh" minute="15" hour="1" state=present
