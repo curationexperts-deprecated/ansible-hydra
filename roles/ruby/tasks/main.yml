@@ -12,7 +12,7 @@
 
 - name: download ruby
   become: yes
-  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/ruby-2.2.2.tar.gz
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz sha256sum=5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44 owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/ruby-2.2.2.tar.gz
   
 - name: unzip ruby file
   become: yes
