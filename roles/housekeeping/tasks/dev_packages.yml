@@ -6,7 +6,7 @@
   apt: upgrade=full
 
 - name: install dev tools and libraries
-  apt: name={{ item}} state=latest
+  apt: name={{ item }} state=latest
   with_items:
     - build-essential
     - git
