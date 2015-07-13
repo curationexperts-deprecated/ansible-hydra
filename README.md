@@ -1,10 +1,13 @@
 This Ansible project was created by Data Curation Experts for the Chemical Heritage Foundation. It builds a production-style Hydra head on an Ubuntu 14.04 Amazon EC2 instance.
 
 ## Prerequisites
-Before you can use this project, you must [install Ansible](http://docs.ansible.com/intro_installation.html).
+[Ansible](http://docs.ansible.com/intro_installation.html).
+
+## AWS / EC2 setup
+TODO
 
 ## Execution
-To create an ec2 instance for an organization other than CHF:
+To create an ec2 instance:
 
 1. Copy group_vars/sample_all to group_vars/all.
 2. Add your organization's AWS credentials there.
