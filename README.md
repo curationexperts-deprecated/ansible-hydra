@@ -24,3 +24,5 @@ To use this project with [Vagrant](http://docs.vagrantup.com/v2/):
 4. clone this project as the `provisioning` sub-directory of your Vagrant project  
 5. run `vagrant up`
 
+The scripts will by default launch an instance tagged 'staging'. If you want a different tag, override the 'instance_type' variable either in a file or directly from the command line:
+`ansible-playbook -i hosts ec2.yml --private-key /path/to/your/keypair.pem --extra-vars "instance_type=production"`

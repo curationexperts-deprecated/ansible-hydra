@@ -11,9 +11,9 @@
     count: 1
     state: present
     count_tag:
-      Name: ansible demo
+      Name: "{{ aws_tag }}"
     instance_tags: 
-      Name: ansible demo 
+      Name: "{{ aws_tag }}"
   register: ec2
 
 - name: attach volume to new instance
