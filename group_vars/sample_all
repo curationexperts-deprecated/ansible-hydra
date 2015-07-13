@@ -1,0 +1,23 @@
+---
+# Copy this file to group_vars/all and change the values to reflect your own keys.
+#   It is recommended you protect group_vars/all with ansible-vault
+# used in ec2 role
+backup_access_key: my_backup_access_key
+backup_secret_key: my_backup_secret_key
+backup_name: my_backup
+# used in launch_ec2 role
+ec2_key: my_ec2_key
+ec2_access_key: my_ec2_access_key
+ec2_secret_key: my_ec2_secret_key
+ec2_security_group: my_ec2_security_group
+# used in housekeeping role
+#keys_to_add:
+# used in services role
+pg_pass: my_pg_pass
+hydra_db: my_hydra_db
+hydra_pg_user: my_hydra_pg_user
+hydra_pg_pass: my_hydra_pg_pass
+# for anything other than temporary use
+# generate a secret key with "rake secret" or "openssl rand -base64 64"
+# use it as the rails_secret_key_base here
+# rails_secret_key_base: your_random_string_here_xxxxxxxxx

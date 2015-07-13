@@ -24,9 +24,8 @@
     - /opt/{{ project_name }}/releases
     - /home/{{ capistrano_user }}/.ssh
 
-- name: add keys for capistrano user
-  authorized_key: user={{ capistrano_user }} key="{{ item }}" 
-  with_items:
-      - https://github.com/hackmastera.keys
-      - https://github.com/acozine.keys
-  #copy: src=team_keys dest=/home/{{ capistrano_user }}/.ssh/authorized_keys owner={{ capistrano_user }} group={{ capistrano_group }} mode=0644
+- name: add keys for capistrano, ubuntu users
+  authorized_key: user={{ item[0] }} key={{ item[1] }} exclusive=no state=present
+  with_nested:
+    - [ "{{ capistrano_user }}", 'ubuntu' ]
+    - "{{ keys_to_add }}"
