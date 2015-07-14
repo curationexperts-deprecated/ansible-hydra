@@ -1,7 +1,7 @@
 ---
 - name: download fedora
   become: yes
-  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fcrepo-webapp-4.1.0.war
+  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fcrepo-webapp-4.1.0.war timeout=100
 
 - name: make fedora data dir
   file: owner=tomcat7 group=tomcat7 state=directory path=/opt/fedora-data
