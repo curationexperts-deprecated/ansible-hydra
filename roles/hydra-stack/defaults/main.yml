@@ -4,5 +4,6 @@ install_user: install
 install_group: install
 become_user: install
 solr_context: hydra
+base_path: prod
 # obsolete?
 # project_name: sufia
