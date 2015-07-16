@@ -17,9 +17,9 @@
 
 - name: copy fits
   sudo: yes
-  shell: cp -r {{ install_path }}/fits-0.8.4/* /usr/local/bin/
+  shell: cp -r {{ install_path }}/fits-0.8.4 /usr/local/bin/
 
 - name: symlink fits
   sudo: yes
-  file: src=/usr/local/bin//fits.sh dest=/usr/local/bin/fits state=link
+  file: src=/usr/local/bin/fits-0.8.4/fits.sh dest=/usr/local/bin/fits state=link
 
