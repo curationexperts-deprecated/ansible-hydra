@@ -29,3 +29,6 @@
   with_nested:
     - [ "{{ capistrano_user }}", 'ubuntu' ]
     - "{{ keys_to_add }}"
+
+- name: allow capistrano user to restart resque-pool
+  template: src=resque-restart-users dest=/etc/sudoers.d/resque-restart-users validate='visudo -cf %s'
