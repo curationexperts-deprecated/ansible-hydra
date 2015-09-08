@@ -1,0 +1,1 @@
+{{ capistrano_user }} ALL=(ALL) NOPASSWD: /usr/sbin/service resque-pool restart
