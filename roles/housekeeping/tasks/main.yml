@@ -2,3 +2,4 @@
 - include: dev_packages.yml
 - include: ec2_housekeeping.yml
 - include: users_groups_dirs.yml
+- include: timezone.yml
