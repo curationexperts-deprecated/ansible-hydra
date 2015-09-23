@@ -1,7 +1,7 @@
 This Ansible project was created by Data Curation Experts for the Chemical Heritage Foundation. It builds a production-style Hydra head on an Ubuntu 14.04 Amazon EC2 instance.
 
 ## Prerequisites
-[Ansible](http://docs.ansible.com/intro_installation.html).
+[Ansible](http://docs.ansible.com/intro_installation.html) 1.9 or above.
 
 ## AWS / EC2 setup
 TODO
