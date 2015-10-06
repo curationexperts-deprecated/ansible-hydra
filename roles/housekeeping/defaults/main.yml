@@ -5,3 +5,4 @@ install_group: install
 capistrano_user: deploy
 capistrano_group: deploy
 project_name: sufia-project
+timezone: America/New_York
