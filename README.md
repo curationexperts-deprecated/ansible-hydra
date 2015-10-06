@@ -15,7 +15,7 @@ To create an ec2 instance:
 4. Consider protecting group_vars/all with ansible-vault.
 5. run `ansible-playbook -i hosts --private-key /path/to/your/keypair.pem ec2.yml`
    * Optional: if you encrypt your variables with ansible-vault, add `--ask-vault-pass`
-   * Optional: The scripts will by default launch an instance tagged 'staging'. If you want a different tag, override the 'instance_type' variable either in a file (i.e. group_vars/all) or directly from the command line by adding: `--extra-vars "instance_type=production"`
+   * Optional: The scripts will by default launch an instance tagged 'staging'. If you want a different tag, override the 'aws_tag' variable either in a file (i.e. group_vars/all) or directly from the command line by adding: `--extra-vars "aws_tag=production"`
 
 ## Deployment
 This project expects your code to be deployed with [Capistrano](http://capistranorb.com/). In your Hydra head (the codebase you're deploying), set the Capistrano `:deploy_to` directory to match the housekeeping role's `project_name` variable. If you use the default value for `project_name` in the housekeeping role, you should use 
