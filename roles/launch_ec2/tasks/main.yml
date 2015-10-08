@@ -28,8 +28,13 @@
 
   # first stab at dynamic inventory management on ec2
   # finishing this is out of scope for current project
-- name: Add all instance public IPs to host group
-  add_host: hostname={{ item.public_ip }} groups=ec2hosts
+  # add_host only adds to in-memory list of hosts
+- name: Add all instance public IPs to in-memory host group
+  add_host: hostname={{ item.public_ip }} groups=newboxes
+  with_items: ec2.instances
+
+- name: Add all instance public IPs to on-disc host group
+  lineinfile: dest=hosts line={{ item.public_ip }} insertafter=ec2hosts
   with_items: ec2.instances
 
 - name: give ssh time to come up
