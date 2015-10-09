@@ -8,3 +8,5 @@
 - name: symlink apache config
   file: src=/etc/apache2/sites-available/{{ project_name }}.conf dest=/etc/apache2/sites-enabled/{{ project_name }}.conf state=link
 
+- name: enable ssl module
+  command: a2enmod ssl
