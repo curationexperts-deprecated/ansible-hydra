@@ -1,4 +1,4 @@
 ---
 - include: systems.yml
-- include: apache.yml
+- include: apache.yml tags=ssl
 - include: initializers.yml
