@@ -67,8 +67,8 @@
 
 - name: symlink schema from code to solr
   sudo: yes
-  file: src=/opt/{{ project_name }}/current/solr_conf/conf/schema.xml dest=/opt/solr/collection1/conf/schema.xml state=link force=yes
+  file: src={{ app_root }}/solr_conf/conf/schema.xml dest=/opt/solr/collection1/conf/schema.xml state=link force=yes
 
 - name: symlink solrconfig from code to solr
   sudo: yes
-  file: src=/opt/{{ project_name }}/current/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes
+  file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes

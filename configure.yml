@@ -14,7 +14,8 @@
     - { role: system_setup, sudo: yes }
     - { role: capistrano_setup, sudo: yes }
     - { role: ruby }
-    - { role: hydra-stack }
+    - { role: hydra-stack/install }
+    - { role: hydra-stack/config-capistrano }
     - { role: services }
     - { role: passenger, sudo: yes }
     - { role: app-config, sudo: yes }
