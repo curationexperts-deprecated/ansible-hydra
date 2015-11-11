@@ -1,8 +1,8 @@
-- name: provision basic vagrant box
+- name: provision a vagrant box to mimic a production environment as closely as possible.
   hosts: vagrant
   remote_user: vagrant
   roles:
-#    - { role: whole_hydra }
+    - { role: packages, sudo: yes }
     - { role: housekeeping, sudo: yes }
     - { role: ruby }
     - { role: hydra-stack }
