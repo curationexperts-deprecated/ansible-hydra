@@ -10,6 +10,7 @@
   gather_facts: true
   roles:
     - { role: packages, sudo: yes }
+    - { role: set_timezone, sudo: yes }
     - { role: housekeeping, sudo: yes }
     - { role: ruby }
     - { role: hydra-stack }
