@@ -11,7 +11,8 @@
   roles:
     - { role: packages, sudo: yes }
     - { role: set_timezone, sudo: yes }
-    - { role: housekeeping, sudo: yes }
+    - { role: system_setup, sudo: yes }
+    - { role: capistrano_setup, sudo: yes }
     - { role: ruby }
     - { role: hydra-stack }
     - { role: services }
