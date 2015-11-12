@@ -2,9 +2,3 @@
 project_name: sufia-project
 capistrano_user: deploy
 capistrano_group: deploy
-server_name: 127.0.0.1
-ssl_crt_location: /etc/ssl/server.crt
-ssl_key_location: /etc/ssl/private/server.key
-# this should be blank / undefined for self-signed certs.
-# provided here just as an example; specify it in a local file if needed.
-#ssl_intermediate_directive: SSLCertificateChainFile /etc/ssl/certs/my-intermediate-cert
