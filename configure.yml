@@ -16,7 +16,7 @@
     - { role: ruby }
     - { role: hydra-stack/install }
     - { role: hydra-stack/config-capistrano }
-    - { role: services }
+    - { role: sufia_dependencies }
     - { role: apache-passenger/install, sudo: yes }
     - { role: apache-passenger/config, sudo: yes }
     - { role: app-config, sudo: yes }
