@@ -28,10 +28,14 @@ set :deploy_to, '/opt/sufia-project'
 in `config/deploy.rb` and/or in `config/deploy/<yourenv>.rb`  
 
 ## Vagrant
-To use this project with [Vagrant](http://docs.vagrantup.com/v2/):
+[Vagrant](http://docs.vagrantup.com/v2/)
 
-1. Create a Vagrant project
-2. Modify the Vagrantfile to use Ansible (see sample Vagrantfile for ideas)
-3. Be sure to point to the vagrant.yml file, which skips the launch_ec2 and ec2 roles
-4. Clone this project as the `provisioning` sub-directory of your Vagrant project
-5. Run `vagrant up`
+### A production-like vagrant box
+To set up a production-like Vagrant box (for staging, troubleshooting) for you project:
+
+1. Create a Vagrant file in your project
+  * (see sample_Vagrantfile for ideas)
+  * Be sure to point to the vagrant_staging.yml file, which skips aws-related roles
+2. Clone this repository alongside your project
+3. cd into your project and run `vagrant up`
+4. TODO: deploy your capistrano project to your vagrant box. Haven't tried this yet.
