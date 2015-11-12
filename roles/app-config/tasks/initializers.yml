@@ -1,6 +1,6 @@
 ---
 - name: create shared initializers
-  template: src={{ item }}.j2 dest=/opt/{{ project_name }}/shared/config/initializers/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=no
+  template: src={{ item }}.j2 dest={{ shared_root }}/config/initializers/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=no
   with_items:
       - blacklight_initializer.rb
       - devise.rb

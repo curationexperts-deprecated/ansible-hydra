@@ -1,4 +1,4 @@
 ---
-project_name: sufia-project
+shared_root: /opt/sufia-project/shared
 capistrano_user: deploy
 capistrano_group: deploy
