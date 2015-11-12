@@ -16,7 +16,7 @@
 
 NAME=resque-pool
 KILL=/bin/kill
-APP_ROOT=/opt/{{ project_name }}/current
+APP_ROOT={{ app_root }}
 PIDFILE=$APP_ROOT/tmp/pids/$NAME.pid
 OUTLOG=$APP_ROOT/log/$NAME.stdout.log
 ERRLOG=$APP_ROOT/log/$NAME.stderr.log

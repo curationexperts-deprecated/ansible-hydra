@@ -3,4 +3,3 @@
 - include: fits.yml
 - include: redis_resque.yml
 - include: postgresql.yml
-- include: services_rails_config.yml

@@ -1,0 +1,9 @@
+---
+- name: create shared config files
+  sudo: yes
+  template: src={{ item }}.j2 dest={{ shared_root }}/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=no
+  with_items:
+      - database.yml
+      - redis.yml
+      - resque-pool.yml
+      - secrets.yml

@@ -27,4 +27,3 @@
   cron: name="backup pg db" user=postgres job="/opt/pg_backups/pg_daily_double" minute="0" hour="1" state=present
 
 - meta: flush_handlers
-
