@@ -3,7 +3,8 @@
 # MANAGER IS RUN. MAKE SURE YOU REFLECT CHANGES IN THE ANSIBLE SCRIPTS IF
 # THEY SHOULD BE MADE PERMANENT.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-<VirtualHost *:80>
+
+<VirtualHost *:443>
   ServerName {{ server_name }}
   # !!! Be sure to point DocumentRoot to 'public'!
   DocumentRoot {{ app_root }}/public
@@ -15,4 +16,9 @@
         # Uncomment this if you're on Apache >= 2.4:
         Require all granted
   </Directory>
+
+  SSLEngine on
+  SSLCertificateFile {{ ssl_crt_location }}
+  SSLCertificateKeyFile {{ ssl_key_location }}
+  {{ ssl_intermediate_directive | default("")}}
 </VirtualHost>

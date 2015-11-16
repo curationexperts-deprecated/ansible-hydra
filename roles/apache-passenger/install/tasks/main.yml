@@ -21,6 +21,3 @@
 - name: symlink passenger config
   file: src=/etc/apache2/conf-available/passenger.conf path=/etc/apache2/conf-enabled/passenger.conf state=link
   sudo: yes
-
-- name: restart apache
-  service: name=apache2 state=restarted
