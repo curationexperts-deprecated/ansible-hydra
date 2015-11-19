@@ -39,3 +39,19 @@ To set up a production-like Vagrant box (for staging, troubleshooting) for you p
 2. Clone this repository alongside your project
 3. cd into your project and run `vagrant up`
 4. TODO: deploy your capistrano project to your vagrant box. Haven't tried this yet.
+
+### A development vagrant box
+
+1. Create a Vagrant file in your project
+  * (see sample_Vagrantfile for ideas)
+  * Be sure to point to the vagrant_dev.yml file
+2. Clone this repository alongside your project
+3. In your application code, edit
+  * development section of config/blacklight.yml to url: http://localhost:8080/hydra/collection1
+  * development section of config/fedora.yml to url: http://127.0.0.1:8080/fedora/rest
+  * create a file config/solr.yml with a development section containing url: http://localhost:8080/hydra
+  * (see roles/hydra-stack/config/ for more context)
+4. run `vagrant up`
+5. 'vagrant ssh'; cd /vagrant; 'bundle install'
+6. sudo service resque-pool start (resque-pool can't start until bundler has run)
+7. sudo service apache2 restart
