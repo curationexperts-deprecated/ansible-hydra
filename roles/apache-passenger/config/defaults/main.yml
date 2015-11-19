@@ -1,4 +1,5 @@
 ---
+rails_env: production
 project_name: sufia-project
 app_root: /opt/sufia-project/current
 server_name: 127.0.0.1
