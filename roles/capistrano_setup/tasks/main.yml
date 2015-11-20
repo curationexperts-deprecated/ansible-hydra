@@ -15,6 +15,7 @@
   authorized_key: user={{ capistrano_user }} key={{ item }} exclusive=no state=present
   with_items:
     - "{{ keys_to_add }}"
+  when: keys_to_add is defined
 
 - name: allow capistrano user to restart resque-pool
   template: src=resque-restart-users dest=/etc/sudoers.d/resque-restart-users validate='visudo -cf %s'
