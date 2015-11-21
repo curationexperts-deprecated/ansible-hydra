@@ -1,0 +1,24 @@
+---
+# ROLE: mount_opt
+# roles/mount_opt/tasks/main.yml
+#
+# Allows a separate data drive for /opt to be defined in your playbook
+# the setting is optional, leave it out if you want to leave /opt in it's original location
+#
+# USAGE
+# In your playbook
+#   - { role: mount_opt, data_device: /dev/sdc } # replace 'data_device' with the device you would like /opt mounted on
+
+- name: data_device undefined warning
+  debug: msg="WARNING - mount_opt role included without 'data_device' set"
+  when: data_device is undefined
+
+- name: format volume for /opt
+  become: yes
+  filesystem: fstype=xfs dev={{ data_device }}
+  when: data_device is defined
+
+- name: mount volume at /opt
+  become: yes
+  mount: name=/opt src={{ data_device }} fstype=xfs state=mounted
+  when: data_device is defined
