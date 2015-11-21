@@ -1,0 +1,11 @@
+# ROLE: vagrant_setup
+# put any tasks here needed to make a vagrant VM look and behave consistently with 
+# a vanilla server or EC2 instance
+---
+- name: read vagrant public key
+  shell: grep vagrant .ssh/authorized_keys 
+  register: vagrant_public_key
+  
+- name: add vagrant public key to deloyment key list
+  set_fact:
+    keys_to_add: "{{ keys_to_add | default( [ ] ) + [ vagrant_public_key.stdout | quote ] }}"
