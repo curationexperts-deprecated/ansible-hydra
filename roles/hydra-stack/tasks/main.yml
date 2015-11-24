@@ -1,6 +1,0 @@
----
-- include: tomcat.yml
-- include: solr.yml
-- include: fedora.yml
-- include: hydra_rails_config.yml
- 

@@ -1,0 +1,12 @@
+---
+- name: create install group
+  group: name={{ install_group }} state=present
+
+- name: create install user
+  user: name={{ install_user }} group={{ install_group }} shell=/bin/bash createhome=yes state=present
+
+- name: chown /opt
+  file: owner={{ install_user }} group={{ install_group }} state=directory path=/opt
+
+- name: create install directory
+  file: owner={{ install_user }} group={{ install_group }} state=directory path=/opt/install

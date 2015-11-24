@@ -1,0 +1,19 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# THIS IS AN ANSIBLE-MANAGED FILE. ALL CHANGES WILL BE OVERRIDEN IF CONFIG
+# MANAGER IS RUN. MAKE SURE YOU REFLECT CHANGES IN THE ANSIBLE SCRIPTS IF
+# THEY SHOULD BE MADE PERMANENT.
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<VirtualHost *:80>
+  PassengerAppEnv {{ rails_env }}
+  ServerName {{ server_name }}
+  # !!! Be sure to point DocumentRoot to 'public'!
+  DocumentRoot {{ app_root }}/public
+  # allows forward slashes for IIIF
+  AllowEncodedSlashes NoDecode
+  <Directory {{ app_root }}/public>
+        # MultiViews must be turned off.
+        Options -MultiViews
+        # Uncomment this if you're on Apache >= 2.4:
+        Require all granted
+  </Directory>
+</VirtualHost>

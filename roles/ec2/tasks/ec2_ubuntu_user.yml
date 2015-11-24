@@ -1,0 +1,5 @@
+---
+- name: add keys for ubuntu user
+  authorized_key: user=ubuntu key={{ item }} exclusive=no state=present
+  with_items:
+    - "{{ keys_to_add }}"

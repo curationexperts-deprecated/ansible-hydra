@@ -1,13 +1,12 @@
 ---
-# host group must be specified at command line, e.g.
-# ansible-playbook configure.yml -e hosts=ec2hosts
-# TODO: it should work to default to all ec2hosts in this way:
-#   hosts: ec2hosts,&{{ hosts | default("all") }}
-#   But I couldn't get this to work for me.
-- name: configuration
-  hosts: "{{ hosts }}"
-  user: ubuntu
-  gather_facts: true
+- name: provision a vagrant box to mimic a production environment as closely as possible.
+  hosts: vagrant
+  #user: vagrant
+  remote_user: vagrant
+  #gather_facts: true
+  vars:
+    #leave blank; don't need ssh keys for vagrant instance.
+    - keys_to_add:
   roles:
     - { role: packages, sudo: yes }
     - { role: set_timezone, sudo: yes }

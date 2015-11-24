@@ -27,24 +27,17 @@ Vagrant.configure(2) do |config|
     # Display the VirtualBox GUI when booting the machine
     #vb.gui = true
     # Customize the amount of memory on the VM:
-    vb.memory = 2048
+    vb.memory = 4096
     vb.cpus = 2
   end
 
-  # Enable provisioning with Ansible
+  # Enable provisioning with sufia-ansible project
   config.vm.provision "ansible" do |ansible|
     #ansible.verbose = 'vvv'
     ansible.groups = {
       "vagrant" => ["default"],
       "all_groups:children" => ["group1"],
     }
-    ansible.extra_vars = {
-      deploy_user: "vagrant",
-      project_dir: "/vagrant",
-      server_name: "localhost",
-      rails_env: "development",
-      bundle_path: "~/.bundle"
-    }
-    ansible.playbook = "provisioning/vagrant.yml"
+    ansible.playbook = "../sufia-ansible/vagrant_staging.yml"
   end
 end
