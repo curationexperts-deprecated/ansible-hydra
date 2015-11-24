@@ -1,7 +1,15 @@
 ---
+- name: set fedora version if absent
+  set_fact: fedora_version "4.1.0"
+  when: fedora_version is undefined
+  
+- name: fedora version to install {{ fedora_version }}
+  # Handy in cases where we're logging or watching the console
+  debug: msg="Set 'fedora_version' in your variables to install a different version of Fedora Commons"
+  
 - name: download fedora
   become: yes
-  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/4.1.0/fcrepo-webapp-4.1.0.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fcrepo-webapp-4.1.0.war timeout=100
+  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
 
 - name: make fedora data dir
   file: owner=tomcat7 group=tomcat7 state=directory path=/opt/fedora-data
@@ -14,7 +22,7 @@
 
 - name: copy over fedora.war
   sudo: yes
-  command: cp {{ install_path }}/fcrepo-webapp-4.1.0.war /var/lib/tomcat7/webapps/fedora.war
+  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war /var/lib/tomcat7/webapps/fedora.war
   when: fedora_war.stat.exists == False
 
 - name: create tomcat config and java options

@@ -1,3 +1,4 @@
 ---
 - include: ec2_housekeeping.yml
 - include: ec2_crons.yml
+- include: ec2_ubuntu_user.yml

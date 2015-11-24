@@ -10,9 +10,3 @@
 
 - name: create install directory
   file: owner={{ install_user }} group={{ install_group }} state=directory path=/opt/install
-
-# TODO: make this into a variable instead of hard-coding ubuntu user
-- name: add keys for ubuntu user
-  authorized_key: user=ubuntu key={{ item }} exclusive=no state=present
-  with_items:
-    - "{{ keys_to_add }}"
