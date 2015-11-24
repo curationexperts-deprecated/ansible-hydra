@@ -1,0 +1,16 @@
+---
+- name: download libtiff source
+  get_url: url=http://download.osgeo.org/libtiff/tiff-{{ libtiff_ver }}.tar.gz dest={{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz
+
+- name: unzip libtiff source
+  unarchive: src={{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/tiff-{{ libtiff_ver }} copy=no
+
+- name: configure libtiff
+  shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && ./configure
+
+- name: make libtiff
+  shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && make 
+
+- name: install libtiff
+  sudo: yes
+  shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && make install

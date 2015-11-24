@@ -1,0 +1,20 @@
+---
+- name: clone ImageMagick source
+  get_url: url=http://www.imagemagick.org/download/releases/ImageMagick-{{ imagemagick_ver }}.tar.xz dest={{ magick_path }}/ImageMagick-{{ imagemagick_ver }}.tar.xz
+
+- name: unzip ImageMagick tarball
+  unarchive: src={{ magick_path }}/ImageMagick-{{ imagemagick_ver }}.tar.xz dest={{ magick_path }}/ copy=no
+
+- name: configure ImageMagick
+  shell: cd {{ magick_path }}/ImageMagick-{{ imagemagick_ver }} && ./configure --prefix=/usr/local --with-modules=yes
+
+- name: make ImageMagick
+  shell: cd {{ magick_path }}/ImageMagick-{{ imagemagick_ver }} && make 
+
+- name: install ImageMagick
+  sudo: yes
+  shell: cd {{ magick_path }}/ImageMagick-{{ imagemagick_ver }} && make install
+
+- name: link new imagemagick
+  sudo: yes
+  shell: ldconfig

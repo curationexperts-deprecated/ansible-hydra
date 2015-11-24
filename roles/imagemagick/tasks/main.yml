@@ -1,0 +1,9 @@
+---
+# ROLE: imagemagick
+# roles/imagemagick/tasks/main.yml 
+
+- include: im_libraries.yml
+- include: openjpg.yml
+- include: libtiff.yml
+- include: libpng.yml
+- include: imagemagick.yml
