@@ -1,0 +1,32 @@
+---
+- name: remove package imagemagick
+  sudo: yes
+  apt: name=imagemagick state=absent
+
+- name: install IM dependencies
+  sudo: yes
+  apt: name={{ item }} state=present
+  with_items:
+      # The commented out packages don't appear to exist in Ubuntu repos
+      # - fontconfig-devel
+      # - freetype-devel
+      # - libtool-ltdl-devel
+      # - libpng-devel
+      - autoconf # already present
+      - automake # already present
+      - cmake # missing - move this to prerequisites?
+      - gcc # exists
+      # - gcc-c++ 
+      - libtool #exists
+      - make #exists
+      - mercurial # what is this required for
+      # - pkgconfig 
+      # - zlib-devel
+
+- name: create IM sources dir
+  sudo: yes
+  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ magick_path }}
+
+- name: IM add ldconfig for /usr/local/lib
+  sudo: yes
+  copy: dest=/etc/ld.so.conf.d/usr-local.conf content=/usr/local/lib owner=root group=root mode=0644 
