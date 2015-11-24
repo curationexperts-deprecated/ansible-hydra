@@ -21,17 +21,37 @@ To create, set up an ec2 instance:
 There's another playbook called configure.yml. It's included by create_ec2 but can also be run separately. This playbook IS idempotent, so it can be used to change configuration at will. Also, AWS-related tasks have been removed (let us know if you run into anything!) so it should be more generalizable. Note that to run this playbook you must specify a hosts variable (see comment in configure.yml).
 
 ## Deployment
-This project expects your code to be deployed with [Capistrano](http://capistranorb.com/). In your Hydra head (the codebase you're deploying), set the Capistrano `:deploy_to` directory to match the housekeeping role's `project_name` variable. If you use the default value for `project_name` in the housekeeping role, you should use 
+This project expects your code to be deployed with [Capistrano](http://capistranorb.com/). In your Hydra head (the codebase you're deploying), set the Capistrano `:deploy_to` directory to match the capistrano_setup role's `project_base` variable. If you use the default value for `project_base` in the capistrano_setup role, you should use 
 ```
 set :deploy_to, '/opt/sufia-project'
 ```
 in `config/deploy.rb` and/or in `config/deploy/<yourenv>.rb`  
 
 ## Vagrant
-To use this project with [Vagrant](http://docs.vagrantup.com/v2/):
+[Vagrant](http://docs.vagrantup.com/v2/)
 
-1. Create a Vagrant project
-2. Modify the Vagrantfile to use Ansible (see sample Vagrantfile for ideas)
-3. Be sure to point to the vagrant.yml file, which skips the launch_ec2 and ec2 roles
-4. Clone this project as the `provisioning` sub-directory of your Vagrant project
-5. Run `vagrant up`
+### A production-like vagrant box
+To set up a production-like Vagrant box (for staging, troubleshooting) for you project:
+
+1. Create a Vagrant file in your project
+  * (see sample_Vagrantfile for ideas)
+  * Be sure to point to the vagrant_staging.yml file, which skips aws-related roles
+2. Clone this repository alongside your project
+3. cd into your project and run `vagrant up`
+4. TODO: deploy your capistrano project to your vagrant box. Haven't tried this yet.
+
+### A development vagrant box
+
+1. Create a Vagrant file in your project
+  * (see sample_Vagrantfile for ideas)
+  * Be sure to point to the vagrant_dev.yml file
+2. Clone this repository alongside your project
+3. In your application code, edit
+  * development section of config/blacklight.yml to url: http://localhost:8080/hydra/collection1
+  * development section of config/fedora.yml to url: http://127.0.0.1:8080/fedora/rest
+  * create a file config/solr.yml with a development section containing url: http://localhost:8080/hydra
+  * (see roles/hydra-stack/config/ for more context)
+4. run `vagrant up`
+5. 'vagrant ssh'; cd /vagrant; 'bundle install'
+6. sudo service resque-pool start (resque-pool can't start until bundler has run)
+7. sudo service apache2 restart

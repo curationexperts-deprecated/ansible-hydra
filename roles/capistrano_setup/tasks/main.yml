@@ -1,0 +1,20 @@
+- name: create cap group
+  group: name={{ capistrano_group }} state=present
+
+- name: create cap user
+  user: name={{ capistrano_user }} group={{ capistrano_group }} shell=/bin/bash createhome=yes state=present
+
+- name: create cap directories
+  file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }}
+  with_items:
+    - "{{ project_base }}/shared/config/initializers"
+    - "{{ project_base }}/releases"
+    - /home/{{ capistrano_user }}/.ssh
+
+- name: add keys for capistrano user
+  authorized_key: user={{ capistrano_user }} key={{ item }} exclusive=no state=present
+  with_items:
+    - "{{ keys_to_add }}"
+
+- name: allow capistrano user to restart resque-pool
+  template: src=resque-restart-users dest=/etc/sudoers.d/resque-restart-users validate='visudo -cf %s'

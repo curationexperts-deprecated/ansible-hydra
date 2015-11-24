@@ -1,0 +1,4 @@
+---
+- include: tomcat.yml
+- include: solr.yml
+- include: fedora.yml
