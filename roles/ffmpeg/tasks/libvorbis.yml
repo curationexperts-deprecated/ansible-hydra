@@ -1,0 +1,16 @@
+---
+- name: download libvorbis source
+  get_url: url=http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.gz dest={{ ffmpeg_path }}/libvorbis-1.3.3.tar.gz
+
+- name: unzip libvorbis source
+  unarchive: src={{ ffmpeg_path }}/libvorbis-1.3.3.tar.gz dest={{ ffmpeg_path }}/ creates={{ ffmpeg_path }}/libvorbis-1.3.3/compile.c copy=no
+
+- name: configure libvorbis
+  shell: cd {{ ffmpeg_path }}/libvorbis-1.3.3 && ./configure creates={{ ffmpeg_path }}/libvorbis-1.3.3/Makefile
+
+- name: make libvorbis
+  shell: cd {{ ffmpeg_path }}/libvorbis-1.3.3 && make 
+
+- name: install libvorbis
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/libvorbis-1.3.3 && make install

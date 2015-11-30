@@ -1,0 +1,20 @@
+---
+- name: clone yasm source
+  git: repo=https://github.com/yasm/yasm.git depth=1 accept_hostkey=yes dest={{ ffmpeg_path }}/yasm force=yes
+
+- name: reconfigure the yasm repo
+  shell: cd {{ ffmpeg_path }}/yasm && autoreconf -fiv # ./autogen.sh
+
+- name: configure yasm
+  shell: cd {{ ffmpeg_path }}/yasm && ./configure
+
+- name: make yasm
+  shell: cd {{ ffmpeg_path }}/yasm && make
+
+- name: install yasm
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/yasm && make install
+
+- name: clean the yasm repo
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/yasm && make distclean # ./autogen.sh

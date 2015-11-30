@@ -1,0 +1,21 @@
+---
+- name: clone ffmpeg source
+  git: repo=git://source.ffmpeg.org/ffmpeg depth=1 accept_hostkey=yes dest={{ ffmpeg_path }}/ffmpeg force=yes
+
+- name: configure ffmpeg
+  shell: cd {{ ffmpeg_path }}/ffmpeg && PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --extra-libs="-ldl" --enable-gpl --enable-nonfree --enable-libfdk_aac --enable-libmp3lame --enable-libopus --enable-libvorbis --enable-libvpx --enable-libx264
+
+- name: make ffmpeg
+  shell: cd {{ ffmpeg_path }}/ffmpeg && make 
+
+- name: install ffmpeg
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/ffmpeg && make install
+
+- name: clean the ffmpeg repo
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/ffmpeg && make distclean
+
+- name: link new ffmpeg
+  sudo: yes
+  shell: ldconfig

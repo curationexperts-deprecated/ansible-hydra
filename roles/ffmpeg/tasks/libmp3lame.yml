@@ -1,0 +1,16 @@
+---
+- name: download libmp3lame source
+  get_url: url=http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz dest={{ ffmpeg_path }}/lame-3.99.5.tar.gz
+
+- name: unzip libmp3lame source
+  unarchive: src={{ ffmpeg_path }}/lame-3.99.5.tar.gz dest={{ ffmpeg_path }}/ creates={{ ffmpeg_path }}/lame-3.99.5/compile.c copy=no
+
+- name: configure libmp3lame
+  shell: cd {{ ffmpeg_path }}/lame-3.99.5 && ./configure --disable-shared --enable-nasm creates={{ ffmpeg_path }}/lame-3.99.5/Makefile
+
+- name: make libmp3lame
+  shell: cd {{ ffmpeg_path }}/lame-3.99.5 && make 
+
+- name: install libmp3lame
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/lame-3.99.5 && make install

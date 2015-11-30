@@ -1,0 +1,30 @@
+---
+- name: install ffmpeg libraries
+  sudo: yes
+  apt: name={{ item }} state=present
+  with_items:
+      - autoconf
+      - automake
+      - cmake
+      # - freetype-devel
+      - gcc
+      # - gcc-c++
+      - git
+      - libtool
+      - make
+      - mercurial
+      - nasm
+      # - pkgconfig
+      # - zlib-devel
+
+- name: remove package ffmpeg
+  sudo: yes
+  apt: name=ffmpeg state=absent
+
+- name: create sources dir
+  sudo: yes
+  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ ffmpeg_path }}
+
+- name: ff add ldconfig for /usr/local/lib
+  sudo: yes
+  copy: dest=/etc/ld.so.conf.d/usr-local.conf content=/usr/local/lib owner=root group=root mode=0644 
