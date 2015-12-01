@@ -16,19 +16,12 @@
   become: yes
   file: path={{ install_path }}/fits-{{ fits_version }}/fits.sh mode=0755
 
-# NOTE: you could just copy fits-{{ fits_version }}/* to the bin directory, but then you junk it up with all the fits licensing and source fiels.
 - name: copy fits scripts
   sudo: yes
-  shell: cp {{ install_path }}/fits-{{ fits_version }}/*.sh /usr/local/bin/
+  shell: cp {{ install_path }}/fits-{{ fits_version }}/* /usr/local/bin/
 
-- name: copy fits runtime libraries
+- name: symlink fits alias
   sudo: yes
-  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/lib /usr/local/bin/
+  file: src=/usr/local/bin/fits-{{ fits_version }}/fits.sh dest=/usr/local/bin/fits state=link
+  
 
-- name: copy fits config files
-  sudo: yes
-  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/xml /usr/local/bin/
-
-- name: copy fits tools
-  sudo: yes
-  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/tools /usr/local/bin/
