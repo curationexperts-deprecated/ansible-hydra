@@ -1,0 +1,10 @@
+---
+# ROLE: imagemagick - defaults
+# roles/imagemagick/defaults/main.yml 
+
+install_path: /opt/install
+magick_path: "{{ install_path }}/imagemagick_sources"
+openjpg_ver: '2.1.0'
+libtiff_ver: '4.0.5'
+libpng_ver: '1.6.18'
+imagemagick_ver: '6.9.2-7'
