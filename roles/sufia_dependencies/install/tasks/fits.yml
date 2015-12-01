@@ -18,10 +18,10 @@
 
 - name: copy fits scripts
   sudo: yes
-  shell: cp {{ install_path }}/fits-{{ fits_version }}/* /usr/local/bin/
+  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/* /usr/local/bin/
 
 - name: symlink fits alias
   sudo: yes
-  file: src=/usr/local/bin/fits-{{ fits_version }}/fits.sh dest=/usr/local/bin/fits state=link
+  file: src=/usr/local/bin/fits.sh dest=/usr/local/bin/fits state=link
   
 
