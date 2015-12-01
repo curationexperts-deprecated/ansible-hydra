@@ -1,0 +1,16 @@
+---
+- name: download libopus source
+  get_url: url=http://downloads.xiph.org/releases/opus/opus-1.0.3.tar.gz dest={{ ffmpeg_path }}/opus-1.0.3.tar.gz
+
+- name: unzip libopus source
+  unarchive: src={{ ffmpeg_path }}/opus-1.0.3.tar.gz dest={{ ffmpeg_path }}/ creates={{ ffmpeg_path }}/opus-1.0.3/compile.c copy=no
+
+- name: configure libopus
+  shell: cd {{ ffmpeg_path }}/opus-1.0.3 && ./configure --disable-shared creates={{ ffmpeg_path }}/opus-1.0.3/Makefile
+
+- name: make libopus
+  shell: cd {{ ffmpeg_path }}/opus-1.0.3 && make 
+
+- name: install libopus
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/opus-1.0.3 && make install

@@ -1,0 +1,17 @@
+---
+- name: clone x264 source
+  git: repo=git://git.videolan.org/x264 depth=1 accept_hostkey=yes dest={{ ffmpeg_path }}/x264 force=yes
+
+- name: configure x264
+  shell: cd {{ ffmpeg_path }}/x264 && ./configure --enable-static 
+
+- name: make x264
+  shell: cd {{ ffmpeg_path }}/x264 && make 
+
+- name: install x264
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/x264 && make install
+
+- name: clean the x264 repo
+  sudo: yes
+  shell: cd {{ ffmpeg_path }}/x264 && make distclean
