@@ -4,22 +4,31 @@
   sudo: yes
   apt: name=unzip state=present
 
-- name: download fits zip
+- name: download fits zip version {{ fits_version }}
   become: yes
-  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.4.zip owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fits-0.8.4.zip
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-{{ fits_version }}.zip owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fits-{{ fits_version }}.zip
 
 - name: unpack fits
   become: yes
-  unarchive: src={{ install_path }}/fits-0.8.4.zip dest={{ install_path }}/ creates={{ install_path }}/fits-0.8.4/fits.sh copy=no
+  unarchive: src={{ install_path }}/fits-{{ fits_version }}.zip dest={{ install_path }}/ creates={{ install_path }}/fits-{{ fits_version }}/fits.sh copy=no
 
 - name: make fits executable
   become: yes
-  file: path={{ install_path }}/fits-0.8.4/fits.sh mode=0755
+  file: path={{ install_path }}/fits-{{ fits_version }}/fits.sh mode=0755
 
-- name: copy fits
+# NOTE: you could just copy fits-{{ fits_version }}/* to the bin directory, but then you junk it up with all the fits licensing and source fiels.
+- name: copy fits scripts
   sudo: yes
-  shell: cp -r {{ install_path }}/fits-0.8.4 /usr/local/bin/
+  shell: cp {{ install_path }}/fits-{{ fits_version }}/*.sh /usr/local/bin/
 
-- name: symlink fits
+- name: copy fits runtime libraries
   sudo: yes
-  file: src=/usr/local/bin/fits-0.8.4/fits.sh dest=/usr/local/bin/fits state=link
+  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/lib /usr/local/bin/
+
+- name: copy fits config files
+  sudo: yes
+  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/xml /usr/local/bin/
+
+- name: copy fits tools
+  sudo: yes
+  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/tools /usr/local/bin/

@@ -1,8 +1,7 @@
 ---
 install_path: /opt/install
-install_user: install
-install_group: install
-become_user: install
+install_user: "{{ ansible_ssh_user }}"
+install_group: "{{ ansible_ssh_user }}"
 app_root: /opt/sufia-project/current
 rails_env: production
 pg_pass: postgres
@@ -11,3 +10,4 @@ hydra_pg_user: my_hydra_pg_user
 hydra_pg_pass: my_hydra_pg_pass
 # needed for resque-pool init script
 capistrano_user: deploy
+fits_version: '0.8.4'
