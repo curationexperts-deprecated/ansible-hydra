@@ -9,9 +9,9 @@
   shell: cd {{ ffmpeg_path }}/libvpx && make 
 
 - name: install libvpx
-  become: yes
+  sudo: yes
   shell: cd {{ ffmpeg_path }}/libvpx && make install
 
 - name: clean the libvpx repo
-  become: yes
+  sudo: yes
   shell: cd {{ ffmpeg_path }}/libvpx && make distclean

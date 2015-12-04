@@ -9,13 +9,13 @@
   shell: cd {{ ffmpeg_path }}/ffmpeg && make 
 
 - name: install ffmpeg
-  become: yes
+  sudo: yes
   shell: cd {{ ffmpeg_path }}/ffmpeg && make install
 
 - name: clean the ffmpeg repo
-  become: yes
+  sudo: yes
   shell: cd {{ ffmpeg_path }}/ffmpeg && make distclean
 
 - name: link new ffmpeg
-  become: yes
+  sudo: yes
   shell: ldconfig

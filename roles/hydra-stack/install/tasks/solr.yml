@@ -1,10 +1,10 @@
 ---
 - name: create velocity log
-  become: yes
+  sudo: yes
   file: path=/var/log/tomcat7/velocity.log state=touch owner=tomcat7 group=tomcat7 mode=0644
 
 - name: symlink velocity log
-  become: yes
+  sudo: yes
   file: src=/var/log/tomcat7/velocity.log dest=/var/lib/tomcat7/velocity.log state=link
 
 - name: download solr tarball
@@ -22,53 +22,53 @@
 
 - name: make solr lib dir
   file: owner=tomcat7 group=tomcat7 state=directory path=/opt/solr/lib
-  become: yes
+  sudo: yes
   when: solr_dir.stat.exists == False
 
 - name: copy over war file
-  become: yes
+  sudo: yes
   command: cp {{ install_path }}/solr-4.10.3/dist/solr-4.10.3.war /opt/solr/
 
 - name: copy over dist jars
-  become: yes
+  sudo: yes
   shell: cp {{ install_path }}/solr-4.10.3/dist/*.jar /opt/solr/lib/
 
 - name: copy over contrib dir
-  become: yes
+  sudo: yes
   command: cp -r {{ install_path }}/solr-4.10.3/contrib /opt/solr/lib/
 
 - name: copy over example collection
-  become: yes
+  sudo: yes
   command: cp -r --remove-destination {{ install_path }}/solr-4.10.3/example/solr/collection1 /opt/solr/
 
 - name: copy logging jars
-  become: yes
+  sudo: yes
   shell: cp {{ install_path }}/solr-4.10.3/example/lib/ext/*.jar /usr/share/tomcat7/lib/
 
 - name: set ownership and group for solr
-  become: yes
+  sudo: yes
   shell: chown -R tomcat7:tomcat7 /opt/solr
 
 - name: copy log4j properties file
-  become: yes
+  sudo: yes
   shell: cp {{ install_path }}/solr-4.10.3/example/resources/log4j.properties /usr/share/tomcat7/
 
 - name: set ownership and group for tomcat
-  become: yes
+  sudo: yes
   shell: chown -R tomcat7:tomcat7 /usr/share/tomcat7
 
 - name: create solr xml file
-  become: yes
+  sudo: yes
   template: src=hydra_xml.j2 dest=/opt/solr/{{ solr_context }}.xml group=tomcat7 owner=tomcat7
 
 - name: symlink solr xml file to tomcat
-  become: yes
+  sudo: yes
   file: src=/opt/solr/{{ solr_context }}.xml dest=/etc/tomcat7/Catalina/localhost/{{ solr_context }}.xml state=link
 
 - name: symlink schema from code to solr
-  become: yes
+  sudo: yes
   file: src={{ app_root }}/solr_conf/conf/schema.xml dest=/opt/solr/collection1/conf/schema.xml state=link force=yes
 
 - name: symlink solrconfig from code to solr
-  become: yes
+  sudo: yes
   file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes

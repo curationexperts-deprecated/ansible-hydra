@@ -1,7 +1,7 @@
 ---
 # install fits
 - name: install zip utility
-  become: yes
+  sudo: yes
   apt: name=unzip state=present
 
 - name: download fits zip version {{ fits_version }}
@@ -17,11 +17,11 @@
   file: path={{ install_path }}/fits-{{ fits_version }}/fits.sh mode=0755
 
 - name: copy fits scripts
-  become: yes
+  sudo: yes
   shell: cp -r {{ install_path }}/fits-{{ fits_version }}/* /usr/local/bin/
 
 - name: symlink fits alias
-  become: yes
+  sudo: yes
   file: src=/usr/local/bin/fits.sh dest=/usr/local/bin/fits state=link
   
 

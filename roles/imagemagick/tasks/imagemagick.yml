@@ -12,9 +12,9 @@
   shell: cd {{ magick_path }}/ImageMagick-{{ imagemagick_ver }} && make 
 
 - name: install ImageMagick
-  become: yes
+  sudo: yes
   shell: cd {{ magick_path }}/ImageMagick-{{ imagemagick_ver }} && make install
 
 - name: link new imagemagick
-  become: yes
+  sudo: yes
   shell: ldconfig

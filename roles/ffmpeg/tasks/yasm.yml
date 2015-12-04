@@ -12,9 +12,9 @@
   shell: cd {{ ffmpeg_path }}/yasm && make
 
 - name: install yasm
-  become: yes
+  sudo: yes
   shell: cd {{ ffmpeg_path }}/yasm && make install
 
 - name: clean the yasm repo
-  become: yes
+  sudo: yes
   shell: cd {{ ffmpeg_path }}/yasm && make distclean # ./autogen.sh

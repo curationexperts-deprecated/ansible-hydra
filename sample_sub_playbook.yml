@@ -3,4 +3,4 @@
   user: ubuntu
   gather_facts: true   
   roles:
-    - { role: ec2, become: yes }
+    - { role: ec2, sudo: yes }

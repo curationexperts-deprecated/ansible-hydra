@@ -2,12 +2,12 @@
 # install and start redis, resque
 - name: run redis-server
   service: name=redis-server state=started
-  become: yes
+  sudo: yes
 
 - name: copy resque init script
   template: src=pool_q.j2 dest=/etc/init.d/resque-pool mode=0755
-  become: yes
+  sudo: yes
 
 - name: start resque
   service: name=resque-pool state=started enabled=yes
-  become: yes
+  sudo: yes

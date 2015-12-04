@@ -1,6 +1,6 @@
 ---
 - name: install ffmpeg libraries
-  become: yes
+  sudo: yes
   apt: name={{ item }} state=present
   with_items:
       - autoconf
@@ -18,13 +18,13 @@
       # - zlib-devel
 
 - name: remove package ffmpeg
-  become: yes
+  sudo: yes
   apt: name=ffmpeg state=absent
 
 - name: create sources dir
-  become: yes
+  sudo: yes
   file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ ffmpeg_path }}
 
 - name: ff add ldconfig for /usr/local/lib
-  become: yes
+  sudo: yes
   copy: dest=/etc/ld.so.conf.d/usr-local.conf content=/usr/local/lib owner=root group=root mode=0644 
