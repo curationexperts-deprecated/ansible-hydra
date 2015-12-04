@@ -9,15 +9,15 @@
   user: ubuntu
   gather_facts: true
   roles:
-    - { role: packages, sudo: yes }
-    - { role: set_timezone, sudo: yes }
-    - { role: system_setup, sudo: yes }
-    - { role: capistrano_setup, sudo: yes }
+    - { role: packages, become: yes }
+    - { role: set_timezone, become: yes }
+    - { role: system_setup, become: yes }
+    - { role: capistrano_setup, become: yes }
     - { role: ruby }
     - { role: hydra-stack/install }
     - { role: hydra-stack/config-capistrano }
     - { role: sufia_dependencies/install }
     - { role: sufia_dependencies/config }
-    - { role: apache-passenger/install, sudo: yes }
-    - { role: apache-passenger/config, sudo: yes }
-    - { role: app-config, sudo: yes }
+    - { role: apache-passenger/install, become: yes }
+    - { role: apache-passenger/config, become: yes }
+    - { role: app-config, become: yes }

@@ -9,9 +9,9 @@
   shell: cd {{ ffmpeg_path }}/x264 && make 
 
 - name: install x264
-  sudo: yes
+  become: yes
   shell: cd {{ ffmpeg_path }}/x264 && make install
 
 - name: clean the x264 repo
-  sudo: yes
+  become: yes
   shell: cd {{ ffmpeg_path }}/x264 && make distclean

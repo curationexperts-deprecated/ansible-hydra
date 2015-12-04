@@ -16,14 +16,14 @@
     - capistrano_user: vagrant
 
   roles:
-    - { role: packages, sudo: yes }
-    - { role: set_timezone, sudo: yes }
-    - { role: system_setup, sudo: yes }
+    - { role: packages, become: yes }
+    - { role: set_timezone, become: yes }
+    - { role: system_setup, become: yes }
     - { role: ruby }
     - { role: hydra-stack/install }
     - { role: sufia_dependencies/install }
-    - { role: apache-passenger/install, sudo: yes }
-    - { role: apache-passenger/config, sudo: yes }
+    - { role: apache-passenger/install, become: yes }
+    - { role: apache-passenger/config, become: yes }
 
 # bundle install hasn't been run? Makes sense; that's done with capistrano deployment
 # resque-pool can't start until bundle install has been run because it loads the actual code.

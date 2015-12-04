@@ -12,9 +12,9 @@
   shell: cd {{ ffmpeg_path }}/fdk-aac && make 
 
 - name: install fdk-aac
-  sudo: yes
+  become: yes
   shell: cd {{ ffmpeg_path }}/fdk-aac && make install
 
 - name: clean the fkd-aac repo
-  sudo: yes
+  become: yes
   shell: cd {{ ffmpeg_path }}/fdk-aac && make distclean

@@ -12,5 +12,5 @@
   shell: cd {{ ffmpeg_path }}/opus-1.0.3 && make 
 
 - name: install libopus
-  sudo: yes
+  become: yes
   shell: cd {{ ffmpeg_path }}/opus-1.0.3 && make install

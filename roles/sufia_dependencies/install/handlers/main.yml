@@ -1,15 +1,15 @@
 ---
 - name: set postgres password
-  sudo: yes
-  sudo_user: postgres
+  become: yes
+  become_user: postgres
   postgresql_user: name=postgres password={{ pg_pass }}
 
 - name: configure md5 security
-  sudo: yes
+  become: yes
   copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
 
 - name: restart postgres server
-  sudo: yes
+  become: yes
   service: name=postgresql enabled=yes state=restarted
 
 - name: create pg hydra database
