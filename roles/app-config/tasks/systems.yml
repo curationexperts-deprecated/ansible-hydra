@@ -24,19 +24,19 @@
 
 #TODO: manage env variables for this separately
 #- name: make sure blacklight has a key
-#  sudo: no
+#  become: no
 #  remote_user: "{{ deploy_user }}"
 #  copy: src=secrets.yml dest={{ project_dir }}/config/secrets.yml
 
 # note db:migrate is natively idempotent
 
 #- name: dbmigrate
-#  sudo: no
+#  become: no
 #  remote_user: "{{ deploy_user }}"
 #  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV={{ rails_env }}
 
 #- name: migrate test db in development installs
-#  sudo: no
+#  become: no
 #  remote_user: "{{ deploy_user }}"
 #  shell: cd {{ project_dir }}; bundle exec rake db:migrate RAILS_ENV=test
 #  when: rails_env == "development"

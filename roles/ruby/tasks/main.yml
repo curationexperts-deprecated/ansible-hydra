@@ -7,7 +7,7 @@
 #  always_run: yes
 
 - name: remove package ruby
-  sudo: yes
+  become: yes
   apt: name=ruby state=absent
 
 - name: download ruby
@@ -19,7 +19,7 @@
   unarchive: src=/opt/install/ruby-2.2.2.tar.gz dest={{ install_path }}/ creates={{ install_path }}/ruby-2.2.2/compile.c copy=no
 
 - name: check if ruby is installed
-  sudo: yes
+  become: yes
   stat: path=/usr/local/bin/ruby
   register: ruby
 
@@ -33,14 +33,14 @@
   when: ruby.stat.exists == False
 
 - name: install ruby
-  sudo: yes
+  become: yes
   shell: cd {{ install_path }}/ruby-2.2.2 && make install creates=/usr/local/bin/ruby
   when: ruby.stat.exists == False
 
 - name: update rubygems
-  sudo: yes
+  become: yes
   command: gem update --system
  
 - name: install bundler
-  sudo: yes
+  become: yes
   gem: name=bundler user_install=no state=present

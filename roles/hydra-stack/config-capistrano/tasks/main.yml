@@ -1,6 +1,6 @@
 ---
 - name: create shared fedora and solr configs
-  sudo: yes
+  become: yes
   template: src={{ item }}.j2 dest={{ shared_root }}/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=yes
   with_items:
     - fedora.yml

@@ -12,5 +12,5 @@
   shell: cd {{ magick_path }}/openjpeg-{{ openjpg_ver }} && make 
 
 - name: install openjpg
-  sudo: yes
+  become: yes
   shell: cd {{ magick_path }}/openjpeg-{{ openjpg_ver }} && make install

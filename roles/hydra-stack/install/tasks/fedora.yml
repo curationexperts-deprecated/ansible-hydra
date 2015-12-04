@@ -13,7 +13,7 @@
 
 - name: make fedora data dir
   file: owner=tomcat7 group=tomcat7 state=directory path=/opt/fedora-data
-  sudo: yes
+  become: yes
 
 - name: check fedora.war
   become: yes
@@ -21,16 +21,16 @@
   register: fedora_war
 
 - name: copy over fedora.war
-  sudo: yes
+  become: yes
   command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war /var/lib/tomcat7/webapps/fedora.war
   when: fedora_war.stat.exists == False
 
 - name: create tomcat config and java options
-  sudo: yes
+  become: yes
   template: src=tomcat7.j2 dest=/etc/default/tomcat7 backup=yes
 # TODO: make Java options configurable at the time of the ansible run
 
 # TODO: make this a service called from main.yml
 - name: restart tomcat
-  sudo: yes
+  become: yes
   service: name=tomcat7 enabled=yes state=restarted

@@ -12,7 +12,7 @@
     - apache2-mpm-worker
 
 - name: install passenger-install-apache2-module
-  sudo: yes
+  become: yes
   shell: passenger-install-apache2-module --auto creates=/usr/local/lib/ruby/gems/{{ ruby_ver }}/gems/passenger-{{ passenger_ver }}/buildout/apache2/mod_passenger.so
 
 - name: generate passenger.conf file
@@ -20,4 +20,4 @@
 
 - name: symlink passenger config
   file: src=/etc/apache2/conf-available/passenger.conf path=/etc/apache2/conf-enabled/passenger.conf state=link
-  sudo: yes
+  become: yes

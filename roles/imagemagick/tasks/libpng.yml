@@ -12,5 +12,5 @@
   shell: cd {{ magick_path }}/libpng-{{ libpng_ver }} && make 
 
 - name: install libpng
-  sudo: yes
+  become: yes
   shell: cd {{ magick_path }}/libpng-{{ libpng_ver }} && make install

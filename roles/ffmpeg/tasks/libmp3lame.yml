@@ -12,5 +12,5 @@
   shell: cd {{ ffmpeg_path }}/lame-3.99.5 && make 
 
 - name: install libmp3lame
-  sudo: yes
+  become: yes
   shell: cd {{ ffmpeg_path }}/lame-3.99.5 && make install

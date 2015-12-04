@@ -12,5 +12,5 @@
   shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && make 
 
 - name: install libtiff
-  sudo: yes
+  become: yes
   shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && make install
