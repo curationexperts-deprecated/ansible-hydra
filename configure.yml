@@ -21,3 +21,5 @@
     - { role: apache-passenger/install, become: yes }
     - { role: apache-passenger/config, become: yes }
     - { role: app-config, become: yes }
+    # if using RIIIF, uncomment this role
+    # - { role: RIIIF }

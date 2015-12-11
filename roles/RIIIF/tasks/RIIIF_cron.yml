@@ -1,0 +1,7 @@
+---
+# RIIIF caches image files in $RAILS_ROOT/tmp/network_files
+# left unchecked these files can eat the space on your disk quickly
+# this cron job will remove old files daily
+- name: add cron job 
+  become: yes
+  cron: minute="15" hour="11" name="network_files_cleanup" user=root job="find /opt/{{ app_root }}/tmp/network_files -mtime +7 -exec rm {} \;" cron_file=network_files_cleanup

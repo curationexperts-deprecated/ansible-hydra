@@ -1,0 +1,8 @@
+---
+# ROLE: RIIIF
+# roles/RIIIF/tasks/main.yml
+
+# supporting hydra-heads that use RIIIF for image display
+# panning, zooming, etc.
+
+- include: RIIIF_cron.yml
