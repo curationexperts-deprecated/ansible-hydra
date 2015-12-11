@@ -1,0 +1,5 @@
+---
+# roles/RIIIF/defaults/main.yml
+# default variable values for RIIIF role
+project_name: sufia-project
+app_root: /opt/{{ project_name }}/current
