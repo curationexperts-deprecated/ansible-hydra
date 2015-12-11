@@ -1,11 +1,14 @@
 ---
 - name: update apt cache
+  become: yes
   apt: update_cache=yes
 
 - name: upgrade apt packages
+  become: yes
   apt: upgrade=full
 
 - name: install dev tools and libraries
+  become: yes
   apt: name={{ item }} state=latest
   with_items:
     - build-essential

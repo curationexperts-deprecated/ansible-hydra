@@ -1,10 +1,17 @@
+---
+# ROLE: capistranso_setup
+# roles/capistrano_setup/tasks/main.yml
+
 - name: create cap group
+  become: yes
   group: name={{ capistrano_group }} state=present
 
 - name: create cap user
+  become: yes
   user: name={{ capistrano_user }} group={{ capistrano_group }} shell=/bin/bash createhome=yes state=present
 
 - name: create cap directories
+  become: yes
   file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }}
   with_items:
     - "{{ project_base }}/shared/config/initializers"
@@ -12,10 +19,12 @@
     - /home/{{ capistrano_user }}/.ssh
 
 - name: add keys for capistrano user
+  become: yes
   authorized_key: user={{ capistrano_user }} key={{ item }} exclusive=no state=present
   with_items:
     - "{{ keys_to_add }}"
   when: keys_to_add is defined
 
 - name: allow capistrano user to restart resque-pool
+  become: yes
   template: src=resque-restart-users dest=/etc/sudoers.d/resque-restart-users validate='visudo -cf %s'
