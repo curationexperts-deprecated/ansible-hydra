@@ -7,4 +7,4 @@ magick_path: "{{ install_path }}/imagemagick_sources"
 openjpg_ver: '2.1.0'
 libtiff_ver: '4.0.5'
 libpng_ver: '1.6.20'
-imagemagick_ver: '6.9.2-7'
+imagemagick_ver: '.' # call the role with imagemagick_ver: '6.8' to get the most recent 6.8 release, '.' to match the newest release 

@@ -1,6 +1,11 @@
 ---
 # ROLE: imagemagick
 # roles/imagemagick/tasks/main.yml 
+#
+# USAGE:
+# Installs the most recent release of ImageMagick, if you need a specific major or minor release, set the `imagemagick_ver:` variable
+#   EG:
+#     - { role: imagemagick, imagemagick_ver: '6.6' }   # will install the highest version matching the 6.6 prefix
 
 - include: im_libraries.yml
 - include: openjpg.yml
