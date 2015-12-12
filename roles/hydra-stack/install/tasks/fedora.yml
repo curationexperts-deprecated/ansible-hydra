@@ -1,9 +1,9 @@
 ---
 - name: set fedora version if absent
-  set_fact: fedora_version "4.1.0"
+  set_fact: fedora_version="4.1.0"
   when: fedora_version is undefined
   
-- name: fedora version to install {{ fedora_version }}
+- name: fedora version to install {{ fedora_version | default("4.1.0") }}  
   # Handy in cases where we're logging or watching the console
   debug: msg="Set 'fedora_version' in your variables to install a different version of Fedora Commons"
   
