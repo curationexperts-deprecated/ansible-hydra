@@ -3,6 +3,20 @@
 # TODO
 # add backup and cleanup scripts to crontab
 # be sure backup_opt runs at least an hour after the postgres backups
+
+- name: get EC2 instance_id
+  action: ec2_facts
+  register: instance_facts
+
+- name: get volume_ID for data volume # used in snapshot_backup.j2 template
+  ec2_vol:
+    aws_access_key: "{{ ec2_access_key }}"
+    aws_secret_key: "{{ ec2_secret_key }}"
+    instance: "{{ instance_facts.ansible_ec2_instance_id }}"
+    device_name: /dev/sdf
+    state: list
+  register: ec2_vol_1
+
 - name: add ec2 directory
   become: yes
   file: owner=root group=root path=/etc/ec2-backups state=directory
