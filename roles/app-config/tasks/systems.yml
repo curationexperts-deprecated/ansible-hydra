@@ -1,5 +1,6 @@
 ---
 - name: update ssh config
+  become: yes
   template: src=ssh_config dest=/etc/ssh/sshd_config backup=yes
   notify:
   - restart ssh service
@@ -7,9 +8,11 @@
 - meta: flush_handlers
 
 - name: add log rotation for production logs
+  become: yes
   template: src=logrotate-rails.j2 dest=/etc/logrotate.d/rails
     
 - name: add log rotation for catalina.out (tomcat/fedora/solr logs)
+  become: yes
   template: src=logrotate-tomcat dest=/etc/logrotate.d/tomcat7 backup=yes
 
 # use capistrano to deploy the code, migrate the database, restart apache

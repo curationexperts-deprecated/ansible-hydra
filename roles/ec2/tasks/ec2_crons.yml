@@ -4,25 +4,33 @@
 # add backup and cleanup scripts to crontab
 # be sure backup_opt runs at least an hour after the postgres backups
 - name: add ec2 directory
+  become: yes
   file: owner=root group=root path=/etc/ec2-backups state=directory
 
 - name: add snapshot delete key
+  become: yes
   template: src=delete_key.j2 dest=/etc/ec2-backups/delete_key owner=root group=root mode=0600
 
 - name: add snapshot delete secret
+  become: yes
   template: src=delete_secret.j2 dest=/etc/ec2-backups/delete_secret owner=root group=root mode=0600
 
 - name: add snapshot cleanup (delete) script
+  become: yes
   template: src=snapshot_cleanup.j2 dest=/etc/ec2-backups/clean_up_snapshots.sh owner=root group=root mode=0744
 
 - name: add snapshot create credentials
+  become: yes
   template: src=snapshot_creds.j2 dest=/etc/ec2-backups/snapshot_creds owner=root group=root mode=0600
 
 - name: add snapshot create (backup) script
+  become: yes
   template: src=snapshot_backup.j2 dest=/etc/ec2-backups/backup_opt.sh owner=root group=root mode=0744
 
 - name: add snapshot cleanup cron job
+  become: yes
   cron: name="delete ec2 old snapshots" user=root job="/etc/ec2-backups/clean_up_snapshots.sh" minute="5" hour="2" state=present
 
 - name: add snapshot create cron job
+  become: yes
   cron: name="ec2 snapshot backup" user=root job="/etc/ec2-backups/backup_opt.sh" minute="15" hour="1" state=present

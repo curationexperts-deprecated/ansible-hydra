@@ -1,4 +1,9 @@
 ---
+# Role: ec2
+# roles/ec2/tasks/main.yml
+#
+# sets up standard users, backups, and cron jobs for production (-like) enviroronment
+
 - include: ec2_housekeeping.yml
 - include: ec2_crons.yml
 - include: ec2_ubuntu_user.yml

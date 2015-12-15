@@ -1,16 +1,21 @@
 ---
 
 - name: install PPA for ec2-consistent-snapshot
+  become: yes
   apt_repository: repo='ppa:alestic'
 
 - name: install PPA for ec2-api-tools
+  become: yes
   apt_repository: repo='ppa:awstools-dev/awstools'
 
 - name: update apt cache for PPAs
+  become: yes
   apt: update_cache=yes
 
 - name: install ec2-consistent-snapshot
+  become: yes
   apt: name=ec2-consistent-snapshot state=present
 
 - name: install ec2-api-tools
+  become: yes
   apt: name=ec2-api-tools state=present

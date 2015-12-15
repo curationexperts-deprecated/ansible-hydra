@@ -1,5 +1,14 @@
 ---
+# ROLE: set_timezone
+# roles/set_timezone/tasks/main.yml
+#
+# Sets the timezone persistently for the target host.  Defaults to America/New_York
+# Usage:
+#    - { role: set_timezone, timezone: America/Chicago  }
+# the timezone must be a valid zone for your distribution - see http://www.iana.org/time-zones for the definitive list
+
 - name: Set timezone
+  become: yes
   template: src=timezone
         dest=/etc/timezone
         owner=root

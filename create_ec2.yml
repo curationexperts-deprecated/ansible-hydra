@@ -12,7 +12,7 @@
   vars:
     ec2_vol_1: "{{ hostvars['localhost'].ec2_vol }}"
   roles:
-    - { role: packages, become: yes }
-    - { role: ec2, become: yes }
+    - { role: packages }
+    - { role: ec2 }
 
 - include: configure.yml hosts=newboxes
