@@ -1,7 +1,8 @@
 ---
+# ROLE: hydra-stack
+# roles/hydra-stack/install/defaults/main.yml
+#
+# Provides default values for variables in the hydra-stack install role
 install_path: /opt/install
-install_user: install
-install_group: install
-become_user: install
 solr_context: hydra
 app_root: /opt/sufia-project/current

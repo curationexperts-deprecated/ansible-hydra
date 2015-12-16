@@ -1,4 +1,6 @@
 ---
+# ROLE: system_setup
+# roles/system_setup/defaults/main.yml
+#
+# Provides default values for variables in the system_setup role
 install_path: /opt/install
-install_user: install
-install_group: install

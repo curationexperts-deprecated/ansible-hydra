@@ -1,7 +1,9 @@
 ---
+# ROLE: sufia_dependencies
+# roles/sufia_dependencies/install/defaults/main.yml
+#
+# Provides default values for variables in the sufia_dependencies install role
 install_path: /opt/install
-install_user: "{{ ansible_ssh_user }}"
-install_group: "{{ ansible_ssh_user }}"
 app_root: /opt/sufia-project/current
 rails_env: production
 pg_pass: postgres

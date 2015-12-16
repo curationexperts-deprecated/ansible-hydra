@@ -1,4 +1,9 @@
 ---
+# ROLE: hydra-stack
+# roles/hydra-stack/install/tasks/main.yml
+#
+# installs solr and fedora in production mode as servlets under tomcat
+#
 - include: tomcat.yml
 - include: solr.yml
 - include: fedora.yml
