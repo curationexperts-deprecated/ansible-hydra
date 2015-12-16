@@ -26,9 +26,6 @@
             delete_on_termination: true
   register: ec2
 
-  # first stab at dynamic inventory management on ec2
-  # finishing this is out of scope for current project
-  # add_host only adds to in-memory list of hosts
 - name: Add all instance public IPs to in-memory host group
   add_host: hostname={{ item.public_ip }} groups=newboxes
   with_items: ec2.instances
@@ -39,3 +36,4 @@
 
 - name: give ssh time to come up
   wait_for: host={{ item.public_ip }} port=22 state=started
+  with_items: ec2.instances
