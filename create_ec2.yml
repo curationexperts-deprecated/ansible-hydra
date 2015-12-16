@@ -1,5 +1,5 @@
 - hosts: localhost
-  name: create
+  name: create a new EC2 instance
   connection: local
   gather_facts: False
   roles:
@@ -11,6 +11,7 @@
   gather_facts: true
   roles:
     - { role: packages }
+    - { role: mount_opt, data_device: /dev/xvdf }
     - { role: ec2 }
 
 - include: configure.yml hosts=newboxes
