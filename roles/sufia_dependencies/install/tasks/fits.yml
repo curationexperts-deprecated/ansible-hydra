@@ -6,7 +6,7 @@
 
 - name: download fits zip version {{ fits_version }}
   become: yes
-  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-{{ fits_version }}.zip owner={{ install_user }} group={{ install_group }} dest={{ install_path }}/fits-{{ fits_version }}.zip
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-{{ fits_version }}.zip owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fits-{{ fits_version }}.zip
 
 - name: unpack fits
   become: yes

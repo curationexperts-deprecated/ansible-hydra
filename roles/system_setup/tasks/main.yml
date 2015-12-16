@@ -2,18 +2,20 @@
 # ROLE: system_setup
 # roles/system_setup/tasks/main.yml
 
+# these two tasks ensure that the ansible_ssh_user will 
+# always belong to a group with the same name
 - name: create install group
   become: yes
-  group: name={{ install_group }} state=present
+  group: name={{ ansible_ssh_user }} state=present
 
 - name: create install user
   become: yes
-  user: name={{ install_user }} group={{ install_group }} shell=/bin/bash createhome=yes state=present
+  user: name={{ ansible_ssh_user }} groups={{ ansible_ssh_user }} shell=/bin/bash createhome=yes state=present
 
 - name: chown /opt
   become: yes
-  file: owner={{ install_user }} group={{ install_group }} state=directory path=/opt
+  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path=/opt
 
 - name: create install directory
   become: yes
-  file: owner={{ install_user }} group={{ install_group }} state=directory path=/opt/install
+  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ install_path }}
