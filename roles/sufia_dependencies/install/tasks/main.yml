@@ -1,5 +1,9 @@
 ---
-# Install all dependencies specific to sufia (but not hydra generally)
+# ROLE: sufia_dependencies
+# roles/sufia_dependencies/install/tasks/main.yml
+#
+# includes tasks to install dependencies specific to sufia (but not hydra generally)
+#
 - include: fits.yml
 - include: redis_resque.yml
 - include: postgresql.yml

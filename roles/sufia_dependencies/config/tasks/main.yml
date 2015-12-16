@@ -1,4 +1,9 @@
 ---
+# ROLE: sufia_dependencies
+# roles/sufia_dependencies/config/tasks/main.yml
+#
+# creates sufia-related shared config files for capistrano 
+#
 - name: create shared config files
   become: yes
   template: src={{ item }}.j2 dest={{ shared_root }}/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=no

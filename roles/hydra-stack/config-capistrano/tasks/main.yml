@@ -1,4 +1,9 @@
 ---
+# ROLE: hydra-stack
+# roles/hydra-stack/config-capistrano/tasks/main.yml
+#
+# creates shared config files for capistrano deployment
+#
 - name: create shared fedora and solr configs
   become: yes
   template: src={{ item }}.j2 dest={{ shared_root }}/config/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=yes

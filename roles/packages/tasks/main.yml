@@ -1,4 +1,9 @@
 ---
+# ROLE: packages
+# roles/packages/tasks/main.yml
+#
+# updates apt, installs packages used by other installation/configuration tasks
+#
 - name: update apt cache
   become: yes
   apt: update_cache=yes
