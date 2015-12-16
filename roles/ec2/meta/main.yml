@@ -1,5 +1,0 @@
----
-# FILE: roles/ec2/meta/main.yml
-
-dependencies:
-  - { role: mount_opt, data_device: /dev/xvdf }
