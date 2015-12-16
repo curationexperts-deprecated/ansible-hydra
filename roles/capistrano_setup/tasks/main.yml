@@ -15,6 +15,7 @@
   file: path={{ item }} state=directory owner={{ capistrano_user }} group={{ capistrano_group }}
   with_items:
     - "{{ project_base }}/shared/config/initializers"
+    - "{{ project_base }}/shared/log"
     - "{{ project_base }}/releases"
     - /home/{{ capistrano_user }}/.ssh
 
