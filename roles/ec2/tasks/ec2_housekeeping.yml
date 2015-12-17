@@ -19,3 +19,11 @@
 - name: install ec2-api-tools
   become: yes
   apt: name=ec2-api-tools state=present
+
+- name: Install Python PIP
+  become: yes
+  apt: pkg=python-pip state=latest
+
+- name: Install boto via PIP
+  become: yes
+  pip: name=boto state=latest

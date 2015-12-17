@@ -8,13 +8,16 @@
   action: ec2_facts
   register: instance_facts
 
-- name: get volume_ID for data volume # used in snapshot_backup.j2 template
+- name: lookup volume_ID for data volume # used in snapshot_backup.j2 template
+  # NOTE: the volume was created with the instance in order to set delete_on_terminate
+  # but you need to run this to get the volume id to use for AWS snapshots
   ec2_vol:
     aws_access_key: "{{ ec2_access_key }}"
     aws_secret_key: "{{ ec2_secret_key }}"
     instance: "{{ instance_facts.ansible_facts.ansible_ec2_instance_id }}"
+    region: "{{ instance_facts.ansible_facts.ansible_ec2_placement_region }}"
     device_name: /dev/sdf
-    state: list
+    state: present
   register: ec2_vol_1
 
 - name: add ec2 directory
