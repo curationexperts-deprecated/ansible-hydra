@@ -1,0 +1,30 @@
+---
+- name: get ec2 instance info
+  hosts: ec2hosts
+  user: ubuntu
+  gather_facts: false
+  tasks:
+    - name: get ec2 facts
+      action: ec2_facts
+      register: instance_info
+  
+- name: terminate ec2 hosts launched by ansible
+  hosts: localhost
+  vars: # it seems like there should be an easier way to get the instance_info from the play above...
+    instance_id: "{{ hostvars[groups['ec2hosts'][0]]['instance_info']['ansible_facts']['ansible_ec2_instance_id'] }}"
+    ec2_region: "{{ hostvars[groups['ec2hosts'][0]]['instance_info']['ansible_facts']['ansible_ec2_placement_region'] }}"
+  gather_facts: false
+  tasks: 
+    - name: terminate instance
+      connection: local
+      ec2:
+        aws_access_key: "{{ ec2_access_key }}"
+        aws_secret_key: "{{ ec2_secret_key }}"
+        state: absent 
+        instance_ids: '{{ instance_id }}'
+        region: "{{ ec2_region }}"
+    - name: update inventory
+      lineinfile:
+        dest: hosts
+        regexp: "{{ groups['ec2hosts'][0] }}"
+        state: absent
