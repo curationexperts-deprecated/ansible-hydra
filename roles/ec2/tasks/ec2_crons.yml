@@ -12,7 +12,7 @@
   ec2_vol:
     aws_access_key: "{{ ec2_access_key }}"
     aws_secret_key: "{{ ec2_secret_key }}"
-    instance: "{{ instance_facts.ansible_ec2_instance_id }}"
+    instance: "{{ instance_facts.ansible_facts.ansible_ec2_instance_id }}"
     device_name: /dev/sdf
     state: list
   register: ec2_vol_1
