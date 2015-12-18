@@ -5,6 +5,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 <VirtualHost *:80>
   PassengerAppEnv {{ rails_env }}
+  SetEnv SECRET_KEY_BASE {{ rails_secret.stdout }}
   ServerName {{ server_name }}
   # !!! Be sure to point DocumentRoot to 'public'!
   DocumentRoot {{ app_root }}/public

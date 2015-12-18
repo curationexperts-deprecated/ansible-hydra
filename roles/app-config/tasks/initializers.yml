@@ -1,4 +1,12 @@
 ---
+- name: generate blacklight secret key
+  command: openssl rand -hex 64
+  register: blacklight_secret
+
+- name: generate devise secret key
+  command: openssl rand -hex 64
+  register: devise_secret
+
 - name: create shared initializers
   become: yes
   template: src={{ item }}.j2 dest={{ shared_root }}/config/initializers/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=no

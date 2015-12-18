@@ -4,6 +4,10 @@
 # 
 # Apache configuration; setup apache configuration files and apply ssl certs when needed
 
+- name: generate rails secret
+  command: openssl rand -hex 64
+  register: rails_secret
+
 - name: create apache vhosts file
   become: yes
   template: src=apache_config.j2 dest=/etc/apache2/sites-available/{{ project_name }}.conf owner=root group=root backup=no
