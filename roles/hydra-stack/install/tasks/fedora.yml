@@ -2,14 +2,6 @@
 # ROLE: hydra-stack
 # roles/hydra-stack/install/tasks/fedora.yml
 #
-- name: set fedora version if absent
-  set_fact: fedora_version="4.1.0"
-  when: fedora_version is undefined
-  
-- name: fedora version to install {{ fedora_version | default("4.1.0") }}  
-  # Handy in cases where we're logging or watching the console
-  debug: msg="Set 'fedora_version' in your variables to install a different version of Fedora Commons"
-  
 - name: download fedora
   become: yes
   get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
