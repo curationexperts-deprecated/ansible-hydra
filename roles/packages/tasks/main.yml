@@ -7,9 +7,6 @@
 - name: update apt cache
   become: yes
   apt: update_cache=yes
-  register: result
-  until: result|success
-  retries: 3
 
 - name: upgrade apt packages
   become: yes
