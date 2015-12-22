@@ -17,11 +17,11 @@
 
 - name: download ruby
   become: yes
-  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz sha256sum=5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44 owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/ruby-2.2.2.tar.gz
+  get_url: url={{ ruby_gzip_url }} sha256sum={{ ruby_sha_256 }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/ruby-{{ ruby_ver }}.tar.gz
   
 - name: unzip ruby file
   become: yes
-  unarchive: src=/opt/install/ruby-2.2.2.tar.gz dest={{ install_path }}/ creates={{ install_path }}/ruby-2.2.2/compile.c copy=no
+  unarchive: src=/opt/install/ruby-{{ ruby_ver }}.tar.gz dest={{ install_path }}/ creates={{ install_path }}/ruby-{{ ruby_ver }}/compile.c copy=no
 
 - name: check if ruby is installed
   become: yes
@@ -30,16 +30,16 @@
 
 - name: configure ruby
   become: yes
-  shell: cd {{ install_path }}/ruby-2.2.2 && ./configure --enable-shared creates={{ install_path }}/ruby-2.2.2/Makefile
+  shell: cd {{ install_path }}/ruby-{{ ruby_ver }} && ./configure --enable-shared creates={{ install_path }}/ruby-{{ ruby_ver }}/Makefile
   
 - name: make ruby
   become: yes
-  shell: cd {{ install_path }}/ruby-2.2.2 && make 
+  shell: cd {{ install_path }}/ruby-{{ ruby_ver }} && make 
   when: ruby.stat.exists == False
 
 - name: install ruby
   become: yes
-  shell: cd {{ install_path }}/ruby-2.2.2 && make install creates=/usr/local/bin/ruby
+  shell: cd {{ install_path }}/ruby-{{ ruby_ver }} && make install creates=/usr/local/bin/ruby
   when: ruby.stat.exists == False
 
 - name: update rubygems
