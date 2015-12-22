@@ -7,3 +7,4 @@ install_path: /opt/install
 solr_context: hydra
 app_root: /opt/sufia-project/current
 fedora_version: 4.1.0
+solr_version: 4.10.4
