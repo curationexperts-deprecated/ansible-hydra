@@ -1,4 +1,6 @@
 ---
+# roles/capistrano_setup/defaults/main.yml
 capistrano_user: deploy
 capistrano_group: deploy
-project_base: /opt/sufia-project
+project_name: sufia-project
+project_base: /opt/{{ project_name }}

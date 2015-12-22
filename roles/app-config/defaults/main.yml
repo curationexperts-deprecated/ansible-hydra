@@ -1,4 +1,6 @@
 ---
-shared_root: /opt/sufia-project/shared
+# roles/app-config/defaults/main.yml
+project_name: sufia-project
+shared_root: /opt/{{ project_name }}/shared
 capistrano_user: deploy
 capistrano_group: deploy

@@ -1,6 +1,4 @@
 ---
-# ROLE: ffmpeg - defaults
 # roles/ffmpeg/defaults/main.yml 
-
 install_path: /opt/install
-ffmpeg_path: "{{ install_path }}/ffmpeg_sources"
+ffmpeg_path: "{{ install_path }}/ffmpeg_sources" # needs double-quotes for yaml syntax

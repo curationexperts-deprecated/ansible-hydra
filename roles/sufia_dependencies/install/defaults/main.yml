@@ -1,10 +1,8 @@
 ---
-# ROLE: sufia_dependencies
 # roles/sufia_dependencies/install/defaults/main.yml
-#
-# Provides default values for variables in the sufia_dependencies install role
 install_path: /opt/install
-app_root: /opt/sufia-project/current
+project_name: sufia-project
+app_root: /opt/{{ project_name }}/current
 rails_env: production
 pg_pass: postgres
 hydra_db: my_hydra_db
