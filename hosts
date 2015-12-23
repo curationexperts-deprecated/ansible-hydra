@@ -23,7 +23,3 @@ local.myproject.com nickname=local vm=1 branch=develop
 # EC2 boxes
 # Ansible will populate on initial box creation; you can also edit at will
 [ec2hosts]
-
-# For ansible use during first run
-# Do not populate manually!
-[newboxes]
