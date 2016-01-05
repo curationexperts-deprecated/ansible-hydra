@@ -1,5 +1,5 @@
 ---
-- name: provision a vagrant box to mimic a production environment as closely as possible.
+- name: provision a vagrant box as a development machine.
   hosts: vagrant
   remote_user: vagrant
   vars:
