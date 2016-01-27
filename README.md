@@ -38,8 +38,11 @@ To set up a production-like Vagrant box (for staging, troubleshooting) for you p
   * (see sample_Vagrantfile for ideas)
   * Be sure to point to the vagrant_staging.yml file, which skips aws-related roles
 2. Clone this repository alongside your project
-3. cd into your project and run `vagrant up`
-4. TODO: deploy your capistrano project to your vagrant box. Haven't tried this yet.
+3. Copy group_vars/sample_all to group_vars/all.
+ * Add/change any other variables you wish to override.
+ * Consider protecting group_vars/all with ansible-vault.
+4. cd into your project and run `vagrant up`
+5. TODO: deploy your capistrano project to your vagrant box. Haven't tried this yet.
 
 ### A development vagrant box
 
@@ -47,15 +50,18 @@ To set up a production-like Vagrant box (for staging, troubleshooting) for you p
   * (see sample_Vagrantfile for ideas)
   * Be sure to point to the vagrant_dev.yml file
 2. Clone this repository alongside your project
-3. In your application code, edit
+3. Copy group_vars/sample_all to group_vars/all.
+ * Add/change any other variables you wish to override.
+ * Consider protecting group_vars/all with ansible-vault.
+4. In your application code, edit
   * development section of config/blacklight.yml to url: http://localhost:8080/hydra/collection1
   * development section of config/fedora.yml to url: http://127.0.0.1:8080/fedora/rest
   * create a file config/solr.yml with a development section containing url: http://localhost:8080/hydra
   * (see roles/hydra-stack/config/ for more context)
-4. run `vagrant up`
-5. 'vagrant ssh'; cd /vagrant; 'bundle install'
-6. sudo service resque-pool start (resque-pool can't start until bundler has run)
-7. sudo service apache2 restart
+5. run `vagrant up`
+6. 'vagrant ssh'; cd /vagrant; 'bundle install'
+7. sudo service resque-pool start (resque-pool can't start until bundler has run)
+8. sudo service apache2 restart
 
 ## Contributing
 Contributions are welcome in the form of issues (including bug reports, use cases) and pull requests.
