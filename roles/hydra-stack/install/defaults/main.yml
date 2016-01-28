@@ -1,6 +1,15 @@
 ---
 # roles/hydra-stack/install/defaults/main.yml
 install_path: /opt/install
+# to run successfully with Java 8, you must run the openjdk1_8 role BEFORE the hydra-stock role
+# so the openjdk1_8 role can overwrite this default:
+java_home: /usr/lib/jvm/java-7-openjdk-amd64
+# tomcat PermGen memory (for loading java classes, etc.)
+tomcat_permgen_memory: 128M
+# tomcat min memory allocation
+tomcat_min_memory: 512m
+# tomcat max memory allocation
+tomcat_max_memory: 4096m
 solr_context: hydra
 project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
