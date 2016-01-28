@@ -1,0 +1,41 @@
+---
+# ROLE: deploy
+# roles/deploy/tasks/main.yml 
+#
+# Does a minimal install of a codebase in development mode to bootstrap a capistrano deployment
+# The codebase being deployed must be capified and have a config/deploy/{{ deploy_target }}.rb file
+
+- name: create deployment keypair for connection user
+  user: 
+      name: "{{ ansible_ssh_user }}"
+      generate_ssh_key: yes 
+      ssh_key_file: .ssh/id_rsa
+
+- name: read public key
+  slurp:
+      src: /home/{{ ansible_ssh_user }}/.ssh/id_rsa.pub
+  register: public_key
+
+- name: add public key to deploy user
+  become: yes
+  authorized_key: 
+      user: "{{ capistrano_user }}" 
+      key: "{{ public_key.content | b64decode }}"
+
+- name: clone repo 
+  git: 
+      repo: "{{ repo }}"
+      dest: /home/{{ ansible_ssh_user }}/{{ project_name }}
+
+- name: setup repo - i.e. bundle install
+  shell: bundle install chdir=/home/{{ ansible_ssh_user }}/{{ project_name }}
+
+- name: deploy to production directories with capistrano
+  shell: cap {{ deploy_target }} deploy chdir=/home/{{ ansible_ssh_user }}/{{ project_name }}
+
+- name: restart tomcat and apache
+  become: true
+  service: name={{ item }} state=restarted
+  with_items: 
+    - tomcat7
+    - apache2
