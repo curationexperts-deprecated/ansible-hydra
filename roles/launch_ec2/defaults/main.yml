@@ -1,7 +1,6 @@
 ---
+# roles/launch_ec2/defaults/main.yml
 ec2_region: us-east-1
-# a moderate instance size 
-ec2_instance_type: m3.medium
-# ubuntu 14.04 LTS 64-bit
-ec2_image: ami-b9c525d2
+ec2_instance_type: m3.medium # a moderate instance size 
+ec2_image: ami-b9c525d2 # ubuntu 14.04 LTS 64-bit for us-east-1
 aws_tag: staging

@@ -1,3 +1,4 @@
 ---
-passenger_ver: "5.0.10"
-ruby_ver: "2.2.0"
+# roles/apache-passenger/install/defaults/main.yml
+passenger_ver: '5.0.10'
+ruby_ver: '2.2.4'
