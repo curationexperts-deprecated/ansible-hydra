@@ -1,0 +1,45 @@
+---
+- name: create a new EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  roles:
+    - launch_ec2
+
+- name: setup
+  hosts: newboxes
+  user: ubuntu
+  gather_facts: true
+  roles:
+    - { role: packages }
+    - { role: mount_opt, data_device: /dev/xvdf }
+    - { role: ec2 }
+
+- include: configure_dev.yml hosts=newboxes
+
+### After running this script!
+# create entry in .ssh/config
+# clone repo to /opt/sufia-project
+# bundle install
+# bin/rake db:migrate RAILS_ENV=development
+# restart resque-pool
+# restart apache
+# restart tomcat
+# pull dotfiles!
+# copy your private key to the new box so you can push to github
+# create a solr test core:
+#   $ cd /opt/solr
+#   $ mkdir test
+#   $ cd test
+#   # (you need a local checkout of hydra-jetty for this one)
+#   $ cp -r /home/ubuntu/src/hydra-jetty/solr/test/conf .
+#   $ cp ../collection1/core.properties .
+#   # edit core.properties and change the name to test
+#   $ cd /opt/solr
+#   $ chown -R tomcat7: test
+#   # add a solr.xml that consists of <solr></solr>
+#   #   this should be enough so that solr automatically discovers the new core.
+#   # restart tomcat
+# apt-get install phantomjs # make sure it's version 1.9.x
+# make sure config files (especially blacklight.yml and fedora.yml have tomcat ports/paths)
+# add a solr.yml with url entries for development and test, similar to the above
