@@ -32,7 +32,7 @@ set :deploy_to, '/opt/sufia-project'
 [Vagrant](http://docs.vagrantup.com/v2/)
 
 ### A production-like vagrant box
-To set up a production-like Vagrant box (for staging, troubleshooting) for you project:
+To set up a production-like Vagrant box (for staging, troubleshooting) for your project:
 
 1. Create a Vagrant file in your project
   * (see sample_Vagrantfile for ideas)
