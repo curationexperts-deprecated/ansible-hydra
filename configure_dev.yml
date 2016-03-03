@@ -1,0 +1,27 @@
+- name: provision an ec2 box as a development machine.
+  hosts: "{{ hosts }}"
+  user: ubuntu
+  gather_facts: true
+  vars:
+    - project_base: /opt/{{ project_name }}
+    - app_root: /opt/{{ project_name }}
+    - rails_env: development
+    - base_path: /dev
+    # Unfortunately named, but needed for resque-pool init script
+    # in roles/sufia_dependencies/install/defaults/main.yml
+    - capistrano_user: ubuntu
+  roles:
+    - packages
+    - set_timezone
+    - system_setup
+    - ruby
+    - openjdk1_8
+    - hydra-stack/install
+    - sufia_dependencies/install
+    - apache-passenger/install
+    - apache-passenger/config
+
+# bundle install hasn't been run? Makes sense; that's done with capistrano deployment
+# resque-pool can't start until bundle install has been run because it loads the actual code.
+# rubyracer was installed on prod only; needed to move gem to general sectionof Gemfile
+# ports 8983 need to say 8080.
