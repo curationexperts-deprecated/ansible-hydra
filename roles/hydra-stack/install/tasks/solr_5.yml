@@ -16,3 +16,7 @@
   when: solr_5_script.stat.exists == False
   become: yes
   shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh solr-{{ solr_version }}.tgz
+
+- name: set the solr port
+  set_fact:
+    solr_port: 8983
