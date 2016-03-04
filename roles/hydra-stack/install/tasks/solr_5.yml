@@ -1,0 +1,18 @@
+---
+- name: download solr tarball
+  become: yes
+  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz force=no
+  # when we upgrade to ansible 2.0, add checksum="md5:{{ solr_md5 }}" 
+
+- name: untar solr tarball
+  become: yes
+  unarchive: src={{ install_path }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/ creates={{ install_path }}/solr-{{ solr_version }}/bin/solr copy=no
+
+- name: check if solr 5 is installed
+  stat: path=/etc/default/solr.in.sh
+  register: solr_5_script
+
+- name: run solr 5 service script
+  when: solr_5_script.stat.exists == False
+  become: yes
+  shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh solr-{{ solr_version }}.tgz
