@@ -13,6 +13,15 @@
 # description: resque workers handle transcoding jobs
 # processname: resque-pool
 #
+# Init info for Debian systems, need
+### BEGIN INIT INFO
+# Provides: resque-pool
+# Required-Start:    $local_fs $syslog $remote_fs dbus
+# Required-Stop:     $local_fs $syslog $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start resque-pool
+### END INIT INFO
 
 NAME=resque-pool
 KILL=/bin/kill
