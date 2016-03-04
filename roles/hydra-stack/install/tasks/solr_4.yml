@@ -73,3 +73,7 @@
 - name: symlink solrconfig from code to solr
   become: yes
   file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes
+
+- name: set the solr port
+  set_fact:
+    solr_port: 8080
