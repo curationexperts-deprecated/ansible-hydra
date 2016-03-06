@@ -1,0 +1,14 @@
+---
+# ROLE: bundler
+# roles/bundler/tasks/main.yml
+#
+# Provides minimal bundler install required to run `bundle install`
+# Requires some version of ruby to be installed on system before being run
+
+- name: update rubygems
+  become: yes
+  command: gem update --system
+
+- name: install bundler
+  become: yes
+  gem: name=bundler user_install=no state=present
