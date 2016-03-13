@@ -1,0 +1,18 @@
+---
+# ROLE: hydra-tutorials
+# roles/hydra-tutorials/tasks/wrappers.yml
+#
+# pre-download Solr & Fedora runtime files to save time in workshops
+#
+
+- name: download files expected by solr_wrapper
+  get_url: url={{ item }} dest=/var/tmp
+  with_items:
+    - "http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.zip"
+    - "http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.zip.md5"
+
+- name: download files expected by fcrepo_wrapper
+  get_url: url={{ item }} dest=/var/tmp
+  with_items:
+    - "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fcrepo_version }}/fcrepo-webapp-{{ fcrepo_version }}-jetty-console.jar"
+    - "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fcrepo_version }}/fcrepo-webapp-{{ fcrepo_version }}-jetty-console.jar.md5"
