@@ -5,11 +5,18 @@
   become: yes
   apt: name=software-properties-common state=present
   
-- name: add openjdk ppa
+- name: add ubuntu openjdk ppa
   # sudo add-apt-repositories ppa:openjdk-r/ppa
   become: yes
   apt_repository: repo='ppa:openjdk-r/ppa'
-  
+  when: OS=ubuntu
+
+- name: add debian backports
+  # edit sources.list, add repo line 
+  become: yes
+  apt_repository: repo='deb http://http.debian.net/debian jessie-backports main' state=present # filename='openjdk-8-jdk'
+  when: OS=debian
+
 - name: update apt caches
   # sudo apt-get update 
   become: yes
