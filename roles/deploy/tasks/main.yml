@@ -33,9 +33,17 @@
 - name: deploy to production directories with capistrano
   shell: cap {{ deploy_target }} deploy chdir=/home/{{ ansible_ssh_user }}/{{ project_name }}
 
-- name: restart tomcat and apache
+- name: restart solr 4.x
   become: true
-  service: name={{ item }} state=restarted
-  with_items: 
-    - tomcat7
-    - apache2
+  when: solr_main_version == 4
+  service: name=tomcat7 state=restarted
+
+- name: restart solr 5.x
+  become: true
+  when: solr_main_version == 5
+  service: name=solr state=restarted
+
+- name: restart apache
+  # restart apache now that solr has loaded the symlinked solrconfig and schema files
+  become: true
+  service: name=apache2 state=restarted
