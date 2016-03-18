@@ -10,8 +10,12 @@ tomcat_permgen_memory: 128M
 tomcat_min_memory: 512m
 # tomcat max memory allocation
 tomcat_max_memory: 4096m
-solr_context: hydra
+tomcat_config_path: /etc/tomcat7/Catalina/localhost
+solr_context: solr
 project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
 fedora_version: 4.1.0
-solr_version: 4.10.4
+#solr_version: 4.10.4
+solr_version: 5.5.0
+#solr_main_version: "{{ solr_version[0:1] }}"
+solr_main_version: 5

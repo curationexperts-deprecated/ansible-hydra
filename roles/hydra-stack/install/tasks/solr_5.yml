@@ -1,0 +1,34 @@
+---
+- name: download solr tarball
+  become: yes
+  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz force=no
+  # when we upgrade to ansible 2.0, add checksum="md5:{{ solr_md5 }}" 
+
+- name: untar solr tarball
+  become: yes
+  unarchive: src={{ install_path }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/ creates={{ install_path }}/solr-{{ solr_version }}/bin/solr copy=no
+
+- name: check if solr 5 is installed
+  stat: path=/etc/default/solr.in.sh
+  register: solr_5_script
+
+- name: run solr 5 service script
+  when: solr_5_script.stat.exists == False
+  become: yes
+  shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh {{ install_path }}/solr-{{ solr_version }}.tgz
+
+- name: create default collection
+  become: yes
+  shell: sudo -u solr /opt/solr/bin/solr create -c {{ solr_core }} -d basic_configs
+
+- name: symlink schema from code to solr
+  become: yes
+  file: src={{ app_root }}/solr_conf/conf/schema.xml dest=/var/solr/data/{{ solr_core }}/conf/schema.xml state=link force=yes
+
+- name: symlink solrconfig from code to solr
+  become: yes
+  file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/var/solr/data/{{ solr_core }}/conf/solrconfig.xml state=link force=yes
+
+- name: set the solr port
+  set_fact:
+    solr_port: 8983
