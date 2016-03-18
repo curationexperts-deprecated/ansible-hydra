@@ -6,7 +6,7 @@
 
 - name: configure md5 security
   become: yes
-  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf group=postgres owner=postgres backup=yes
+  copy: src=pg_hba.conf dest=/etc/postgresql/{{ postgres_version }}/main/pg_hba.conf group=postgres owner=postgres backup=yes
 
 - name: restart postgres server
   become: yes

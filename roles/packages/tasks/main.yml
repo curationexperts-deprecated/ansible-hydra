@@ -4,6 +4,11 @@
 #
 # updates apt, installs packages used by other installation/configuration tasks
 #
+- name: install aptitude
+  # on Debian Jessie aptitude is not installed by default, without it apt-get update fails
+  become: yes
+  apt: name=aptitude state=installed
+
 - name: update apt cache
   become: yes
   apt: update_cache=yes
@@ -43,3 +48,4 @@
     - libxvidcore-dev
     - redis-server
     - xfsprogs
+    - libsqlite3-dev
