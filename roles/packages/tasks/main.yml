@@ -43,3 +43,4 @@
     - libxvidcore-dev
     - redis-server
     - xfsprogs
+    - libsqlite3-dev
