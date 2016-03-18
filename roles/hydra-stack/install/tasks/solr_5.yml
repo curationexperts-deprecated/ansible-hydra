@@ -19,15 +19,15 @@
 
 - name: create default collection
   become: yes
-  shell: sudo -u solr /opt/solr/bin/solr create -c {{ solr_context }} -d basic_configs
+  shell: sudo -u solr /opt/solr/bin/solr create -c {{ solr_core }} -d basic_configs
 
 - name: symlink schema from code to solr
   become: yes
-  file: src={{ app_root }}/solr_conf/conf/schema.xml dest=/var/solr/data/{{ solr_context }}/conf/schema.xml state=link force=yes
+  file: src={{ app_root }}/solr_conf/conf/schema.xml dest=/var/solr/data/{{ solr_core }}/conf/schema.xml state=link force=yes
 
 - name: symlink solrconfig from code to solr
   become: yes
-  file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/var/solr/data/{{ solr_context }}/conf/solrconfig.xml state=link force=yes
+  file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/var/solr/data/{{ solr_core }}/conf/solrconfig.xml state=link force=yes
 
 - name: set the solr port
   set_fact:
