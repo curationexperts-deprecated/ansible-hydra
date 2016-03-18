@@ -5,3 +5,7 @@ project_name: sufia-project
 shared_root: /opt/{{ project_name }}/shared
 capistrano_user: deploy
 capistrano_group: deploy
+# running Solr 4.x under tomcat, solr_context is the name of the tomcat config file
+# for Solr 4.x use "hydra" to distinguish the tomcat config file hydra.xml from core config solr.xml
+solr_context: solr
+solr_core: collection1
