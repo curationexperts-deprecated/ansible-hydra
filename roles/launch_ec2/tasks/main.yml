@@ -11,6 +11,7 @@
     aws_access_key: "{{ ec2_access_key }}"
     aws_secret_key: "{{ ec2_secret_key }}"
     vpc_subnet_id: "{{ vpc_subnet_id }}"
+    # assign_public_ip: yes
     group_id: "{{ ec2_security_group }}"
     instance_type: "{{ ec2_instance_type }}"
     image: "{{ ec2_image }}"
@@ -26,6 +27,16 @@
             volume_size: 40
             delete_on_termination: true
   register: ec2
+
+- name: associate EIP with instance
+  ec2_eip:
+    in_vpc: yes
+    reuse_existing_ip_allowed: yes
+    state: present
+    instance_id: "{{ ec2.instance_ids[0] }}"
+  register: instance_eip
+
+- debug: var=instance_eip.public_ip
 
 - name: Add all instance public IPs to in-memory host group
   add_host: hostname={{ item.public_ip }} groups=newboxes
