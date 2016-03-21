@@ -4,14 +4,14 @@
 #
 # updates apt, installs packages used by other installation/configuration tasks
 #
-- name: install aptitude
-  # on Debian Jessie aptitude is not installed by default, without it apt-get update fails
-  become: yes
-  apt: name=aptitude state=installed
-
 - name: update apt cache
   become: yes
   apt: update_cache=yes
+
+- name: install aptitude
+  # on Debian Jessie aptitude is not installed by default, without it apt-get upgrade fails
+  become: yes
+  apt: name=aptitude state=installed
 
 - name: upgrade apt packages
   become: yes
@@ -49,3 +49,4 @@
     - redis-server
     - xfsprogs
     - libsqlite3-dev
+    - libreoffice
