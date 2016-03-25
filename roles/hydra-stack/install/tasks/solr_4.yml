@@ -58,13 +58,13 @@
   become: yes
   shell: chown -R tomcat7:tomcat7 /usr/share/tomcat7
 
-- name: create solr xml file
+- name: create solr context file
   become: yes
   template: src=hydra_xml.j2 dest=/opt/solr/{{ solr_context }}.xml group=tomcat7 owner=tomcat7
 
-- name: symlink solr xml file to tomcat
+- name: symlink solr context file to tomcat
   become: yes
-  file: src=/opt/solr/{{ solr_context }}.xml dest=/etc/tomcat7/Catalina/localhost/{{ solr_context }}.xml state=link
+  file: src=/opt/solr/{{ solr_context }}.xml dest={{ tomcat_config_path }}/{{ solr_context }}.xml state=link
 
 - name: symlink schema from code to solr
   become: yes
@@ -73,3 +73,7 @@
 - name: symlink solrconfig from code to solr
   become: yes
   file: src={{ app_root }}/solr_conf/conf/solrconfig.xml dest=/opt/solr/collection1/conf/solrconfig.xml state=link force=yes
+
+- name: set the solr port
+  set_fact:
+    solr_port: 8080

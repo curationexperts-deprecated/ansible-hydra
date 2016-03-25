@@ -5,5 +5,8 @@
 # installs solr and fedora in production mode as servlets under tomcat
 #
 - include: tomcat.yml
-- include: solr.yml
+- include: solr_5.yml
+  when: solr_version | match("^5\.[0-9]\.[0-9]")
+- include: solr_4.yml
+  when: solr_version | match("^4\.[0-9]\.[0-9]")
 - include: fedora.yml

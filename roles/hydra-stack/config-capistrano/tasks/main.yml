@@ -11,3 +11,5 @@
     - fedora.yml
     - solr.yml
     - blacklight.yml
+# the solr.yml template requires a solr_port variable, which is set in the install tasks
+# for solr 4 it is 8080, for solr 5 it is 8983
