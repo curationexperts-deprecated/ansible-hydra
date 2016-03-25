@@ -17,5 +17,3 @@ app_root: /opt/{{ project_name }}/current
 fedora_version: 4.1.0
 #solr_version: 4.10.4
 solr_version: 5.5.0
-#solr_main_version: "{{ solr_version[0:1] }}"
-solr_main_version: 5
