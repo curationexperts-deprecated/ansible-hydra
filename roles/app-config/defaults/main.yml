@@ -4,3 +4,6 @@ project_name: sufia-project
 shared_root: /opt/{{ project_name }}/shared
 capistrano_user: deploy
 capistrano_group: deploy
+derivatives_path: /opt/{{ project_name }}/derivatives
+uploads_path: /opt/{{ project_name }}/uploads
+minter_state_path: /opt/{{ project_name }}/minter-state

@@ -5,3 +5,4 @@
   with_items:
       - blacklight_initializer.rb
       - devise.rb
+      - curation_concerns.rb
