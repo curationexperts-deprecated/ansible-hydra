@@ -1,8 +1,8 @@
 production:
-  adapter: postgresql
-  encoding: unicode
+  adapter: {{ db }}
+  encoding: {{ encoding }}
   database: {{ hydra_db }}
   pool: 5
-  username: {{ hydra_pg_user }}
-  password: {{ hydra_pg_pass }}
+  username: {{ hydra_db_user }}
+  password: {{ hydra_db_pass }}
 

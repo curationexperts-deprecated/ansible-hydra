@@ -1,0 +1,7 @@
+---
+# installs rails database and supporting libraries - psql or mysql
+- include: mysql.yml
+  when: db == "mysql2"
+
+- include: postgresql.yml
+  when: db == "postgresql"
