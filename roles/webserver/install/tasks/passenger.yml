@@ -1,8 +1,9 @@
 ---
-# Role: apapche-passenger/install
-# roles/apapche-passenger/install/tasks/main.yml
+# Role: webserver/install
+# roles/webserver/install/tasks/passenger.yml
 # 
-# Apache installation; install apapched pagckages - see apache-passenger/configure role for local configuration files
+# Apache installation with passenger; install apached packages 
+# see webserver/configure role for local configuration files
 #
 # adapted from
 # https://github.com/akishin/ansible-playbooks/blob/master/lokka/roles/passenger/tasks/main.yml

@@ -1,0 +1,47 @@
+---
+# Role: webserver/install
+# roles/webserver/install/tasks/puma.yml
+# 
+# Bare apache package for use with puma
+# see webserver/configure role for local configuration files
+#
+
+- name: install apache
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+      - apache2
+      - apache2-mpm-prefork
+
+- name: create puma.rb
+  become: yes
+  template: src=puma.rb.j2 dest={{ shared_root }}/config/puma.rb owner={{ capistrano_user }} group={{ capistrano_group }}
+
+- name: create puma service definition
+  become: yes
+  template: src=puma-service.j2 dest=/etc/systemd/system/{{ project_name }}-puma.service
+
+- name: allow cap user to restart puma
+  become: yes
+  template: src=puma_restart_users.j2 dest=/etc/sudoers.d/puma_restart_users validate='visudo -cf %s'
+
+- name: create apache puma config (rewrite rules)
+  become: yes
+  template: src=puma_config.j2 dest=/etc/apache2/conf-available/puma.conf
+
+- name: disable mpm_event module
+  become: yes
+  command: a2dismod mpm_event
+
+- name: enable apache modules
+  become: yes
+  command: a2enmod {{ item }}
+  with_items:
+      - rewrite
+      - mpm_prefork
+      - proxy
+      - proxy_http
+
+- name: symlink puma config
+  become: yes
+  file: src=/etc/apache2/conf-available/puma.conf path=/etc/apache2/conf-enabled/puma.conf state=link

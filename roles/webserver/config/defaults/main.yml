@@ -1,12 +1,15 @@
 ---
-# roles/apache-passenger/config/defaults/main.yml
+# roles/webserver/config/defaults/main.yml
 rails_env: production
 project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
+shared_root: /opt/{{ project_name }}/shared
 server_name: 127.0.0.1
 use_ssl: false
 ssl_crt_location: /etc/ssl/server.crt
 ssl_key_location: /etc/ssl/private/server.key
+capistrano_user: deploy
+capistrano_group: deploy
 # this should be blank / undefined for self-signed certs.
 # provided here just as an example; specify it in a local file if needed.
 #ssl_intermediate_directive: SSLCertificateChainFile /etc/ssl/certs/my-intermediate-cert

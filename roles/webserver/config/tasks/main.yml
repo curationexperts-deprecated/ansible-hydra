@@ -1,12 +1,12 @@
 ---
-# Role: apapche-passenger/config
-# roles/apapche-passenger/config/tasks/main.yml
+# Role: webserver/config
+# roles/webserver/config/tasks/main.yml
 # 
 # Apache configuration; setup apache configuration files and apply ssl certs when needed
 
 - name: create apache vhosts file
   become: yes
-  template: src=apache_config.j2 dest=/etc/apache2/sites-available/{{ project_name }}.conf owner=root group=root backup=no
+  template: src={{ webserver }}_config.j2 dest=/etc/apache2/sites-available/{{ project_name }}.conf owner=root group=root backup=no
 
 - name: remove default apache site
   become: yes
@@ -16,6 +16,7 @@
   become: yes
   file: src=/etc/apache2/sites-available/{{ project_name }}.conf dest=/etc/apache2/sites-enabled/{{ project_name }}.conf state=link
 
+# currently this role only supports ssl with passenger
 - name: enable ssl module
   become: yes
   command: a2enmod ssl

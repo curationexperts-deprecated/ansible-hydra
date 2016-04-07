@@ -1,0 +1,8 @@
+RewriteEngine on
+
+# Serve static assets through apache
+RewriteCond {{ app_root }}/public/$1 -f
+RewriteRule ^/(.*)$  {{ app_root }}/public/$1 [L]
+
+# Proxy access to app through unix socket
+RewriteRule ^(/.*)$ unix:/tmp/puma.sock|http://{{ server_name }}$1 [P,NE]

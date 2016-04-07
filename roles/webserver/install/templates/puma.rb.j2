@@ -1,0 +1,29 @@
+environment 'production'
+threads 1, 4
+# in a multi-server architecture, bind to the private network address
+# with tcp to the http server (apache) on a different host.
+# bind 'tcp://<ip#>:<port#>'
+bind 'tcp://{{ server_name }}:{{ puma_port }}'
+
+pidfile '{{ shared_root }}/tmp/pids/{{ project_name }}-puma.pid'
+
+on_restart do
+# Code to run before doing a restart. This code should
+# close log files, database connections, etc.
+end
+
+workers 4
+worker_timeout 120
+on_worker_boot do
+  # Code to run when a worker boots to setup the process before booting
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Base.establish_connection
+  end
+end
+
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect!
+end
+
+preload_app!
+

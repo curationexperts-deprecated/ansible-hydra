@@ -1,0 +1,20 @@
+[Unit]
+Description= {{ project_name }} Puma
+After=network.target
+Requires=resque-pool.service
+PropagatesReloadTo=resque-pool.service
+
+[Service]
+Type=simple
+User={{ capistrano_user }}
+Group={{ capistrano_group }}
+WorkingDirectory={{ app_root }}
+PIDFile={{ shared_root }}/tmp/pids/{{ project_name }}-puma.pid
+Environment="RAILS_ENV=production"
+ExecStart=/usr/local/bin/bundle exec puma -C {{ shared_root}}/config/puma.rb
+ExecReload=usr/local/bin/bundle exec bundle exec pumactl restart
+TimeoutStartSec=20
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
