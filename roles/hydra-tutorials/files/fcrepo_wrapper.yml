@@ -1,0 +1,3 @@
+port: '8984'
+download_dir: /var/tmp
+fcrepo_home_dir: /home/vagrant/fcrepo-data
