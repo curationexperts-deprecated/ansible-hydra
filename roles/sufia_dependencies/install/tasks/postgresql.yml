@@ -9,6 +9,7 @@
   - python-psycopg2
   notify:
   - set postgres password
+  - determine postgres directory
   - configure md5 security
   - restart postgres server
   - create pg hydra database
