@@ -34,6 +34,7 @@
     - libyaml-dev
     - libxml2-dev
     - libxslt-dev
+    - libgmp3-dev
     - autoconf
     - libc6-dev
     - ncurses-dev
@@ -47,6 +48,7 @@
     - libcurl4-openssl-dev
     - libxvidcore-dev
     - redis-server
+    - nodejs
     - xfsprogs
     - libsqlite3-dev
     - libreoffice

@@ -1,0 +1,4 @@
+port: '8983'
+download_dir: /var/tmp
+name: hydra-development
+instance_dir: tmp/solr

@@ -9,3 +9,9 @@
 - name: add vagrant public key to deloyment key list
   set_fact:
     keys_to_add: "{{ keys_to_add | default( [ ] ) + [ vagrant_public_key.stdout | quote ] }}"
+    
+- name: add dynamic DNS services for local name resolution
+  become: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - avahi-daemon

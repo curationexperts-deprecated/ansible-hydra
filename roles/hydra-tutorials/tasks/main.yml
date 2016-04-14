@@ -1,0 +1,38 @@
+---
+# ROLE: hydra-tutorials
+# roles/hydra-tutorials/tasks/main.yml
+#
+# setup for Dive-Into-Hydra and other workshop and online tutorials
+#
+
+- name: generate demo app
+  command: ".rvm/bin/rvm all do rails new dive-into-hydra-sample"
+
+- name: specify hydra dependencies
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/dive-into-hydra-sample/Gemfile 
+    state: present
+    line: "gem 'hydra', '9.1.0'"  
+  
+- name: install dependencies
+  command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/dive-into-hydra-sample/Gemfile" 
+    
+- name: download files expected by solr_wrapper
+  get_url: url={{ item }} dest=/var/tmp
+  with_items:
+    # Match these to the solr version listed at https://github.com/cbeer/solr_wrapper/blob/master/lib/solr_wrapper.rb#L10
+    - http://www.us.apache.org/dist/lucene/solr/5.4.1/solr-5.4.1.zip
+    - http://www.us.apache.org/dist/lucene/solr/5.4.1/solr-5.4.1.zip.md5
+
+- name: download files expected by fcrepo_wrapper
+  get_url: url={{ item }} dest=/var/tmp
+  with_items:
+    # Match these to the fedora version listed at https://github.com/cbeer/fcrepo_wrapper/blob/master/lib/fcrepo_wrapper.rb#L10
+    - https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.5.0/fcrepo-webapp-4.5.0-jetty-console.jar
+    - https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-4.5.0/fcrepo-webapp-4.5.0-jetty-console.jar.md5
+    
+- name: copy fcrepo_wrapper config file
+  copy: src=fcrepo_wrapper.yml dest=/home/vagrant/.fcrepo_wrapper backup=yes
+
+- name: copy solr_wrapper config file
+  copy: src=solr_wrapper.yml dest=/home/vagrant/.solr_wrapper backup=yes

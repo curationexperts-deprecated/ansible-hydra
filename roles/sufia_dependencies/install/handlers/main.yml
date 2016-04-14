@@ -3,10 +3,14 @@
   become: yes
   become_user: postgres
   postgresql_user: name=postgres password={{ pg_pass }}
+  
+- name: determine postgress directory
+  shell: ls /etc/postgresql
+  register: postgres_version
 
 - name: configure md5 security
   become: yes
-  copy: src=pg_hba.conf dest=/etc/postgresql/{{ postgres_version }}/main/pg_hba.conf group=postgres owner=postgres backup=yes
+  copy: src=pg_hba.conf dest=/etc/postgresql/{{ postgres_version.stdout }}/main/pg_hba.conf group=postgres owner=postgres backup=yes
 
 - name: restart postgres server
   become: yes
