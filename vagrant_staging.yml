@@ -1,22 +1,26 @@
 ---
 - name: provision a vagrant box to mimic a production environment as closely as possible.
   hosts: vagrant
-  #user: vagrant
   remote_user: vagrant
-  #gather_facts: true
-  vars:
-    #leave blank; don't need ssh keys for vagrant instance.
-    - keys_to_add:
+  gather_facts: true
+  vars_files:
+      - vagrant_vars.yml
   roles:
     - { role: packages }
+    - { role: mount_opt }
     - { role: set_timezone }
     - { role: system_setup }
     - { role: capistrano_setup }
     - { role: rbenv }
+    - { role: openjdk1_8 }
     - { role: hydra-stack/install }
     - { role: hydra-stack/config-capistrano }
     - { role: sufia_dependencies/install }
     - { role: sufia_dependencies/config }
+    - { role: RIIIF }
     - { role: webserver/install }
     - { role: webserver/config }
     - { role: app-config }
+    - { role: ffmpeg }
+    - { role: imagemagick }
+    - { role: deploy }
