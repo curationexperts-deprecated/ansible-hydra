@@ -18,10 +18,20 @@
 
 - name: copy fits scripts
   become: yes
-  shell: cp -r {{ install_path }}/fits-{{ fits_version }}/* /usr/local/bin/
+  shell: cp -r {{ install_path }}/fits-{{ fits_version }} /usr/local/lib/
 
 - name: symlink fits alias
   become: yes
-  file: src=/usr/local/bin/fits.sh dest=/usr/local/bin/fits state=link
+  file: src=/usr/local/lib/fits-{{ fits_version }}/fits.sh dest=/usr/local/bin/fits state=link
   
+- name: symlink fits.sh alias
+  become: yes
+  file: src=/usr/local/lib/fits-{{ fits_version }}/fits.sh dest=/usr/local/bin/fits.sh state=link
 
+- name: set FITS_HOME in fits-env.sh
+  become: yes
+  lineinfile: dest=/usr/local/lib/fits-{{ fits_version }}/fits-env.sh regexp=^FITS_HOME line=FITS_HOME="/usr/local/lib/fits-{{ fits_version }}" state=present
+
+- name: symlink fits-env.sh alias
+  become: yes
+  file: src=/usr/local/lib/fits-{{ fits_version }}/fits-env.sh dest=/usr/local/bin/fits-env.sh state=link
