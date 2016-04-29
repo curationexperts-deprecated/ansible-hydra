@@ -1,8 +1,8 @@
 #!/bin/bash
-export PGPASSWORD="{{ hydra_pg_pass }}"
+export PGPASSWORD="{{ hydra_db_pass }}"
 # removes 2-day-old backup
 rm /opt/pg_backups/hydra_day_old.bak
 # renames lates backup to day-old
 mv /opt/pg_backups/hydra.bak /opt/pg_backups/hydra_day_old.bak
 # does fresh backup of hydra database
-pg_dump -U {{ hydra_pg_user }} hydra > /opt/pg_backups/hydra.bak
+pg_dump -U {{ hydra_db_user }} hydra > /opt/pg_backups/hydra.bak
