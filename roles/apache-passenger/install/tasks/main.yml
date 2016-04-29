@@ -29,4 +29,3 @@
 - name: symlink passenger config
   become: yes
   file: src=/etc/apache2/conf-available/passenger.conf path=/etc/apache2/conf-enabled/passenger.conf state=link
-  become: yes
