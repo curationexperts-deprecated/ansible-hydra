@@ -18,7 +18,7 @@ echo "The cutoff date is" $cutoff_date_1m
 echo "Reviewing current snapshots . . . "
 
 # Creates snap_info.txt with a list of snapshots with the backup name in the description
-ec2-describe-snapshots -O $my_access_key -W $my_secret_key --filter "description=*{{ backup_name }}*" > /tmp/snap_info.txt 2>&1
+ec2-describe-snapshots -O $my_access_key -W $my_secret_key --filter "description=*{{ aws_tag }}*" > /tmp/snap_info.txt 2>&1
 
 # Loops through the snap_info.txt file
 while read line
