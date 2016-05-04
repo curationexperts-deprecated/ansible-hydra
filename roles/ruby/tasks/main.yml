@@ -13,7 +13,7 @@
 
 - name: remove package ruby
   become: yes
-  apt: name=ruby state=absent
+  package: name=ruby state=absent
 
 - name: download ruby
   become: yes

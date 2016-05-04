@@ -3,7 +3,7 @@
 - name: ensure add-apt-repositories is present
   # sudo apt-get install software-properties-common
   become: yes
-  apt: name=software-properties-common state=present
+  package: name=software-properties-common state=present
   
 - name: add ubuntu openjdk ppa
   # sudo add-apt-repositories ppa:openjdk-r/ppa
@@ -20,12 +20,12 @@
 - name: update apt caches
   # sudo apt-get update 
   become: yes
-  apt: update_cache=yes
+  package: update_cache=yes
 
 - name: install openjdk 1.8
   # sudo apt-get install openjdk-8-jdk
   become: yes
-  apt: name=openjdk-8-jdk state=latest
+  package: name=openjdk-8-jdk state=latest
   
 - name: select correct java version
   # sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java

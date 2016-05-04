@@ -2,7 +2,7 @@
 # install fits
 - name: install zip utility
   become: yes
-  apt: name=unzip state=present
+  package: name=unzip state=present
 
 - name: download fits zip version {{ fits_version }}
   become: yes

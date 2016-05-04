@@ -6,20 +6,20 @@
 #
 - name: update apt cache
   become: yes
-  apt: update_cache=yes
+  package: update_cache=yes
 
 - name: install aptitude
   # on Debian Jessie aptitude is not installed by default, without it apt-get upgrade fails
   become: yes
-  apt: name=aptitude state=installed
+  package: name=aptitude state=installed
 
 - name: upgrade apt packages
   become: yes
-  apt: upgrade=full
+  package: upgrade=full
 
 - name: install dev tools and libraries
   become: yes
-  apt: name={{ item }} state=latest
+  package: name={{ item }} state=latest
   with_items:
     - build-essential
     - git

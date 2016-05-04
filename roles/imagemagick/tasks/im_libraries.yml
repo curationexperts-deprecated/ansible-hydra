@@ -1,11 +1,11 @@
 ---
 - name: remove package imagemagick
   become: yes
-  apt: name=imagemagick state=absent
+  package: name=imagemagick state=absent
 
 - name: install IM dependencies
   become: yes
-  apt: name={{ item }} state=present
+  package: name={{ item }} state=present
   with_items:
       # The commented out packages don't appear to exist in Ubuntu repos
       # - fontconfig-devel

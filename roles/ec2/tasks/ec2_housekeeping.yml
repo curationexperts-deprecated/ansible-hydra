@@ -14,15 +14,15 @@
 
 - name: install ec2-consistent-snapshot
   become: yes
-  apt: name=ec2-consistent-snapshot state=present
+  package: name=ec2-consistent-snapshot state=present
 
 - name: install ec2-api-tools
   become: yes
-  apt: name=ec2-api-tools state=present
+  package: name=ec2-api-tools state=present
 
 - name: Install Python PIP
   become: yes
-  apt: pkg=python-pip state=latest
+  package: pkg=python-pip state=latest
 
 - name: Install boto via PIP
   become: yes
