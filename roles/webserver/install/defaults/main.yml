@@ -9,3 +9,4 @@ shared_root: /opt/{{ project_name }}/shared
 server_name: 127.0.0.1
 capistrano_user: deploy
 capistrano_group: deploy
+webserver: passenger
