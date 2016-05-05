@@ -1,6 +1,7 @@
 ---
 # roles/ruby/defaults/main.yml
 install_path: /opt/install
-ruby_ver: '2.2.4'
-ruby_gzip_url: http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.4.tar.gz
-ruby_sha_256: b6eff568b48e0fda76e5a36333175df049b204e91217aa32a65153cc0cdcb761
+ruby_ver: '2.3.1'
+ruby_major_minor_ver: '2.3'
+ruby_gzip_url: http://cache.ruby-lang.org/pub/ruby/{{ ruby_major_minor_ver }}/ruby-{{ ruby_ver }}.tar.gz
+ruby_sha_256: b87c738cb2032bf4920fef8e3864dc5cf8eae9d89d8d523ce0236945c5797dcd
