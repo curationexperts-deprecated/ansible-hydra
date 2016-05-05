@@ -1,0 +1,6 @@
+# Ignore vagrant configuration files
+.vagrant
+ansible.log
+*.box
+*.retry
+
