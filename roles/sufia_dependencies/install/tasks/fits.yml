@@ -18,7 +18,7 @@
 
 - name: copy fits scripts
   become: yes
-  shell: cp -r {{ install_path }}/fits-{{ fits_version }} /usr/local/lib/
+  shell: cp -r {{ install_path }}/fits-{{ fits_version }} /usr/local/lib/ creates=/usr/local/lib/fits-{{ fits_version }}
 
 - name: symlink fits alias
   become: yes

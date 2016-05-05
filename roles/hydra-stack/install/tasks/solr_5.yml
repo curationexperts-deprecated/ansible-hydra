@@ -22,10 +22,9 @@
   shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh {{ install_path }}/solr-{{ solr_version }}.tgz
 
 - name: create default collection
-  # in Ansible 2.0 this task triggers a warning about using sudo
-  # see https://github.com/curationexperts/ansible-hydra/issues/119
   become: yes
-  shell: sudo -u solr /opt/solr/bin/solr create -c {{ solr_core }} -d basic_configs
+  become_user: solr
+  shell: /opt/solr/bin/solr create -c {{ solr_core }} -d basic_configs creates=/var/solr/data/{{ solr_core }}
 
 - name: symlink schema from code to solr
   become: yes

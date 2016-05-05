@@ -19,7 +19,7 @@
 
 - name: install dev tools and libraries
   become: yes
-  package: name={{ item }} state=latest
+  package: name={{ item }} state=installed
   with_items:
     - build-essential
     - git
