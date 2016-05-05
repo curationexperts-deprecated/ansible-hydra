@@ -22,8 +22,8 @@
     - { role: ruby }
     - { role: hydra-stack/install }
     - { role: sufia_dependencies/install }
-    - { role: apache-passenger/install }
-    - { role: apache-passenger/config }
+    - { role: webserver/install }
+    - { role: webserver/config }
 
 # bundle install hasn't been run? Makes sense; that's done with capistrano deployment
 # resque-pool can't start until bundle install has been run because it loads the actual code.

@@ -17,6 +17,6 @@
     - { role: hydra-stack/config-capistrano }
     - { role: sufia_dependencies/install }
     - { role: sufia_dependencies/config }
-    - { role: apache-passenger/install }
-    - { role: apache-passenger/config }
+    - { role: webserver/install }
+    - { role: webserver/config }
     - { role: app-config }
