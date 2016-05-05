@@ -39,16 +39,17 @@
 - debug: var=instance_eip.public_ip
 
 - name: Add all instance public IPs to in-memory host group
-  add_host: hostname={{ item.public_ip }} groups=newboxes
+  add_host: hostname={{ instance_eip.public_ip }} groups=newboxes
   with_items: ec2.instances
 
 - name: Add all instance public IPs to on-disc host group
-  lineinfile: dest=hosts line={{ item.public_ip }} insertafter=ec2hosts
+  lineinfile: dest=hosts line={{ instance_eip.public_ip }} insertafter=ec2hosts
   with_items: ec2.instances
 
 - name: give ssh time to come up
-  wait_for: host={{ item.public_ip }} port=22 state=started
+#  wait_for: host={{ item.public_ip }} port=22 state=started
+  wait_for: host={{ instance_eip.public_ip }} port=22 state=started
   with_items: ec2.instances
-  
+
 - name: pause another few seconds for other services to start
   pause: seconds=5

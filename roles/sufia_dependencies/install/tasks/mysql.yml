@@ -1,0 +1,18 @@
+---
+# installs mysql
+- name: install mysql packages
+  apt: name={{ item }} state=present
+  become: yes
+  with_items:
+    - libmysqlclient-dev
+    - mysql-server
+    - python-mysqldb
+  notify:
+    - set mysql password
+    - create mysql data directory
+    - set mysql character set to utf8
+    - restart mysql to reset config
+    - create mysql hydra database
+    - add mysql hydra user
+
+- meta: flush_handlers

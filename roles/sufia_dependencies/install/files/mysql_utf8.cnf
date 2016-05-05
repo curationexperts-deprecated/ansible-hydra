@@ -1,0 +1,9 @@
+[mysqld]
+character-set-server=utf8
+collation-server=utf8_unicode_ci
+
+[client]
+default-character-set=utf8
+
+# this config works for mysql 5.5
+# for 5.6, change the [client] setting to character_set_client=utf8

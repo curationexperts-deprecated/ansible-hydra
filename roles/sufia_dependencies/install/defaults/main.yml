@@ -4,10 +4,13 @@ install_path: /opt/install
 project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
 rails_env: production
-pg_pass: postgres
+db: postgresql
+# for mysql, set db to 'mysql2'
+db_pass: postgres
 hydra_db: my_hydra_db
-hydra_pg_user: my_hydra_pg_user
-hydra_pg_pass: my_hydra_pg_pass
+hydra_db_user: my_hydra_db_user
+hydra_db_pass: my_hydra_db_pass
+mysql_data_dir: /var/lib/mysql
 # needed for resque-pool init script
 capistrano_user: deploy
 fits_version: '0.8.4'

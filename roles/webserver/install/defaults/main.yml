@@ -1,0 +1,11 @@
+---
+# roles/webserver/install/defaults/main.yml
+passenger_ver: '5.0.10'
+ruby_ver: '2.2.4'
+puma_port: '3030'
+project_name: sufia-project
+app_root: /opt/{{ project_name }}/current
+shared_root: /opt/{{ project_name }}/shared
+server_name: 127.0.0.1
+capistrano_user: deploy
+capistrano_group: deploy

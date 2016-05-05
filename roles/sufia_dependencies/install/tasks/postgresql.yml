@@ -1,12 +1,12 @@
 ---
-# installs database, dev library, and python psql adapter
+# installs postgresql and supporting libraries
 - name: install postgresql packages
   apt: name={{ item }} state=present
   become: yes
   with_items:
-  - postgresql
-  - libpq-dev
-  - python-psycopg2
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
   notify:
   - set postgres password
   - determine postgres directory
@@ -15,7 +15,7 @@
   - create pg hydra database
   - add pg hydra user
 
-- name: create pg_backups directory
+- name: create db_backups directory
   become: yes
   file: owner=postgres group=postgres state=directory path=/opt/pg_backups
 

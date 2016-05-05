@@ -1,8 +1,11 @@
 ---
 # roles/sufia_dependencies/config/defaults/main.yml
+db: postgresql
+encoding: unicode
+# for mysql, use 'mysql2' for db and 'utf8' for encoding
 hydra_db: my_hydra_db
-hydra_pg_user: my_hydra_pg_user
-hydra_pg_pass: my_hydra_pg_pass
+hydra_db_user: my_hydra_db_user
+hydra_db_pass: my_hydra_db_pass
 rails_secret_key_base: eaa4e23ab500b77c8c2064780b4f41b83b0b0e7ec13036d55b72d87d8cc8d9ec9183230b7b3ccab7bc6387c73317b0fbb3c637f98b6ad265b99e7304b5e47292
 # needed for capistrano configuration
 project_name: sufia-project

@@ -11,12 +11,17 @@
     - { role: system_setup }
     - { role: capistrano_setup }
     - { role: ruby }
+    - { role: openjdk1_8 }
     - { role: hydra-stack/install }
     - { role: hydra-stack/config-capistrano }
+    # if using imagemagick and/or ffmpeg, uncomment:
+    # - { role: ffmpeg }
+    # - { role: imagemagick }
     - { role: sufia_dependencies/install }
     - { role: sufia_dependencies/config }
     # if using RIIIF, uncomment this role
     # - { role: RIIIF }
-    - { role: apache-passenger/install }
-    - { role: apache-passenger/config }
+    - { role: webserver/install }
+    - { role: webserver/config }
     - { role: app-config }
+    - { role: deploy }

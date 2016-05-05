@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+  ServerName {{ server_name }}
+  # !!! Be sure to point DocumentRoot to 'public'!
+  DocumentRoot {{ app_root }}/public
+
+  ProxyPass /assets !
+  ProxyPass /favicon.ico !
+  ProxyPass /robots.txt !
+  ProxyPass /system !
+  ProxyPassMatch ^/(404|422|500).html$ !
+ 
+  ProxyPass / http://{{ server_name }}:{{ puma_port }}/
+  ProxyPassReverse / http://{{ server_name }}:{{ puma_port }}/
+
+  # allows forward slashes for IIIF
+  AllowEncodedSlashes NoDecode
+  <Directory {{ app_root }}/public>
+        # MultiViews must be turned off.
+        Options -MultiViews
+        # Uncomment this if you're on Apache >= 2.4:
+        Require all granted
+  </Directory>
+</VirtualHost>
