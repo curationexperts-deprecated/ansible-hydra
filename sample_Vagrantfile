@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
       rails_env: "production"
     }
 
-    ansible.playbook = "../ansible-hydra/vagrant_staging.yml"
+    ansible.playbook = "./vagrant_staging.yml"
 
     # update start_at_task and re-run `vagrant provison` if your configuration scripts fail on a particular task
     # and you want to restart the provisioning at the step where the failure occurred
