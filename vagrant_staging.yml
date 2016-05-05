@@ -12,7 +12,7 @@
     - { role: set_timezone }
     - { role: system_setup }
     - { role: capistrano_setup }
-    - { role: ruby }
+    - { role: rbenv }
     - { role: hydra-stack/install }
     - { role: hydra-stack/config-capistrano }
     - { role: sufia_dependencies/install }

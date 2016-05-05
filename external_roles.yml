@@ -1,0 +1,6 @@
+---
+# External Roles
+# To install run: ansible-galaxy install -r external_roles.yml 
+- src: https://github.com/mlibrary/ansible-rbenv-role
+  path: external_roles
+  name: rbenv
