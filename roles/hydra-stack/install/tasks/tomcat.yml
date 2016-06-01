@@ -1,5 +1,5 @@
 ---
 - name: install package tomcat
   become: yes
-  apt: name=tomcat7 state=present
+  package: name=tomcat7 state=present
 

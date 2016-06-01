@@ -24,7 +24,7 @@
   authorized_key: user={{ capistrano_user }} key={{ item }} exclusive=no state=present
   with_items:
     - "{{ keys_to_add }}"
-  when: keys_to_add is defined
+  when: keys_to_add is defined and keys_to_add != None
 
 - name: allow capistrano user to restart resque-pool
   become: yes

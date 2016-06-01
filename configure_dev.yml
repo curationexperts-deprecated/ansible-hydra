@@ -18,8 +18,8 @@
     - openjdk1_8
     - hydra-stack/install
     - sufia_dependencies/install
-    - apache-passenger/install
-    - apache-passenger/config
+    - webserver/install
+    - webserver/config
 
 # bundle install hasn't been run? Makes sense; that's done with capistrano deployment
 # resque-pool can't start until bundle install has been run because it loads the actual code.

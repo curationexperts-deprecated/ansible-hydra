@@ -1,7 +1,7 @@
 ---
 - name: install ffmpeg libraries
   become: yes
-  apt: name={{ item }} state=present
+  package: name={{ item }} state=present
   with_items:
       - autoconf
       - automake
@@ -19,7 +19,7 @@
 
 - name: remove package ffmpeg
   become: yes
-  apt: name=ffmpeg state=absent
+  package: name=ffmpeg state=absent
 
 - name: create sources dir
   become: yes

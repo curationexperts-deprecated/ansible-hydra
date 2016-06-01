@@ -1,0 +1,7 @@
+---
+
+- hosts: all
+  tasks: 
+  - name: Install external roles
+    local_action: command ansible-galaxy install -r external_roles.yml 
+

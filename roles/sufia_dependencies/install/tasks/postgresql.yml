@@ -1,7 +1,7 @@
 ---
 # installs postgresql and supporting libraries
 - name: install postgresql packages
-  apt: name={{ item }} state=present
+  package: name={{ item }} state=present
   become: yes
   with_items:
     - postgresql
