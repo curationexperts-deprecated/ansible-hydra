@@ -1,0 +1,46 @@
+---
+packages:
+  # Development Tools group - manual install would be:
+  # sudo yum -y groupinstall "Development Tools"
+  - autoconf
+  - automake
+  - binutils
+  - bison
+  - flex
+  - gcc
+  - gcc-c++
+  - gettext
+  - libtool
+  - make
+  - patch
+  - pkgconfig
+  - redhat-rpm-config
+  - rpm-build
+  - rpm-sign
+  # other packages
+  - ImageMagick-devel
+  - curl-devel
+  - gdbm-devel
+  - git
+  - httpd-devel
+  - java-1.8.0-openjdk
+  - libffi-devel
+  - libxml2-devel
+  - libxslt-devel
+  - libyaml-devel
+  - mysql-devel
+  - nasm
+  - openssl-devel
+  - readline-devel
+  - screen
+  - sqlite-devel
+  - wget
+  - xfsprogs
+  - xz
+  # - java-1.7.0-openjdk-devel
+  # - redis
+  # on centos mod_xsendfile is not in the main repos
+  # - mod_xsendfile
+  - libreoffice-headless
+  # this was in the ubuntu package list
+  #    - libxvidcore-dev
