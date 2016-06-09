@@ -2,53 +2,42 @@
 # ROLE: packages
 # roles/packages/tasks/main.yml
 #
-# updates apt, installs packages used by other installation/configuration tasks
+# updates, installs packages used by other installation/configuration tasks
 #
 - name: update apt cache
   become: yes
+  # the package module still depends on the underlying yum & apt modules
+  # where the commands differ, we can't use a single task across distros
   package: update_cache=yes
+  when: 
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
 
 - name: install aptitude
   # on Debian Jessie aptitude is not installed by default, without it apt-get upgrade fails
   become: yes
   package: name=aptitude state=installed
+  when: ansible_distribution == "Debian"
 
 - name: upgrade apt packages
   become: yes
+  # commands for upgrading differ - this is for apt
   package: upgrade=full
+  when: 
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
+
+- name: upgrade yum packages
+  become: yes
+  # upgrade for yum
+  package: name=* state=latest
+  when: ansible_distribution == "CentOS"
+
+- name: include package list for distro
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: install dev tools and libraries
   become: yes
+  # this one works across distros (hooray!!!)
   package: name={{ item }} state=installed
-  with_items:
-    - build-essential
-    - git
-    - git-core
-    - curl
-    - openssl
-    - libreadline6
-    - libreadline6-dev
-    - zlib1g
-    - zlib1g-dev
-    - libssl-dev
-    - libyaml-dev
-    - libxml2-dev
-    - libxslt-dev
-    - libgmp3-dev
-    - autoconf
-    - libc6-dev
-    - ncurses-dev
-    - automake
-    - libtool
-    - bison
-    - subversion
-    - pkg-config
-    - libmagickwand-dev
-    - imagemagick
-    - libcurl4-openssl-dev
-    - libxvidcore-dev
-    - redis-server
-    - nodejs
-    - xfsprogs
-    - libsqlite3-dev
-    - libreoffice
+  with_items: "{{ packages }}"
