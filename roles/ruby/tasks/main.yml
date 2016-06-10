@@ -42,6 +42,14 @@
   shell: cd {{ install_path }}/ruby-{{ ruby_ver }} && make install creates=/usr/local/bin/ruby
   when: ruby.stat.exists == False
 
+- name: CentOS symlinks for root
+  become: yes
+  file: src=/usr/local/bin/{{ item }} dest=/usr/bin/{{ item }} state=link
+  with_items:
+      - ruby
+      - gem
+  when: ansible_distribution == "CentOS"
+
 - name: update rubygems
   become: yes
   command: gem update --system
