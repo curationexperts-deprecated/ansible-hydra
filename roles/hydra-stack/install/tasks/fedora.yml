@@ -7,23 +7,23 @@
   get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
 
 - name: make fedora data dir
-  file: owner=tomcat7 group=tomcat7 state=directory path=/opt/fedora-data
+  file: owner={{ tomcat }} group={{ tomcat }} state=directory path=/opt/fedora-data
   become: yes
 
 - name: check fedora.war
   become: yes
-  stat: path=/var/lib/tomcat7/webapps/fedora.war
+  stat: path={{ tomcat_path }}/webapps/fedora.war
   register: fedora_war
 
 - name: copy over fedora.war
   become: yes
-  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war /var/lib/tomcat7/webapps/fedora.war
+  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war {{ tomcat_path }}/webapps/fedora.war
   when: fedora_war.stat.exists == False
 
 - name: create tomcat config and java options
   become: yes
-  template: src=tomcat7.j2 dest=/etc/default/tomcat7 backup=yes
+  template: src=tomcat7.j2 dest=/etc/default/{{ tomcat }} backup=yes
 
 - name: restart tomcat
   become: yes
-  service: name=tomcat7 enabled=yes state=restarted
+  service: name={{ tomcat }} enabled=yes state=restarted
