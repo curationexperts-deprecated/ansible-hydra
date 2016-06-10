@@ -1,7 +1,24 @@
 ---
 # install and start redis, resque
-- name: run redis-server
-  service: name=redis-server state=started
+#- name: download epel repo for CentOS
+ # become: yes
+  #get_url: url=http://dl.fedoraproject.org/pub/epel/7/x86_64/e//epel-release-7-5.noarch.rpm owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/epel-release-7.5.noarch.rpm
+
+- name: enable epel repo for redis on CentOS
+  become: yes
+  yum: name=http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm state=present
+  when: ansible_distribution == "CentOS"
+
+- name: install redis for CentOS
+  become: yes
+  yum: name={{ item }} update_cache=yes state=present
+  with_items:
+      - "{{ redis }}"
+      - php-pecl-redis
+  when: ansible_distribution == "CentOS"
+
+- name: run redis
+  service: name={{ redis }} state=started
   become: yes
 
 - name: copy resque init script
@@ -11,3 +28,11 @@
 - name: start resque
   service: name=resque-pool state=started enabled=yes
   become: yes
+
+- name: set CentOS redis and resque-pool to restart on reboot
+  become: yes
+  service: name={{ item }} enabled=yes
+  with_items:
+      - "{{ redis }}"
+      - resque-pool
+  when: ansible_distribution == "CentOS"
