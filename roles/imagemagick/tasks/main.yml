@@ -7,17 +7,17 @@
 #   EG:
 #     - { role: imagemagick, imagemagick_ver: '6.6' }   # will install the highest version matching the 6.6 prefix
 
-- name: imagemagick libraries
+- name: install imagemagick specific dependencies
   include: im_libraries.yml
 
-- name: openjpg
+- name: build openjpg
   include: openjpg.yml
 
-- name: libtiff
+- name: build libtiff
   include: libtiff.yml
-
-- name: libpng
+  
+- name: build libpng
   include: libpng.yml
-
-- name: imagemagick
+  
+- name: build imagemagick
   include: imagemagick.yml
