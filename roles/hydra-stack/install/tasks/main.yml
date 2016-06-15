@@ -6,7 +6,7 @@
 #
 - include: tomcat.yml
 - include: solr_5.yml
-  when: solr_version | match("^5\.[0-9]\.[0-9]")
+  when: solr_version | match("^5\.\d{1,2}\.{1,2}")
 - include: solr_4.yml
-  when: solr_version | match("^4\.[0-9]\.[0-9]")
+  when: solr_version | match("^4\.\d{1-2}\.\d{1-2}")
 - include: fedora.yml
