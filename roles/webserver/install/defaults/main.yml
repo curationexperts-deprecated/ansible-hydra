@@ -10,3 +10,7 @@ server_name: 127.0.0.1
 capistrano_user: deploy
 capistrano_group: deploy
 webserver: passenger
+passenger_root: /etc/apache2/conf-available
+# use /etc/httpd/conf.d for CentOS 7
+apache: apache2
+# use httpd for CentOS 7
