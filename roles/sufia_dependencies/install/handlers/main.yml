@@ -1,4 +1,19 @@
 ---
+- name: symlink runuser
+  become: yes
+  file: src=/usr/sbin/runuser dest=/usr/bin/runuser state=link
+  when: ansible_distribution == "CentOS"
+
+- name: initialize postgres db
+  become: yes
+  command: postgresql-setup initdb
+  when: ansible_distribution == "CentOS"
+
+- name: start postgres
+  become: yes
+  service: name=postgresql enabled=yes state=started
+  when: ansible_distribution == "CentOS"
+
 - name: set postgres password
   become: yes
   become_user: postgres
@@ -7,6 +22,9 @@
 - name: determine postgres directory
   shell: ls /etc/postgresql
   register: postgres_version
+  when: 
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
 
 - name: set mysql password
   become: yes
@@ -15,9 +33,17 @@
 - name: record new mysql root password
   template: src=mysql_conf.j2 dest=/home/{{ ansible_ssh_user }}/.my.cnf owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
 
-- name: configure md5 security
+- name: configure md5 security Debian
   become: yes
   copy: src=pg_hba.conf dest=/etc/postgresql/{{ postgres_version.stdout }}/main/pg_hba.conf group=postgres owner=postgres backup=yes
+  when: 
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
+
+- name: configure md5 security CentOS
+  become: yes
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf group=postgres owner=postgres backup=yes
+  when: ansible_distribution == "CentOS"
 
 - name: restart postgres server
   become: yes
