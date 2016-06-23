@@ -1,16 +1,21 @@
 ---
 # installs postgresql and supporting libraries
+- name: include package list for distro
+  include_vars: "{{ ansible_distribution }}.yml"
+
 - name: install postgresql packages
   package: name={{ item }} state=present
   become: yes
-  with_items:
-    - postgresql
-    - libpq-dev
-    - python-psycopg2
+  with_items: "{{ postgresql_packages }}"
   notify:
+  # see handlers/main.yml - many handlers are only needed on CentOS
+  - symlink runuser
+  - initialize postgres db
+  - start postgres
   - set postgres password
   - determine postgres directory
-  - configure md5 security
+  - configure md5 security Debian
+  - configure md5 security CentOS
   - restart postgres server
   - create pg hydra database
   - add pg hydra user
