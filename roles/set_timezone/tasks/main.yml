@@ -7,12 +7,22 @@
 #    - { role: set_timezone, timezone: America/Chicago  }
 # the timezone must be a valid zone for your distribution - see http://www.iana.org/time-zones for the definitive list
 
-- name: Set timezone
+- name: Write timezone to /etc/timezone
   become: yes
   template: src=timezone
         dest=/etc/timezone
         owner=root
         group=root
         mode=0644
-  notify:
-    - update timezone
+
+- name: update timezone via dpkg
+  become: yes
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  when:
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
+
+- name: update timezone via timedatectl
+  become: yes
+  command: timedatectl set-timezone {{ timezone }}
+  when: ansible_distribution == "CentOS"
