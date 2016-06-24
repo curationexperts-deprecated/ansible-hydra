@@ -1,0 +1,9 @@
+---
+im_packages:
+  - autoconf # already present
+  - automake # already present
+  - cmake # missing - move this to prerequisites?
+  - gcc # exists
+  - libtool #exists
+  - make #exists
+  - mercurial # what is this required for
