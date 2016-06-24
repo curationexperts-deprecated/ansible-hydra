@@ -3,25 +3,13 @@
   become: yes
   package: name=imagemagick state=absent
 
+- name: include package list for distro
+  include_vars: "{{ ansible_distribution }}.yml"
+
 - name: install IM dependencies
   become: yes
   package: name={{ item }} state=present
-  with_items:
-      # The commented out packages don't appear to exist in Ubuntu repos
-      # - fontconfig-devel
-      # - freetype-devel
-      # - libtool-ltdl-devel
-      # - libpng-devel
-      - autoconf # already present
-      - automake # already present
-      - cmake # missing - move this to prerequisites?
-      - gcc # exists
-      # - gcc-c++ 
-      - libtool #exists
-      - make #exists
-      - mercurial # what is this required for
-      # - pkgconfig 
-      # - zlib-devel
+  with_items: "{{ im_packages }}"
 
 - name: create IM sources dir
   become: yes
