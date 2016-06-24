@@ -13,3 +13,10 @@ capistrano_group: deploy
 # this should be blank / undefined for self-signed certs.
 # provided here just as an example; specify it in a local file if needed.
 #ssl_intermediate_directive: SSLCertificateChainFile /etc/ssl/certs/my-intermediate-cert
+webserver: passenger
+passenger_root: /etc/apache2/sites-available
+# use /etc/httpd/conf.d for CentOS 7
+apache: apache2
+# use httpd for CentOS 7
+apache_default: /etc/apache2/sites-enabled/000-default.conf
+# use /etc/httpd/conf.d/welcome.conf for CentOS 7
