@@ -4,3 +4,7 @@ project_name: sufia-project
 shared_root: /opt/{{ project_name }}/shared
 capistrano_user: deploy
 capistrano_group: deploy
+ssh: ssh
+# use sshd for CentOS 7
+sftp_location: /usr/lib/openssh/sftp-server
+# use /usr/libexec/openssh/sftp-server for CentOS 7
