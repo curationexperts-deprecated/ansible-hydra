@@ -1,0 +1,14 @@
+---
+# The default playbook and variables in this project are optimized for Debian/Ubuntu
+# To build on CentOS 7:
+# remove the openjdk1_8 role
+# use the following values for these variables:
+java_home: /usr/lib/jvm/java-8-openjdk-amd64
+tomcat: tomcat
+tomcat_path: /usr/share/tomcat
+tomcat_user: tomcat
+tomcat_group: tomcat
+apache: httpd
+passenger_root: /etc/httpd/conf.d
+apache_default: /etc/httpd/conf.d/welcome.conf
+ssh: sshd
