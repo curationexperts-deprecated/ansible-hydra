@@ -1,4 +1,6 @@
 ---
+  # This role only works on Ubuntu/Debian
+  # if you are building a CentOS 7 box, use Solr 5.x
 - name: create velocity log
   become: yes
   file: path=/var/log/tomcat7/velocity.log state=touch owner=tomcat7 group=tomcat7 mode=0644
