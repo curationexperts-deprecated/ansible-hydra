@@ -3,3 +3,5 @@ repo: https://github.com/curationexperts/newfia.git
 capistrano_user: deploy
 project_name: sufia-project
 deploy_target: internal_vm
+apache: apache2
+# use httpd for CentOS 7

@@ -51,4 +51,4 @@
 - name: restart apache
   # restart apache now that solr has loaded the symlinked solrconfig and schema files
   become: true
-  service: name=apache2 state=restarted
+  service: name={{ apache }} state=restarted
