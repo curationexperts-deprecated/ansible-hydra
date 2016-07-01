@@ -10,6 +10,7 @@ ec2_key: my_ec2_key
 ec2_access_key: my_ec2_access_key
 ec2_secret_key: my_ec2_secret_key
 ec2_security_group: my_ec2_security_group
+elastic: True
 # used in capistrano_setup, system_setup roles
 #keys_to_add:
 # used in sufia_dependencies role
