@@ -1,6 +1,6 @@
 ---
 - name: download libpng source
-  get_url: url=http://sourceforge.net/projects/libpng/files/libpng16/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz
+  get_url: url=http://downloads.sourceforge.net/project/libpng/libpng16/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz
 
 - name: unzip libpng source
   unarchive: src={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/libpng-{{ libpng_ver }} copy=no
