@@ -1,6 +1,6 @@
 ---
 - name: clone fdk-aac source
-  git: repo=git://git.code.sf.net/p/opencore-amr/fdk-aac depth=1 accept_hostkey=yes dest={{ ffmpeg_path }}/fdk-aac force=yes
+  git: repo=https://github.com/mstorsjo/fdk-aac.git depth=1 accept_hostkey=yes dest={{ ffmpeg_path }}/fdk-aac force=yes
 
 - name: clean the fdk-aac repo
   shell: cd {{ ffmpeg_path }}/fdk-aac && autoreconf -fiv
