@@ -6,8 +6,10 @@
 # see webserver/configure role for local configuration files
 #
 
-- include: passenger.yml
+- name: passenger
+  include: passenger.yml
   when: webserver == "passenger"
 
-- include: puma.yml
+- name: puma
+  include: puma.yml
   when: webserver == "puma"
