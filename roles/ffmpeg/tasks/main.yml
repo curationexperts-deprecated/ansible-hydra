@@ -2,13 +2,32 @@
 # ROLE: ffmpeg
 # roles/ffmpeg/tasks/main.yml 
 
-- include: ff_libraries.yml
-- include: yasm.yml
-- include: x264.yml
-- include: libfdk_aac.yml
-- include: libmp3lame.yml
-- include: libopus.yml
-- include: libogg.yml
-- include: libvorbis.yml
-- include: libvpx.yml
-- include: ffmpeg.yml
+- name: ffmpeg libraries
+  include: ff_libraries.yml
+
+- name: yasm
+  include: yasm.yml
+
+- name: x264
+  include: x264.yml
+
+- name: libfdk_aac
+  include: libfdk_aac.yml
+
+- name: libmp2lame
+  include: libmp3lame.yml
+
+- name: libopus
+  include: libopus.yml
+
+- name: libogg
+  include: libogg.yml
+
+- name: libvorbis
+  include: libvorbis.yml
+
+- name: libvpx
+  include: libvpx.yml
+
+- name: ffmpeg
+  include: ffmpeg.yml

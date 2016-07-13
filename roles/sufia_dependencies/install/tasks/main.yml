@@ -4,6 +4,11 @@
 #
 # includes tasks to install dependencies specific to sufia (but not hydra generally)
 #
-- include: fits.yml
-- include: redis_resque.yml
-- include: database.yml
+- name: fits
+  include: fits.yml
+
+- name: redis and resque 
+  include: redis_resque.yml
+
+- name: postgresql or mysql
+  include: database.yml
