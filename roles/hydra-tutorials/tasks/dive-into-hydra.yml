@@ -1,0 +1,21 @@
+---
+# ROLE: hydra-tutorials
+# roles/hydra-tutorials/tasks/dive-into-hydra.yml
+#
+# Pre-load gem dependencies required by dive-into-hydra tutorial
+#
+
+- name: generate demo app
+  command: ".rvm/bin/rvm all do rails new dive-into-hydra-sample"
+
+- name: specify hydra dependencies
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/dive-into-hydra-sample/Gemfile 
+    state: present
+    line: "gem 'hydra', '10.0.0'"  
+  
+- name: install dependencies
+  command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/dive-into-hydra-sample/Gemfile" 
+  
+- name: pre-run the Hydra generator
+  command: bash -lc "cd ~/dive-into-hydra-sample/ && rails generate hydra:install"

@@ -1,0 +1,21 @@
+---
+# ROLE: rvm
+# roles/rvm/tasks/main.yml
+#
+# Simple rvm installaiton
+# ideally switch this out for https://github.com/rvm/rvm1-ansible
+
+- name: Disable gem documentation
+  lineinfile: "dest=~/.gemrc line='gem: --no-document' create=yes state=present"
+
+- name: Import GPG keys
+  command: 'gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3'
+  
+- name: Install rvm
+  shell: "curl -sSL https://get.rvm.io | bash -s stable --ruby={{ ruby_version }}"
+  
+- name: Install rails version to use for Hydra tutorials
+  command: ".rvm/bin/rvm all do gem install rails -v {{ rails_version }}"
+
+- name: Report versions
+  debug: msg="Succesfully installed ruby {{ ruby_version }} & rails {{ rails_version }}"

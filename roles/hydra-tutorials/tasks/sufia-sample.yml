@@ -1,0 +1,21 @@
+---
+# ROLE: hydra-tutorials
+# roles/hydra-tutorials/tasks/sufia-sample.yml
+#
+# Preload gem dependencies required to run any Sufia-based application
+#
+
+- name: generate demo app
+  command: ".rvm/bin/rvm all do rails new sufia-sample"
+
+- name: specify hydra dependencies
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/sufia-sample/Gemfile 
+    state: present
+    line: "gem 'sufia', '7.0.0.rc1'"  
+  
+- name: install dependencies
+  command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/sufia-sample/Gemfile" 
+    
+- name: pre-run the Sufia generator
+  command: bash -lc "cd ~/sufia-sample/ && rails generate sufia:install -f"

@@ -1,0 +1,8 @@
+---
+# roles/hydra-tutorials/defaults/main.yml
+
+# the solr version needs to match the default version for [cbeer/solr_wrapper](https://github.com/cbeer/solr_wrapper/blob/master/lib/solr_wrapper.rb#L10-L12) or needs to be explicity set on the local system to match the version here
+  solr_version: 6.1.0
+
+# the fedora version needs to match the default version for [cbeer/fcrepo_wrapper](https://github.com/cbeer/fcrepo_wrapper/blob/master/lib/fcrepo_wrapper.rb#L9-L11) or needs to be explicity set on the local system to match the version here
+  fcrepo_version: 4.5.1

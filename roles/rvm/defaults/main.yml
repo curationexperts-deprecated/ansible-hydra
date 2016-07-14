@@ -1,0 +1,9 @@
+---
+# roles/rvm/defaults/main.yml
+
+# check the dive-into-hydra tutorial for the most recent ruby & rails versions supported: https://github.com/projecthydra/hydra/wiki/Dive-into-Hydra
+
+  ruby_version: 2.3.1
+  rails_version: 4.2.6
+
+

@@ -1,0 +1,15 @@
+---
+# ROLE: hydra-tutorials
+# roles/hydra-tutorials/tasks/main.yml
+#
+# setup for Dive-Into-Hydra and other workshop and online tutorials
+#
+
+- name: Download solr and fedora runtime files
+  include: wrappers.yml
+  
+- name: Setup Dive-into-Hydra tutorial
+  include: dive-into-hydra.yml
+  
+- name: Setup Sufia sample application
+  include: sufia-sample.yml
