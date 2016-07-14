@@ -28,6 +28,7 @@ packages:
   - libxml2-devel
   - libxslt-devel
   - libyaml-devel
+  - lsof # needed for solr 5.x service script
   - mysql-devel
   - nasm
   - openssl-devel
