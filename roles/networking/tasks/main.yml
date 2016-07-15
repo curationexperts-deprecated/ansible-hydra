@@ -1,0 +1,15 @@
+---
+# Role: networking
+# roles/networking/tasks/main.yml
+# 
+# Placeholder for architecture/networking options
+#
+
+- name: check hostname
+  become: yes
+  shell:  hostname -s
+  register: hostname
+
+- name: make sure /etc/hosts includes hostname
+  become: yes
+  lineinfile: line="127.0.0.1 {{ hostname.stdout }}" dest=/etc/hosts state=present
