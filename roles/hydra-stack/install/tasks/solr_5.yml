@@ -1,7 +1,7 @@
 ---
   # solr 5 requires java 8
-  # until java 8 becomes the default package
-  # you must include the openjdk1_8 role before the hydra-stack role when installing solr 5.x
+  # until java 8 becomes the default package for apt,
+  # you must include the openjdk1_8 role on Ubuntu/Debian before the hydra-stack role when installing solr 5.x
 
 - name: download solr tarball
   become: yes
@@ -37,3 +37,8 @@
 - name: set the solr port
   set_fact:
     solr_port: 8983
+
+- name: set solr to restart on reboot
+  become: yes
+  service: name=solr enabled=yes
+  when: ansible_distribution == "CentOS"
