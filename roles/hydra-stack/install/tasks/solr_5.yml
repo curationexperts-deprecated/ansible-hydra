@@ -42,3 +42,9 @@
   become: yes
   service: name=solr enabled=yes
   when: ansible_distribution == "CentOS"
+
+# Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
+- name: Ensure solr is stopped (RHEL 7 workaround)
+  become: yes
+  command: service solr stop
+  when: (ansible_distribution == "CentOS") and (solr_5_script.stat.exists == False)
