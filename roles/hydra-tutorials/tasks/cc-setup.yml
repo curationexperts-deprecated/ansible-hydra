@@ -1,0 +1,20 @@
+---
+# ROLE: hydra-tutorials
+# roles/hydra-tutorials/tasks/dive-into-hydra.yml
+#
+# Pre-load gem dependencies required by dive-into-hydra tutorial
+#
+
+- name: generate demo app
+  command: ".rvm/bin/rvm all do rails new cc-sample"
+
+- name: add curation concerns dependency to gemfile
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/cc-sample/Gemfile 
+    state: present
+    line: "gem 'curation_concerns', '1.6.1'"  
+  
+- name: install dependencies
+  command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/cc-sample/Gemfile" 
+  
+

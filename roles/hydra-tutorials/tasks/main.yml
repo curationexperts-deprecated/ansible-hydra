@@ -13,3 +13,6 @@
   
 - name: Setup Sufia sample application
   include: sufia-sample.yml
+  
+- name: Install curation_concerns
+  include: cc-setup.yml
