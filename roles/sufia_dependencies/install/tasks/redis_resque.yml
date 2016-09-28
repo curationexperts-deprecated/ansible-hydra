@@ -1,5 +1,7 @@
 ---
 # install and start redis, resque
+- name: include package list for distro
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: enable epel repo for redis on CentOS
   become: yes
