@@ -1,0 +1,39 @@
+Vagrant.configure(2) do |config|
+  config.vm.box = "box-cutter/centos72"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8484 # apache web server in production mode
+  config.vm.network "forwarded_port", guest: 8080, host: 2424 # tomcat (fedora & solr) in production mode
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 2048
+    vb.cpus = 2
+    vb.name = "centos_hydra_dev"
+  end
+
+  # Install the Ansible Galaxy roles as a prerequisite
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "install_external_roles.yml"
+  end
+
+  # Enable provisioning with sufia-ansible project
+  config.vm.provision "ansible" do |ansible|
+    ansible.groups = {
+      "vagrant" => ["default"]
+    }
+    ansible.extra_vars = {
+      server_name:    "localhost",
+      rails_env:      "production",
+      java_home:      "/usr/lib/jvm/java-8-openjdk-amd64",
+      tomcat:         "tomcat",
+      tomcat_path:    "/usr/share/tomcat",
+      tomcat_user:    "tomcat",
+      tomcat_group:   "tomcat",
+      apache:         "httpd",
+      passenger_root: "/etc/httpd/conf.d",
+      apache_default: "/etc/httpd/conf.d/welcome.conf",
+      ssh:            "sshd"
+    }
+
+    ansible.playbook = "centos-vagrant-playbook.yml"
+  end
+end
