@@ -15,6 +15,8 @@ solr_context: solr
 project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
 fedora_version: 4.1.0
+#fedora_database only used in Fedora versions >= 4.6.0
+fedora_database: minimal-default
 #solr_version: 4.10.4
 solr_version: 5.5.0
 # Default solr collection

@@ -31,7 +31,9 @@
 - name: set FITS_HOME in fits-env.sh
   become: yes
   lineinfile: dest=/usr/local/lib/fits-{{ fits_version }}/fits-env.sh regexp=^FITS_HOME line=FITS_HOME="/usr/local/lib/fits-{{ fits_version }}" state=present
+  when: fits_version | match("^0\.([8-9]|10)\.[0-9]|1\.[0-9]\.[0-9]")
 
 - name: symlink fits-env.sh alias
   become: yes
   file: src=/usr/local/lib/fits-{{ fits_version }}/fits-env.sh dest=/usr/local/bin/fits-env.sh state=link
+  when: fits_version | match("^0\.([8-9]|10)\.[0-9]|1\.[0-9]\.[0-9]")
