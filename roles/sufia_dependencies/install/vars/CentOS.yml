@@ -7,3 +7,4 @@ postgresql_packages:
   - postgresql-libs
   - postgresql-python
   - python-psycopg2
+redis: redis
