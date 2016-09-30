@@ -5,16 +5,24 @@
 # Pre-load gem dependencies required by dive-into-hydra tutorial
 #
 
+- name: Install rails version 5.0.0.1 to use for Hydra tutorials
+  command: "~/.rvm/bin/rvm all do gem install rails -v 5.0.0.1"
+
 - name: generate demo app
   command: ".rvm/bin/rvm all do rails new cc-sample"
 
-- name: add curation concerns dependency to gemfile
+- name: add curation_concerns dependency to gemfile
   lineinfile:
     dest: /home/{{ ansible_ssh_user }}/cc-sample/Gemfile 
     state: present
     line: "gem 'curation_concerns', '1.6.1'"  
   
-- name: install dependencies
+- name: install CC dependencies
   command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/cc-sample/Gemfile" 
   
+- name: pre-run the CC generator
+  command: bash -lc "cd ~/cc-sample/ && rails generate curation_concerns:install -f"  
+
+- name: pre-run the db migrations for CC
+  command: bash -lc "cd ~/cc-sample/ && rails db:migrate"  
 
