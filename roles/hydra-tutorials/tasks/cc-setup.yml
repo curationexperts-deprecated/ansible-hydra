@@ -25,4 +25,27 @@
 
 - name: pre-run the db migrations for CC
   command: bash -lc "cd ~/cc-sample/ && rails db:migrate"  
+  
+- name: set cc solr_wrapper download directory
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/cc-sample/.solr_wrapper
+    state: present
+    line: "download_dir: /var/tmp"
 
+- name: set cc solr_wrapper to use 6.1.0
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/cc-sample/.solr_wrapper
+    state: present
+    line: "version: 6.1.0"
+
+- name: set cc fcrepo_wrapper download directory
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/cc-sample/.fcrepo_wrapper
+    state: present
+    line: "download_dir: /var/tmp"
+
+- name: set cc fcrepo_wrapper to use 6.1.0
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/cc-sample/.fcrepo_wrapper
+    state: present
+    line: "version: 4.5.1"
