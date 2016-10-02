@@ -1,7 +1,10 @@
-Builds a production-style Hydra head on an Ubuntu 14.04 Amazon EC2 instance or a vagrant box.
+Builds a production-style Hydra head on an Amazon EC2 instance or a vagrant box. Supports Ubuntu 14.04, Debian Squeeze, and Centos 7. 
 
 ## Prerequisites
-[Ansible](http://docs.ansible.com/intro_installation.html) 1.9 or above.
+[Ansible](http://docs.ansible.com/intro_installation.html) 2.0 or above.
+
+## Variables
+This project uses a large number of variables. Defaults are included in each role - they are appropriate for an Ubuntu 14.04 build. Please review the sample variables files for more information.
 
 ## AWS / EC2 setup
 Step-by-step instructions were presented in our 2015 Hydra Connect talk: [Deploying Hydra with Ansible and AWS](https://wiki.duraspace.org/download/attachments/67241821/Deploying%20Hydra%20with%20Ansible%20and%20AWS%281%29.pdf?version=1&modificationDate=1443113768038&api=v2) -- The presentation is image-heavy and the [accompanying notes](https://wiki.duraspace.org/download/attachments/67241821/DevOpsHydraConnectDeployingHydrawithAnsibleandAWS.pdf?version=1&modificationDate=1449085395026&api=v2) provide more detail.
