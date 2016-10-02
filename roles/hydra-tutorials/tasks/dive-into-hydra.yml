@@ -12,7 +12,7 @@
   lineinfile:
     dest: /home/{{ ansible_ssh_user }}/dive-into-hydra-sample/Gemfile 
     state: present
-    line: "gem 'hydra', '10.0.0'"  
+    line: "gem 'hydra', '10.0.1'"  
   
 - name: install dependencies
   command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/dive-into-hydra-sample/Gemfile" 

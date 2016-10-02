@@ -12,7 +12,7 @@
   lineinfile:
     dest: /home/{{ ansible_ssh_user }}/sufia-sample/Gemfile 
     state: present
-    line: "gem 'sufia', '7.0.0.rc1'"  
+    line: "gem 'sufia', '7.1.0'"  
   
 - name: install dependencies
   command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/sufia-sample/Gemfile" 
