@@ -18,6 +18,21 @@
   with_items:
     - apache2-prefork-dev
     - apache2-mpm-worker
+  when: 
+    (ansible_distribution == "Ubuntu") or
+    (ansible_distribution == "Debian")
+
+- name: symlink passenger utilities for root user
+  become: yes
+  file: src=/usr/local/bin/{{ item }} dest=/usr/sbin/{{ item }} state=link
+  with_items:
+      - passenger
+      - passenger-config
+      - passenger-install-apache2-module
+      - passenger-install-nginx-module
+      - passenger-memory-stats
+      - passenger-status
+  when: ansible_distribution == "CentOS"
 
 - name: install passenger-install-apache2-module
   become: yes
@@ -25,8 +40,15 @@
 
 - name: generate passenger.conf file
   become: yes
-  shell: passenger-install-apache2-module --snippet > /etc/apache2/conf-available/passenger.conf creates=/etc/apache2/conf-available/passenger.conf
+  shell: passenger-install-apache2-module --snippet > "{{ passenger_root }}/passenger.conf" creates="{{ passenger_root }}/passenger.conf"
 
 - name: symlink passenger config
   become: yes
   file: src=/etc/apache2/conf-available/passenger.conf path=/etc/apache2/conf-enabled/passenger.conf state=link
+  when: 
+    (ansible_distribution == "Ubuntu") or
+    (ansible_distribution == "Debian")
+
+- name: restart apache
+  become: yes
+  service: name="{{ apache }}" state=restarted

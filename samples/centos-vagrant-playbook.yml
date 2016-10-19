@@ -1,0 +1,31 @@
+---
+- name: provision a vagrant box as a development machine.
+  hosts: vagrant
+  remote_user: vagrant
+  vars:
+    - keys_to_add: #leave blank; don't need ssh keys for vagrant instance.
+    - install_user: vagrant
+    - install_group: vagrant
+    - become_user: vagrant
+    - project_base: /vagrant
+    - app_root: /vagrant
+    - rails_env: development
+    - base_path: /dev
+    # Unfortunately named, but needed for resque-pool init script
+    # in roles/sufia_dependencies/install/defaults/main.yml
+    - capistrano_user: vagrant
+
+  roles:
+    - { role: packages }
+    - { role: set_timezone }
+    - { role: system_setup }
+    - { role: ruby }
+    - { role: hydra-stack/install }
+    - { role: sufia_dependencies/install }
+    - { role: webserver/install }
+    - { role: webserver/config }
+
+# bundle install hasn't been run? Makes sense; that's done with capistrano deployment
+# resque-pool can't start until bundle install has been run because it loads the actual code.
+# rubyracer was installed on prod only; needed to move gem to general sectionof Gemfile
+# ports 8983 need to say 8080.

@@ -1,4 +1,6 @@
-# roles/openjdk1_8 - installs OpenJDK 1.8 for Ubuntu 14.04.x releases
+# roles/openjdk1_8 - installs OpenJDK 1.8 for Ubuntu 14.04.x releases or Debian
+# on CentOS 7, openjdk is installed as a package in the packages role
+# for a CentOS 7 build, skip this role entirely
 ---
 - name: ensure add-apt-repositories is present
   # sudo apt-get install software-properties-common

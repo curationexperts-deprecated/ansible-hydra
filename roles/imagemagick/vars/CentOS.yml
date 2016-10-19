@@ -1,0 +1,17 @@
+---
+im_packages:
+  - autoconf
+  - automake
+  - cmake
+  - fontconfig-devel
+  - freetype-devel
+  - gcc
+  - gcc-c++
+  - lcms2-devel
+  - libpng-devel
+  - libtool
+  - libtool-ltdl-devel
+  - make
+  - pkgconfig
+  - xz
+  - zlib-devel
