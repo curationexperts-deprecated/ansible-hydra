@@ -25,6 +25,10 @@
   become: yes
   file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ ffmpeg_path }}
 
-- name: ff add ldconfig for /usr/local/lib
+- name: ff add ldconfig for ffmpeg lib dir
   become: yes
-  copy: dest=/etc/ld.so.conf.d/usr-local.conf content=/usr/local/lib owner=root group=root mode=0644 
+  copy: dest=/etc/ld.so.conf.d/ffmpeg.conf content={{ ffmpeg_prefix }}/lib owner=root group=root mode=0644 
+
+- name: ff export ffmpeg bin dir to PATH
+  become: yes
+  template: src=profile.j2 dest=/etc/profile.d/ffmpeg.sh

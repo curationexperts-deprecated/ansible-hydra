@@ -2,3 +2,5 @@
 # roles/ffmpeg/defaults/main.yml 
 install_path: /opt/install
 ffmpeg_path: "{{ install_path }}/ffmpeg_sources" # needs double-quotes for yaml syntax
+ffmpeg_prefix: /opt/ffmpeg/ # ffmpeg libraries and executables will end up here in lib and bin directories
+ffmpeg_tag: n3.1.4

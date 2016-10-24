@@ -6,7 +6,7 @@
   unarchive: src={{ ffmpeg_path }}/libogg-1.3.1.tar.gz dest={{ ffmpeg_path }}/ creates={{ ffmpeg_path }}/libogg-1.3.1/compile.c copy=no
 
 - name: configure ogg
-  shell: cd {{ ffmpeg_path }}/libogg-1.3.1 && ./configure creates={{ ffmpeg_path }}/libogg-1.3.1/Makefile
+  shell: cd {{ ffmpeg_path }}/libogg-1.3.1 && ./configure --prefix=/opt/ffmpeg/ creates={{ ffmpeg_path }}/libogg-1.3.1/Makefile
 
 - name: make ogg
   shell: cd {{ ffmpeg_path }}/libogg-1.3.1 && make 

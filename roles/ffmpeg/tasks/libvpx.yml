@@ -3,7 +3,7 @@
   git: repo=https://chromium.googlesource.com/webm/libvpx.git depth=1 dest={{ ffmpeg_path }}/libvpx force=yes
 
 - name: configure libvpx
-  shell: cd {{ ffmpeg_path }}/libvpx && ./configure --disable-examples --enable-shared creates={{ ffmpeg_path }}/libvpx/Makefile
+  shell: cd {{ ffmpeg_path }}/libvpx && ./configure --disable-examples --enable-shared --prefix=/opt/ffmpeg/ creates={{ ffmpeg_path }}/libvpx/Makefile
 
 - name: make libvpx
   shell: cd {{ ffmpeg_path }}/libvpx && make 

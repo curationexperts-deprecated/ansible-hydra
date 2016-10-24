@@ -3,7 +3,7 @@
   git: repo=git://git.videolan.org/x264 depth=1 accept_hostkey=yes dest={{ ffmpeg_path }}/x264 force=yes
 
 - name: configure x264
-  shell: cd {{ ffmpeg_path }}/x264 && ./configure --enable-static --enable-shared
+  shell: cd {{ ffmpeg_path }}/x264 && ./configure --enable-static --enable-shared --prefix=/opt/ffmpeg/
 
 - name: make x264
   shell: cd {{ ffmpeg_path }}/x264 && make 

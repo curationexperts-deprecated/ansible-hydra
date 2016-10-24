@@ -6,7 +6,7 @@
   unarchive: src={{ ffmpeg_path }}/lame-3.99.5.tar.gz dest={{ ffmpeg_path }}/ creates={{ ffmpeg_path }}/lame-3.99.5/compile.c copy=no
 
 - name: configure libmp3lame
-  shell: cd {{ ffmpeg_path }}/lame-3.99.5 && ./configure --disable-shared --enable-nasm creates={{ ffmpeg_path }}/lame-3.99.5/Makefile
+  shell: cd {{ ffmpeg_path }}/lame-3.99.5 && ./configure --disable-shared --enable-nasm --prefix=/opt/ffmpeg/ creates={{ ffmpeg_path }}/lame-3.99.5/Makefile
 
 - name: make libmp3lame
   shell: cd {{ ffmpeg_path }}/lame-3.99.5 && make 

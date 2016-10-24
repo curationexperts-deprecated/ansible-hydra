@@ -6,7 +6,7 @@
   shell: cd {{ ffmpeg_path }}/yasm && autoreconf -fiv # ./autogen.sh
 
 - name: configure yasm
-  shell: cd {{ ffmpeg_path }}/yasm && ./configure
+  shell: cd {{ ffmpeg_path }}/yasm && ./configure --prefix=/opt/ffmpeg/
 
 - name: make yasm
   shell: cd {{ ffmpeg_path }}/yasm && make

@@ -6,7 +6,7 @@
   shell: cd {{ ffmpeg_path }}/fdk-aac && autoreconf -fiv
 
 - name: configure fdk-aac
-  shell: cd {{ ffmpeg_path }}/fdk-aac && ./configure --disable-shared creates={{ ffmpeg_path }}/fdk-aac/Makefile
+  shell: cd {{ ffmpeg_path }}/fdk-aac && ./configure --disable-shared --prefix=/opt/ffmpeg/ creates={{ ffmpeg_path }}/fdk-aac/Makefile
 
 - name: make fdk-aac
   shell: cd {{ ffmpeg_path }}/fdk-aac && make 
