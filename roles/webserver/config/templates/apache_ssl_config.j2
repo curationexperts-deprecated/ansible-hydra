@@ -4,9 +4,10 @@
 # THEY SHOULD BE MADE PERMANENT.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+ServerName {{ server_name }}
+
 <VirtualHost *:443>
   PassengerAppEnv {{ rails_env }}
-  ServerName {{ server_name }}
   # !!! Be sure to point DocumentRoot to 'public'!
   DocumentRoot {{ app_root }}/public
   # allows forward slashes for IIIF
