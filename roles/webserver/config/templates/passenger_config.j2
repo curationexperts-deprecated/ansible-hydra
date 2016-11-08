@@ -3,9 +3,11 @@
 # MANAGER IS RUN. MAKE SURE YOU REFLECT CHANGES IN THE ANSIBLE SCRIPTS IF
 # THEY SHOULD BE MADE PERMANENT.
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+ServerName {{ server_name }}
+
 <VirtualHost *:80>
   PassengerAppEnv {{ rails_env }}
-  ServerName {{ server_name }}
   # !!! Be sure to point DocumentRoot to 'public'!
   DocumentRoot {{ app_root }}/public
   # allows forward slashes for IIIF
