@@ -12,6 +12,15 @@ ServerName {{ server_name }}
   DocumentRoot {{ app_root }}/public
   # allows forward slashes for IIIF
   AllowEncodedSlashes NoDecode
+
+  # Settings compatible with https://github.com/capistrano/maintenance
+  RewriteEngine On
+  ErrorDocument 503 /system/maintenance.html
+  # Return 503 error if the maintenance page exists.
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ - [L,R=503]
+
   <Directory {{ app_root }}/public>
         # MultiViews must be turned off.
         Options -MultiViews
