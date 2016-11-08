@@ -20,9 +20,15 @@
   command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war {{ tomcat_path }}/webapps/fedora.war
   when: fedora_war.stat.exists == False
 
-- name: create tomcat config and java options
+- name: create tomcat config and java options for Fedora 4-4.5
   become: yes
   template: src=tomcat7.j2 dest=/etc/default/{{ tomcat }} backup=yes
+  when: fedora_version | match("^4\.[0-5]\.[0-9]")
+
+- name: create tomcat config and java options for Fedora 4.6
+  become: yes
+  template: src=tomcat7_fc4_6.j2 dest=/etc/default/{{ tomcat }} backup=yes
+  when: fedora_version | match("^4\.6\.[0-9]")
 
 - name: restart tomcat
   become: yes
