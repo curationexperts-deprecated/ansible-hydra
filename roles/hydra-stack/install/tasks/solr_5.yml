@@ -5,8 +5,7 @@
 
 - name: download solr tarball
   become: yes
-  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz force=no
-  # when we upgrade to ansible 2.0, add checksum="md5:{{ solr_md5 }}" 
+  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz checksum="md5:{{ solr_md5 }}" force=no
 
 - name: untar solr tarball
   become: yes

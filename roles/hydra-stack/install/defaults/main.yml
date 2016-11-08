@@ -19,5 +19,6 @@ fedora_version: 4.1.0
 fedora_database: minimal-default
 #solr_version: 4.10.4
 solr_version: 5.5.0
+solr_md5: c876480f088f95a5df4042a9b60cc520
 # Default solr collection
 solr_core: collection1
