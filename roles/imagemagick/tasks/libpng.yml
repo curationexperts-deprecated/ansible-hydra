@@ -1,11 +1,20 @@
 ---
-- name: download libpng source
-  get_url: url=http://downloads.sourceforge.net/project/libpng/libpng16/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz
-  when: libpng_ver | match("1\.6\.2[4-5]")
+- name: check for local libpng
+  local_action: stat path="{{ local_magick }}/libpng-{{ libpng_ver }}.tar.gz"
+  register: libpng
 
-- name: download older libpng source
-  get_url: url=http://sourceforge.net/projects/libpng/files/libpng16/older-releases/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz
-  when: libpng_ver | match("1\.6\.[0-9](?![0-9])|1\.6\.1[0-9]|1\.6\.2[0-3]")
+- name: copy libpng source
+  copy: 
+    src: "{{ local_magick }}/libpng-{{ libpng_ver }}.tar.gz"
+    dest: "{{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
+  when: 
+    - libpng.stat.exists == True
+
+- name: download libpng source
+  get_url: 
+    url: http://downloads.sourceforge.net/project/libpng/libpng16/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz 
+    dest: "{{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
+    force: no
 
 - name: unzip libpng source
   unarchive: src={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/libpng-{{ libpng_ver }} copy=no
