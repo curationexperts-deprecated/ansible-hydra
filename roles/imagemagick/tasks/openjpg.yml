@@ -1,6 +1,21 @@
 ---
+- name: check for local openjpg
+  local_action: stat path="{{ local_magick }}/openjpeg-{{ openjpg_ver }}.tar.gz"
+  register: openjpg
+
+
+- name: copy openjpg source
+  copy: 
+    src: "{{ local_magick }}/openjpeg-{{ openjpg_ver }}.tar.gz"
+    dest: "{{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
+  when:
+    - openjpg.stat.exists  == True
+
 - name: download openjpg source
-  get_url: url=http://downloads.sourceforge.net/project/openjpeg.mirror/{{ openjpg_ver }}/openjpeg-{{ openjpg_ver }}.tar.gz dest={{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz
+  get_url: 
+    url: http://downloads.sourceforge.net/project/openjpeg.mirror/{{ openjpg_ver }}/openjpeg-{{ openjpg_ver }}.tar.gz 
+    dest: "{{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
+    force: no
 
 - name: unzip openjpg source
   unarchive: src={{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/openjpeg-version.{{ openjpg_ver }} copy=no
@@ -14,3 +29,4 @@
 - name: install openjpg
   become: yes
   shell: cd {{ magick_path }}/openjpeg-{{ openjpg_ver }} && make install
+...

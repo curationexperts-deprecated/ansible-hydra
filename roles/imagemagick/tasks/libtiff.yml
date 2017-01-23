@@ -1,6 +1,20 @@
 ---
+- name: check for local libtiff
+  local_action: stat path="{{ local_magick }}/tiff-{{ libtiff_ver }}.tar.gz"
+  register: libtiff
+
+- name: copy libtiff source
+  copy: 
+    src: "{{ local_magick }}/tiff-{{ libtiff_ver }}.tar.gz"
+    dest: "{{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
+  when:
+    - libtiff.stat.exists == True
+
 - name: download libtiff source
-  get_url: url=http://download.osgeo.org/libtiff/tiff-{{ libtiff_ver }}.tar.gz dest={{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz
+  get_url: 
+    url: http://download.osgeo.org/libtiff/tiff-{{ libtiff_ver }}.tar.gz 
+    dest: "{{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
+    force: no
 
 - name: unzip libtiff source
   unarchive: src={{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/tiff-{{ libtiff_ver }} copy=no
