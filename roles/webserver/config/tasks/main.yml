@@ -25,6 +25,13 @@
   command: a2enmod ssl
   when: use_ssl
 
+- name: enable rewrite module
+  become: yes
+  command: a2enmod rewrite
+  when:
+    (ansible_distribution == "Ubuntu") or
+    (ansible_distribution == "Debian")
+
 - name: create apache vhosts file
   become: yes
   template: src=apache_ssl_config.j2 dest=/etc/apache2/sites-available/{{ project_name }}_ssl.conf owner=root group=root backup=no
