@@ -1,13 +1,32 @@
 ---
   # This role only works on Ubuntu/Debian
   # if you are building a CentOS 7 box, use Solr 5.x
+- name: install servlet container package
+  become: yes
+  package: name={{ servlet }} state=present
+
+- name: install additional centos tomcat packages
+  become: yes
+  package: name={{ item }} state=present
+  with_items:
+    - tomcat-webapps
+    - tomcat-admin-webapps
+  when: 
+    - ansible_distribution == "CentOS"
+
+- name: set tomcat to restart on reboot
+  become: yes
+  service: name={{ servlet }} enabled=yes
+  when: 
+    - ansible_distribution == "CentOS"
+
 - name: create velocity log
   become: yes
-  file: path=/var/log/tomcat7/velocity.log state=touch owner=tomcat7 group=tomcat7 mode=0644
+  file: path=/var/log/{{ servlet }}/velocity.log state=touch owner={{ servlet }} group={{ servlet }} mode=0644
 
 - name: symlink velocity log
   become: yes
-  file: src=/var/log/tomcat7/velocity.log dest=/var/lib/tomcat7/velocity.log state=link
+  file: src=/var/log/{{ servlet }}/velocity.log dest=/var/lib/{{ servlet }}/velocity.log state=link
 
 - name: download solr tarball
   become: yes
@@ -24,7 +43,7 @@
   register: solr_dir
 
 - name: make solr lib dir
-  file: owner=tomcat7 group=tomcat7 state=directory path=/opt/solr/lib
+  file: owner={{ servlet }} group={{ servlet }} state=directory path=/opt/solr/lib
   become: yes
   when: solr_dir.stat.exists == False
 
@@ -46,27 +65,27 @@
 
 - name: copy logging jars
   become: yes
-  shell: cp {{ install_path }}/solr-{{ solr_version }}/example/lib/ext/*.jar /usr/share/tomcat7/lib/
+  shell: cp {{ install_path }}/solr-{{ solr_version }}/example/lib/ext/*.jar /usr/share/{{ servlet }}/lib/
 
 - name: set ownership and group for solr
   become: yes
-  shell: chown -R tomcat7:tomcat7 /opt/solr
+  shell: chown -R {{ servlet }}:{{ servlet }} /opt/solr
 
 - name: copy log4j properties file
   become: yes
-  shell: cp {{ install_path }}/solr-{{ solr_version }}/example/resources/log4j.properties /usr/share/tomcat7/
+  shell: cp {{ install_path }}/solr-{{ solr_version }}/example/resources/log4j.properties /usr/share/{{ servlet }}/
 
 - name: set ownership and group for tomcat
   become: yes
-  shell: chown -R tomcat7:tomcat7 /usr/share/tomcat7
+  shell: chown -R {{ servlet }}:{{ servlet }} /usr/share/{{ servlet }}
 
 - name: create solr context file
   become: yes
-  template: src=hydra_xml.j2 dest=/opt/solr/{{ solr_context }}.xml group=tomcat7 owner=tomcat7
+  template: src=hydra_xml.j2 dest=/opt/solr/{{ solr_context }}.xml group={{ servlet }} owner={{ servlet }}
 
 - name: symlink solr context file to tomcat
   become: yes
-  file: src=/opt/solr/{{ solr_context }}.xml dest={{ tomcat_config_path }}/{{ solr_context }}.xml state=link
+  file: src=/opt/solr/{{ solr_context }}.xml dest={{ servlet_path }}/{{ solr_context }}.xml state=link
 
 - name: symlink schema from code to solr
   become: yes
