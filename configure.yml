@@ -5,6 +5,11 @@
   hosts: "{{ hosts }}"
   user: ubuntu
   gather_facts: true
+  vars:
+    application:
+      solr: True
+      fedora: True
+      frontend: True
   roles:
     - { role: packages }
     - { role: set_timezone }
@@ -12,8 +17,9 @@
     - { role: capistrano_setup }
     - { role: ruby }
     - { role: openjdk1_8 }
-    - { role: hydra-stack/install }
-    - { role: hydra-stack/config-capistrano }
+    - { role: fedora, when: application.fedora == True }
+    - { role: solr, when: application.solr == True }
+    - { role: frontend, when: application.frontend == True }
     # if using imagemagick and/or ffmpeg, uncomment:
     # - { role: ffmpeg }
     # - { role: imagemagick }
