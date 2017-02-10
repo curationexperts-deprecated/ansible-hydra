@@ -9,3 +9,4 @@ capistrano_group: deploy
 # for Solr 4.x use "hydra" to distinguish the tomcat config file hydra.xml from core config solr.xml
 solr_context: solr
 solr_core: collection1
+solr_port: ???
