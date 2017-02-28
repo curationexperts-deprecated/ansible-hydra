@@ -1,0 +1,58 @@
+---
+# ROLE: hydra-stack
+# roles/hydra-stack/install/tasks/fedora.yml
+#
+- name: install servlet container package
+  become: yes
+  package: name={{ servlet }} state=present
+
+- name: install additional centos tomcat packages
+  become: yes
+  package: name={{ item }} state=present
+  with_items:
+    - tomcat-webapps
+    - tomcat-admin-webapps
+  when: 
+    - ansible_distribution == "CentOS"
+
+- name: set tomcat to restart on reboot
+  become: yes
+  service: name={{ servlet }} enabled=yes
+  when: 
+    - ansible_distribution == "CentOS"
+
+- name: download fedora
+  become: yes
+  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
+
+- name: make fedora data dir
+  file: owner={{ servlet }} group={{ servlet }} state=directory path=/opt/fedora-data
+  become: yes
+
+- name: check fedora.war
+  become: yes
+  stat: path={{ servlet_path }}/webapps/fedora.war
+  register: fedora_war
+
+- name: copy over fedora.war
+  become: yes
+  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war {{ servlet_path }}/webapps/fedora.war
+  when: fedora_war.stat.exists == False
+
+- name: create tomcat config and java options for Fedora 4-4.5
+  become: yes
+  template: src=tomcat7.j2 dest=/etc/default/{{ servlet }} backup=yes
+  when: 
+    - fedora_version | match("^4\.[0-5]\.[0-9]")
+    - servlet == "tomcat7"
+
+- name: create tomcat config and java options for Fedora 4.6-4.7
+  become: yes
+  template: src=tomcat7_leveldb.j2 dest=/etc/default/{{ servlet }} backup=yes
+  when: 
+    - fedora_version | match("^4\.6\.[0-9]")
+    - fedora_database == "minimal-default"
+
+- name: restart servlet
+  become: yes
+  service: name={{ servlet }} enabled=yes state=restarted
