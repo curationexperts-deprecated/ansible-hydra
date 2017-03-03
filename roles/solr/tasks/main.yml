@@ -4,8 +4,8 @@
 #
 # installs solr and fedora in production mode as servlets under tomcat
 #
-- name: solr 5.x
-  include: solr_5.yml
+- name: standalone solr
+  include: standalone_solr.yml
   when: solr_version | match("^[5-9]\.\d{1,2}\.\d{1,2}")
 
 - name: solr 4.x

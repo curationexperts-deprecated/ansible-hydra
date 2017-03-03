@@ -1,7 +1,7 @@
 ---
-  # solr 5 requires java 8
+  # standalone solr requires java 8
   # until java 8 becomes the default package for apt,
-  # you must include the openjdk1_8 role on Ubuntu/Debian before the hydra-stack role when installing solr 5.x
+  # you must include the openjdk1_8 role on Ubuntu/Debian before the hydra-stack role when installing solr >=5.x
 
 - name: download solr checksum
   become: yes
@@ -20,12 +20,12 @@
   become: yes
   unarchive: src={{ install_path }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/ creates={{ install_path }}/solr-{{ solr_version }}/bin/solr copy=no
 
-- name: check if solr 5 is installed
+- name: check if standalone solr is installed
   stat: path=/etc/default/solr.in.sh
-  register: solr_5_script
+  register: solr_init_script
 
-- name: run solr 5 service script
-  when: solr_5_script.stat.exists == False
+- name: run standalone solr service script
+  when: solr_init_script.stat.exists == False
   become: yes
   shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh {{ install_path }}/solr-{{ solr_version }}.tgz
 
@@ -55,4 +55,4 @@
 - name: Ensure solr is stopped (RHEL 7 workaround)
   become: yes
   command: service solr stop
-  when: (ansible_distribution == "CentOS") and (solr_5_script.stat.exists == False)
+  when: (ansible_distribution == "CentOS") and (solr_init_script.stat.exists == False)
