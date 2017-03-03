@@ -1,15 +1,15 @@
 ---
 # roles/hydra-stack/install/defaults/main.yml
+app_root: /opt/{{ project_name }}/current
 install_path: /opt/install
 # to run successfully with Java 8, you must run the openjdk1_8 role BEFORE the hydra-stock role
 # so the openjdk1_8 role can overwrite this default:
 java_home: /usr/lib/jvm/java-7-openjdk-amd64
-solr_context: solr
 project_name: sufia-project
-app_root: /opt/{{ project_name }}/current
-#solr_version: 4.10.4
-solr_version: 5.5.0
-# Default solr collection
-solr_core: collection1
 servlet: tomcat7
 servlet_path: /var/lib/tomcat7
+solr_context: solr
+# Default solr collection
+solr_core: collection1
+#solr_version: 4.10.4
+solr_version: 6.4.1
