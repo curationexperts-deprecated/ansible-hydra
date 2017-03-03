@@ -3,10 +3,18 @@
   # until java 8 becomes the default package for apt,
   # you must include the openjdk1_8 role on Ubuntu/Debian before the hydra-stack role when installing solr 5.x
 
+- name: download solr checksum
+  become: yes
+  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz.md5 dest={{ install_path }}/solr-{{ solr_version }}.tgz.md5 force=no
+
+- name: read solr checksum
+  become: yes
+  shell: awk '{print $1}' {{ install_path }}/solr-{{ solr_version }}.tgz.md5
+  register: solr_md5
+
 - name: download solr tarball
   become: yes
-  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz force=no
-  # when we upgrade to ansible 2.0, add checksum="md5:{{ solr_md5 }}" 
+  get_url: url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz dest={{ install_path }}/solr-{{ solr_version }}.tgz force=no checksum="md5:{{ solr_md5.stdout }}" 
 
 - name: untar solr tarball
   become: yes
