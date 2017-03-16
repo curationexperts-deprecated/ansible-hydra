@@ -1,0 +1,3 @@
+---
+- include: pg_marmotta.yml
+- include: tomcat-marmotta.yml

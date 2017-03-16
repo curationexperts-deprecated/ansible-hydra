@@ -1,0 +1,18 @@
+---
+
+db_pass: postgres
+marmotta_256: 34c37281b6875ea95da391ae5bbe059f31091f3c6bf2529539241b35690c84b0
+marmotta_db: marmotta
+marmotta_group: marmotta
+marmotta_home: "{{ project_base }}/marmotta"
+marmotta_pg_user: marmotta
+marmotta_pg_pass: abcmarmotta
+marmotta_user: marmotta
+marmotta_ver: 3.3.0
+project_base: /opt
+project_name: sufia-project
+# orig, from sufia-centos: tomcat: /usr/share/tomcat
+servlet: tomcat7
+# for centos, use tomcat
+servlet_path: /var/lib/tomcat7
+# for centos, use /usr/share/tomcat
