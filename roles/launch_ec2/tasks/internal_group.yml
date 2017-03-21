@@ -30,8 +30,8 @@
           group_id: '{{ internal_network }}'
           
         - proto: tcp
-          from_port: '{{  solr_port }}'
-          to_port: '{{  solr_port }}'
+          from_port: '{{ solr_port }}'
+          to_port: '{{ solr_port }}'
           group_id: '{{ internal_network }}'
 
 ...
