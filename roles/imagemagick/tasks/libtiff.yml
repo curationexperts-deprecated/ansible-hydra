@@ -1,11 +1,11 @@
 ---
 - name: check for local libtiff
-  local_action: stat path="{{ local_magick }}/tiff-{{ libtiff_ver }}.tar.gz"
+  local_action: stat path="{{ local_magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
   register: libtiff
 
 - name: copy libtiff source
   copy: 
-    src: "{{ local_magick }}/tiff-{{ libtiff_ver }}.tar.gz"
+    src: "{{ local_magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
     dest: "{{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
   when:
     - libtiff.stat.exists == True

@@ -1,11 +1,11 @@
 ---
 - name: check for local libpng
-  local_action: stat path="{{ local_magick }}/libpng-{{ libpng_ver }}.tar.gz"
+  local_action: stat path="{{ local_magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
   register: libpng
 
 - name: copy libpng source
   copy: 
-    src: "{{ local_magick }}/libpng-{{ libpng_ver }}.tar.gz"
+    src: "{{ local_magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
     dest: "{{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
   when: 
     - libpng.stat.exists == True

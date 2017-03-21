@@ -1,12 +1,11 @@
 ---
 - name: check for local openjpg
-  local_action: stat path="{{ local_magick }}/openjpeg-{{ openjpg_ver }}.tar.gz"
+  local_action: stat path="{{ local_magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
   register: openjpg
-
 
 - name: copy openjpg source
   copy: 
-    src: "{{ local_magick }}/openjpeg-{{ openjpg_ver }}.tar.gz"
+    src: "{{ local_magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
     dest: "{{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
   when:
     - openjpg.stat.exists  == True

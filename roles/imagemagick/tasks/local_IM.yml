@@ -1,0 +1,19 @@
+---
+# Note: this code assumes that valid imagemagick releases are in tar-zip format.  It appears that future releases may switch to 7zip format...
+
+- name: set zip archive filename
+  set_fact: im_zip=ImageMagick-{{ local_im_ver }}.tar.xz
+
+- name: Copy local version
+  copy:
+    src: "{{ local_magick }}/{{ im_zip }}"
+    dest: "{{ magick_path }}/{{ im_zip }}"
+
+- name: unzip zip archive
+  unarchive:
+    src={{ magick_path }}/{{ im_zip }}
+    dest={{ magick_path }}
+    copy=no
+
+- name: set IM build directory
+  set_fact: im_dir="{{ magick_path }}/ImageMagick-{{ local_im_ver }}"
