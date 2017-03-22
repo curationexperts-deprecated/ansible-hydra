@@ -1,0 +1,15 @@
+---
+
+- name: configure ImageMagick
+  shell: cd {{ im_dir }} && ./configure --prefix=/usr/local --with-modules=yes
+
+- name: make ImageMagick
+  shell: cd {{ im_dir }} && make 
+
+- name: install ImageMagick
+  become: yes
+  shell: cd {{ im_dir }} && make install
+
+- name: link new ImageMagick
+  become: yes
+  shell: ldconfig

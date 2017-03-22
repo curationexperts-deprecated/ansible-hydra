@@ -3,9 +3,13 @@
 # roles/imagemagick/tasks/main.yml 
 #
 # USAGE:
-# Installs the most recent release of ImageMagick, if you need a specific major or minor release, set the `imagemagick_ver:` variable
+# Installs the most recent release of ImageMagick
+# if you need a specific major or minor release, set the `imagemagick_ver:` variable
 #   EG:
-#     - { role: imagemagick, imagemagick_ver: '6.6' }   # will install the highest version matching the 6.6 prefix
+#     - { role: imagemagick, imagemagick_ver: '6.6' }
+# will install the highest version matching the 6.6 prefix
+#
+# To copy a local zip archive of ImageMagick, set a value for local_im_ver and optionally local_magick_path
 
 - name: install imagemagick specific dependencies
   include: im_libraries.yml
@@ -18,6 +22,18 @@
   
 - name: build libpng
   include: libpng.yml
-  
+
+- name: Check for local release # local_im_ver has no default, provide a value to use a local IM zip archive
+  local_action: stat path="{{ local_magick_path }}/ImageMagick-{{ local_im_ver }}.tar.xz"
+  register: local_copy
+
+- name: copy local imagemagick
+  include: local_IM.yml
+  when: local_copy.stat.exists == True
+
+- name: download imagemagick
+  include: web_IM.yml
+  when: local_copy.stat.exists == False
+
 - name: build imagemagick
-  include: imagemagick.yml
+  include: build_IM.yml
