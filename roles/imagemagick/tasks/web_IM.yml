@@ -1,14 +1,40 @@
 ---
 # Note: this code assumes that valid imagemagick releases are in tar-zip format.  It appears that future releases may switch to 7zip format...
 
-- name: find latest matching release {{ imagemagick_ver | default('') }} number
+- name: download list of IM releases
+  uri: 
+    url: http://www.imagemagick.org/download/releases/
+    method: GET 
+    return_content: yes
+  register: im_release_list
+
+- name: what is going on?
+  debug: var=im_release_list
+
+- name: find latest matching release with output of uri
+    # filter list of release downloads for matching versions: '' = everything, 
+    # '6' = any 6.x version, '6.8' = any 6.8.y version, 
+    # '6.8.1-9' = exact match (use exact with caution since they become obsolete quickly)
+    # take the most recent
+  shell: echo {{ im_release_list }} | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]+(?=\.tar)' | grep {{ imagemagick_ver }} | sort -V | tail -n 1
+  register: im_release 
+
+# I kept having the same issue, for some reason .content breaks when applied here to the shell from the uri command.
+# If we leave it off it works fine and spits out the intended result. I don't know why it can't take the .content
+# There is a potential break in something not in the content matching the grep search, though it is very unlikely.
+
+
+- name: find latest matching release with curl
   # get the list of release downloads
   # filter for matching versions: '' = everything, 
   # '6' = any 6.x version, '6.8' = any 6.8.y version, 
   # '6.8.1-9' = exact match (use exact with caution since they become obsolete quickly)
   # take the most recent
-  shell: curl http://www.imagemagick.org/download/releases/ | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]+(?=\.tar)' | grep {{ imagemagick_ver }} | sort -V | tail -n 1 
+  shell: curl http://www.imagemagick.org/download/releases/ | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]+(?=\.tar)' | grep {{ imagemagick_ver }} | sort -V | tail -n 1
   register: im_release  # .content contains a string like 6.8.3-10
+
+- name: what is going on?
+  debug: var=im_release
 
 - name: set zip archive filename
   set_fact: im_zip=ImageMagick-{{ im_release.stdout }}.tar.xz
