@@ -1,14 +1,24 @@
 ---
 # Note: this code assumes that valid imagemagick releases are in tar-zip format.  It appears that future releases may switch to 7zip format...
 
-- name: find latest matching release {{ imagemagick_ver | default('') }} number
-  # get the list of release downloads
-  # filter for matching versions: '' = everything, 
-  # '6' = any 6.x version, '6.8' = any 6.8.y version, 
-  # '6.8.1-9' = exact match (use exact with caution since they become obsolete quickly)
-  # take the most recent
-  shell: curl http://www.imagemagick.org/download/releases/ | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]+(?=\.tar)' | grep {{ imagemagick_ver }} | sort -V | tail -n 1 
-  register: im_release  # .content contains a string like 6.8.3-10
+- name: download list of IM releases
+  uri: 
+    url: http://www.imagemagick.org/download/releases/
+    method: GET
+    return_content: yes
+  register: im_release_list
+
+- name: Cleanup web content
+  set_fact:
+        im_clean_list: "{{ im_release_list.content | replace('\n','') | striptags}}"
+
+- name: find latest matching release with output of uri
+    # filter list of release downloads for matching versions: '' = everything,
+    # '6' = any 6.x version, '6.8' = any 6.8.y version,
+    # '6.8.1-9' = exact match (use exact with caution since they become obsolete quickly)
+    # take the most recent
+  shell: echo {{ im_clean_list | quote }} | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]' | grep {{ imagemagick_ver }} | sort -V | tail -n 1
+  register: im_release
 
 - name: set zip archive filename
   set_fact: im_zip=ImageMagick-{{ im_release.stdout }}.tar.xz
@@ -16,11 +26,11 @@
 - name: download IM version
   get_url:
     url=http://www.imagemagick.org/download/releases/{{ im_zip }}
-    dest={{ magick_path }}/ImageMagick-{{ im_zip }}
+    dest={{ magick_path }}/{{ im_zip }}
 
 - name: unzip zip archive
   unarchive:
-    src={{ magick_path }}/ImageMagick-{{ im_zip }}
+    src={{ magick_path }}/{{ im_zip }}
     dest={{ magick_path }} copy=no
 
 - name: set IM build directory
