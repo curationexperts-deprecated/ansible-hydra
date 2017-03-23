@@ -8,13 +8,17 @@
     return_content: yes
   register: im_release_list
 
-- name: find latest release that matches version filter
-    # filter list of release downloads for matching versions: '' = everything, 
-    # '6' = any 6.x version, '6.8' = any 6.8.y version, 
+- name: Cleanup web content
+  set_fact:
+        im_clean_list: "{{ im_release_list.content | replace('\n','') | striptags}}"
+
+- name: find latest matching release with output of uri
+    # filter list of release downloads for matching versions: '' = everything,
+    # '6' = any 6.x version, '6.8' = any 6.8.y version,
     # '6.8.1-9' = exact match (use exact with caution since they become obsolete quickly)
     # take the most recent
-  shell: echo {{ im_release_list }} | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]+(?=\.tar)' | grep {{ imagemagick_ver }} | sort -V | tail -n 1
-  register: im_release  # .content contains a string like 6.8.3-10
+  shell: echo {{ im_clean_list | quote }} | grep -o -P '[0-9]+[.][0-9]+[.][0-9]+-[0-9]' | grep {{ imagemagick_ver }} | sort -V | tail -n 1
+  register: im_release
 
 - name: set zip archive filename
   set_fact: im_zip=ImageMagick-{{ im_release.stdout }}.tar.xz
