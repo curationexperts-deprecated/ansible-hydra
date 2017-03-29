@@ -42,10 +42,6 @@
   become: yes
   file: src={{ app_root }}/solr/config/solrconfig.xml dest=/var/solr/data/{{ solr_core }}/conf/solrconfig.xml state=link force=yes
 
-- name: set the solr port
-  set_fact:
-    solr_port: "{{ solr_port }}"
-
 - name: set solr to restart on reboot
   become: yes
   service: name=solr enabled=yes
