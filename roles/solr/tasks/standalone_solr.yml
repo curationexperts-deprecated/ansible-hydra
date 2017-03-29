@@ -27,12 +27,12 @@
 - name: run standalone solr service script
   when: solr_init_script.stat.exists == False
   become: yes
-  shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh {{ install_path }}/solr-{{ solr_version }}.tgz
+  shell: bash {{ install_path }}/solr-{{ solr_version }}/bin/install_solr_service.sh {{ install_path }}/solr-{{ solr_version }}.tgz -p {{ solr_port }}
 
 - name: create default collection
   become: yes
   become_user: solr
-  shell: /opt/solr/bin/solr create -c {{ solr_core }} -d basic_configs creates=/var/solr/data/{{ solr_core }}
+  shell: /opt/solr/bin/solr create -c {{ solr_core }} -d basic_configs -p {{ solr_port }} creates=/var/solr/data/{{ solr_core }}
 
 - name: symlink schema from code to solr
   become: yes
@@ -44,7 +44,7 @@
 
 - name: set the solr port
   set_fact:
-    solr_port: 8983
+    solr_port: "{{ solr_port }}"
 
 - name: set solr to restart on reboot
   become: yes
