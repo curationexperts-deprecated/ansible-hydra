@@ -7,27 +7,27 @@
   gather_facts: true
   vars:
     application:
-      solr: True
-      fedora: True
+      solr: False
+      fedora: Flase
       frontend: True
   roles:
-    - { role: packages }
+    - { role: packages } # Still working on this
     - { role: set_timezone }
     - { role: system_setup }
-    - { role: capistrano_setup }
-    - { role: ruby }
-    - { role: openjdk1_8 }
+    - { role: capistrano_setup, when: application.frontend == True or application.solr == True }
+    - { role: ruby, when: application.frontend == True }
+    - { role: openjdk1_8, when: application.fedora == True or application.solr == True }
     - { role: fedora, when: application.fedora == True }
     - { role: solr, when: application.solr == True }
     - { role: frontend, when: application.frontend == True }
     # if using imagemagick and/or ffmpeg, uncomment:
-    # - { role: ffmpeg }
-    # - { role: imagemagick }
-    - { role: sufia_dependencies/install }
-    - { role: sufia_dependencies/config }
+    - { role: ffmpeg, when: application.frontend == True }
+    - { role: imagemagick, when: application.frontend == True }
+    - { role: sufia_dependencies/install, when: application.frontend == True }
+    - { role: sufia_dependencies/config, when: application.frontend == True }
     # if using RIIIF, uncomment this role
-    # - { role: RIIIF }
-    - { role: webserver/install }
-    - { role: webserver/config }
+    # - { role: RIIIF, when: application.frontend == True }
+    - { role: webserver/install, when: application.frontend == True }
+    - { role: webserver/config, when: application.frontend == True }
     - { role: app-config }
-    - { role: deploy }
+#    - { role: deploy, when: application.frontend == True or application.solr == True } #Still working on this

@@ -15,7 +15,9 @@
 - name: add log rotation for production logs
   become: yes
   template: src=logrotate-rails.j2 dest=/etc/logrotate.d/rails
+  when: application.frontend == True
     
 - name: add log rotation for catalina.out (tomcat/fedora/solr logs)
   become: yes
   template: src=logrotate-tomcat dest=/etc/logrotate.d/tomcat7 backup=yes
+  when: application.fedora == True
