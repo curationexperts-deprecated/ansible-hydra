@@ -7,8 +7,8 @@
   gather_facts: true
   vars:
     application:
-      solr: False
-      fedora: Flase
+      solr: True
+      fedora: True
       frontend: True
   roles:
     - { role: packages } # Still working on this
@@ -21,8 +21,8 @@
     - { role: solr, when: application.solr == True }
     - { role: frontend, when: application.frontend == True }
     # if using imagemagick and/or ffmpeg, uncomment:
-    - { role: ffmpeg, when: application.frontend == True }
-    - { role: imagemagick, when: application.frontend == True }
+    # - { role: ffmpeg, when: application.frontend == True }
+    # - { role: imagemagick, when: application.frontend == True }
     - { role: sufia_dependencies/install, when: application.frontend == True }
     - { role: sufia_dependencies/config, when: application.frontend == True }
     # if using RIIIF, uncomment this role
@@ -30,4 +30,4 @@
     - { role: webserver/install, when: application.frontend == True }
     - { role: webserver/config, when: application.frontend == True }
     - { role: app-config }
-#    - { role: deploy, when: application.frontend == True or application.solr == True } #Still working on this
+    - { role: deploy, when: application.frontend == True or application.solr == True } #Still working on this
