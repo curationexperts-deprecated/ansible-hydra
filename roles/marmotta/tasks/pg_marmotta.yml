@@ -1,0 +1,6 @@
+---
+- name: create pg marmotta database
+  postgresql_db: name={{ marmotta_db }} state=present login_user=postgres login_password={{ db_pass }}
+
+- name: add pg hydra user
+  postgresql_user: db={{ marmotta_db }} name={{ marmotta_pg_user }} password={{ marmotta_pg_pass }} priv=ALL state=present login_user=postgres login_password={{ db_pass }}
