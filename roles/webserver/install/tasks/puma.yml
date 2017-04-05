@@ -12,6 +12,8 @@
   with_items:
       - apache2
       - apache2-mpm-prefork
+      # TODO: when we fix the puma install
+      # install correct packages for Ubuntu 16.04
 
 - name: create puma.rb
   become: yes
