@@ -14,10 +14,13 @@
       (ansible_distribution == "Debian")
 
 - name: install aptitude
-  # on Debian Jessie aptitude is not installed by default, without it apt-get upgrade fails
+  # on Debian Jessie and certain minimal Ubuntu builds aptitude is not installed
+  # without aptitude installed `apt-get upgrade` fails
   become: yes
   package: name=aptitude state=installed
-  when: ansible_distribution == "Debian"
+  when:
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
 
 - name: upgrade apt packages
   become: yes
