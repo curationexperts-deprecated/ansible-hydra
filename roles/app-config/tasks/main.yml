@@ -7,3 +7,4 @@
 
 - name: custom initializers
   include: initializers.yml
+  when: application.frontend == True
