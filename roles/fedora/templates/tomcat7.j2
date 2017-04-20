@@ -1,5 +1,9 @@
-# A backup of the original file with addition options is at /etc/default/tomcat7.bak
-TOMCAT7_USER=tomcat7
-TOMCAT7_GROUP=tomcat7
+# Ansible created this file and made a timestamped backup of the original
+# This template will construct settings that look something like
+# TOMCAT7_USER=tomcat7
+# or
+# TOMCAT_GROUP=tomcat
+{{ servlet | upper }}_USER={{ servlet }}
+{{ servlet | upper }}_GROUP={{ servlet }}
 JAVA_HOME={{ java_home }}
-JAVA_OPTS="-Dfcrepo.home=/opt/fedora-data -Djava.awt.headless=true -XX:+UseG1GC -XX:+UseCompressedOops -XX:-UseLargePagesIndividualAllocation -XX:MaxPermSize={{ tomcat_permgen_memory }} -Xms{{ tomcat_min_memory }} -Xmx{{ tomcat_max_memory }} -Djava.util.logging.config.file=/etc/tomcat7/logging.properties -server"
+JAVA_OPTS="-Dfcrepo.home=/opt/fedora-data -Djava.awt.headless=true -XX:+UseG1GC -XX:+UseCompressedOops -XX:-UseLargePagesIndividualAllocation -XX:MaxPermSize={{ tomcat_permgen_memory }} -Xms{{ tomcat_min_memory }} -Xmx{{ tomcat_max_memory }} -Djava.util.logging.config.file=/etc/{{ servlet }}/logging.properties -server"

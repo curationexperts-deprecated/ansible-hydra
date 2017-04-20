@@ -41,17 +41,20 @@
 
 - name: create tomcat config and java options for Fedora 4-4.5
   become: yes
-  template: src=tomcat7.j2 dest=/etc/default/{{ servlet }} backup=yes
+  template: src=tomcat7.j2 dest="{{ fedora_config_file }}" backup=yes
   when: 
     - fedora_version | match("^4\.[0-5]\.[0-9]")
-    - servlet == "tomcat7"
 
 - name: create tomcat config and java options for Fedora 4.6-4.7
   become: yes
-  template: src=tomcat7_leveldb.j2 dest=/etc/default/{{ servlet }} backup=yes
-  when: 
-    - fedora_version | match("^4\.6\.[0-9]")
-    - fedora_database == "minimal-default"
+  template:
+    src: tomcat7_leveldb.j2
+    dest: "{{ fedora_config_file }}"
+    owner: "{{ servlet }}"
+    group: "{{ servlet }}"
+    backup: yes
+  when:
+    - fedora_version | match("^4\.[6-9]\.[0-9]")
 
 - name: restart servlet
   become: yes

@@ -13,12 +13,17 @@ tomcat_max_memory: 4096m
 ##tomcat_config_path: /etc/tomcat7/Catalina/localhost
 ##project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
-fedora_version: 4.1.0
+fedora_config_file: /etc/default/tomcat
+# for CentOS, use /etc/tomcat/conf.d/fedora.conf
+fedora_port: 8080
+fedora_version: 4.7.1
 #fedora_database only used in Fedora versions >= 4.6.0
-fedora_database: minimal-default
+fedora_database: file-simple
+# for fcrepo 4.6.x, use minimal-default
 fcdb_user: admin
 fcdb_pass: admin123
 fcdb_port: 5432
 #need to change
 servlet: tomcat7
-servlet_path: /var/lib/tomcat7
+# for CentOS, use tomcat
+servlet_path: /var/lib/{{ servlet }}
