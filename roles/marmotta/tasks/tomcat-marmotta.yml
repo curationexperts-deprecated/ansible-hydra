@@ -65,26 +65,3 @@
 - name: restart servlet
   become: yes
   service: name={{ servlet }} enabled=yes state=restarted
-
-- wait_for: path={{ servlet_path }}/webapps/marmotta/WEB-INF/lib/log4j-over-slf4j-1.7.7.jar
-
-# Currently Marmotta tries to install a
-# logging library that conflicts with Solr's, so for now we're just
-# removing that library.
-# Check - is the library installed before Marmotta runs?
-# If not, restart tomcat after installing Marmotta, then remove
-# the library, then restart Tomcat again.
-
-- name: remove log4j-over-slf4j.jar
-  become: yes
-  file: path={{ item }} state=absent
-  with_items:
-    - "{{ servlet_path }}/webapps/marmotta/WEB-INF/lib/log4j-over-slf4j-1.7.7.jar"
-
-# Otherwise subsequent runs will hang on the "wait_for" above
-- file: path={{ servlet_path }}/webapps/marmotta/WEB-INF/lib/log4j-over-slf4j-1.7.7.jar state=touch
-  become: yes
-
-- name: restart servlet
-  become: yes
-  service: name={{ servlet }} enabled=yes state=restarted
