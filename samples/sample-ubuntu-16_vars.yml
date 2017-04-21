@@ -1,0 +1,38 @@
+# fill in these variables to build an Ubuntu 16.04 reference hydra head on ec2
+#
+# public ec2-specific variables
+ec2_region: us-east-1
+region: us-east-1
+ec2_zone: us-east-1d
+ec2_instance_type: m4.large # default is m3.medium, a moderate instance size
+ec2_image: ami-b374d5a5 # Ubuntu 16.04 hvm:ebs-ssd
+ec2_vol_1: "{{ hostvars['localhost'].ec2_vol }}"
+count: 1
+elastic: True
+#
+# private ec2-specific variables
+# you can also pass these to Ansible on the command line
+# with --extra vars "var1=content1 var2=content2"
+ec2_secret_key: # fill in your secret key
+ec2_access_key: # fill in your access key
+ec2_key: # fill in the key to use for ssh connections
+ec2_security_group: # fill in the NAME of your security group
+vpc_subnet_id: # fill in the ID of your subnet, looks like subnet-xxxxx
+vpc_id: # fill in the ID of you VPC, looks like vpc-xxxx
+#
+# project-specific variables
+project_name: # bare name of your project, for capistrano - should match repo
+repo: # path to repo, e.g. https://github.com/org_name/project_name.git
+rails_env: production
+ruby_ver: 2.3.4
+ruby_sha_256: 98e18f17c933318d0e32fed3aea67e304f174d03170a38fd920c4fbe49fec0c3
+server_name: # FQDN, looks like server.domain.com; default is 127.0.0.1
+#
+passenger_ver: '5.1.2'
+#
+java_home: /usr/lib/jvm/java-8-openjdk-amd64
+fcdb_user: # user
+fcdb_pass: # pw
+solr_core: # core name
+#
+keys_to_add: # your keys, https://github.com/your_user.keys

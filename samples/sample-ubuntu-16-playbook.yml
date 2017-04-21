@@ -1,0 +1,54 @@
+# Sample file for Ubuntu 16.04 LTS Xenial Xerus
+#
+# to use this example:
+# install ansible on your development machine
+# clone the ansible project https://github.com/curationexperts/ansible-hydra.git
+# fill in the variables in sample-ubuntu-16_vars.yml
+# copy this file and sample-ubuntu-16_vars.yml up one directory
+# run the playbook with the command:
+# "ansible-playbook -i hosts sample-ubuntu-16.yml --private-key=/path/to/ec2_key.pem"
+# 
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - sample-ubuntu-16_vars.yml
+  roles:
+    - launch_ec2
+
+- hosts: newboxes
+  name: prep
+  user: ubuntu
+  gather_facts: false
+  pre_tasks:
+      - name: install python2 for ansible
+        raw: sudo apt-get -y install python-simplejson
+
+- hosts: newboxes
+  name: configuration
+  user: ubuntu
+  vars_files:
+      - sample-ubuntu-16_vars.yml
+  gather_facts: true
+  roles:
+    - { role: networking }
+    - { role: packages }
+    - { role: mount_opt, data_device: /dev/xvdf }
+    - { role: set_timezone }
+    - { role: system_setup }
+    - { role: capistrano_setup }
+    - { role: ruby }
+    - { role: fedora }
+    - { role: solr }
+    - { role: frontend }
+    - { role: sufia_dependencies/install }
+    - { role: sufia_dependencies/config }
+# sufia_dependencies must precede marmotta, which requires postgresql
+    - { role: marmotta }
+    - { role: RIIIF }
+    - { role: webserver/install }
+    - { role: webserver/config }
+    - { role: app-config }
+    - { role: ffmpeg }
+    - { role: imagemagick }
+    - { role: deploy }
