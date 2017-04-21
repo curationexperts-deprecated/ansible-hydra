@@ -16,3 +16,4 @@ servlet: tomcat7
 # for centos, use tomcat
 servlet_path: /var/lib/tomcat7
 # for centos, use /usr/share/tomcat
+tomcat_port: 8080

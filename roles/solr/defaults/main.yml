@@ -11,5 +11,5 @@ servlet_path: /var/lib/tomcat7
 solr_context: solr
 # Default solr collection
 solr_core: collection1
-#solr_version: 4.10.4
+solr_port: 8983
 solr_version: 6.4.1
