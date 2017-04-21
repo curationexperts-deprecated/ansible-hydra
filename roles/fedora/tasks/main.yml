@@ -56,6 +56,13 @@
   when:
     - fedora_version | match("^4\.[6-9]\.[0-9]")
 
+- name: set port for tomcat
+  become: yes
+  replace:
+    dest: /etc/tomcat/server.xml
+    regexp: "8080"
+    replace: "{{ tomcat_port }}"
+
 - name: restart servlet
   become: yes
   service: name={{ servlet }} enabled=yes state=restarted

@@ -10,3 +10,4 @@ capistrano_group: deploy
 solr_context: solr
 solr_core: collection1
 solr_port: 8983
+tomcat_port: 8080

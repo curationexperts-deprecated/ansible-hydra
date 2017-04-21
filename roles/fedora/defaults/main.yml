@@ -15,7 +15,6 @@ tomcat_max_memory: 4096m
 app_root: /opt/{{ project_name }}/current
 fedora_config_file: /etc/default/tomcat
 # for CentOS, use /etc/tomcat/conf.d/fedora.conf
-fedora_port: 8080
 fedora_version: 4.7.1
 #fedora_database only used in Fedora versions >= 4.6.0
 fedora_database: file-simple
@@ -27,3 +26,4 @@ fcdb_port: 5432
 servlet: tomcat7
 # for CentOS, use tomcat
 servlet_path: /var/lib/{{ servlet }}
+tomcat_port: 8080
