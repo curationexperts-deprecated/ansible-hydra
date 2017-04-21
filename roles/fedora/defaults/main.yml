@@ -13,7 +13,7 @@ tomcat_max_memory: 4096m
 ##tomcat_config_path: /etc/tomcat7/Catalina/localhost
 ##project_name: sufia-project
 app_root: /opt/{{ project_name }}/current
-fedora_config_file: /etc/default/tomcat
+fedora_config_file: /etc/default/tomcat7
 # for CentOS, use /etc/tomcat/conf.d/fedora.conf
 fedora_version: 4.7.1
 #fedora_database only used in Fedora versions >= 4.6.0

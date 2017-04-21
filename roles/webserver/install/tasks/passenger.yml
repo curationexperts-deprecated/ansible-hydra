@@ -12,15 +12,26 @@
   become: yes
   gem: name=passenger user_install=no state=present version={{ passenger_ver }}
 
-- name: install apache packages
+- name: install apache packages for Ubuntu < 16
   become: yes
   package: name={{ item }} state=present
   with_items:
     - apache2-prefork-dev
     - apache2-mpm-worker
   when: 
-    (ansible_distribution == "Ubuntu") or
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version < "16") or
     (ansible_distribution == "Debian")
+
+- name: install apache packages for Ubuntu 16
+  become: yes
+  package: name={{ item }} state=present
+  with_items:
+    - apache2
+    # if this is omitted, passenger doesn't have the headers it needs
+    - libaprutil1-dev
+    - apache2-dev
+  when: 
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "16")
 
 - name: symlink passenger utilities for root user
   become: yes
