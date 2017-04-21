@@ -19,3 +19,17 @@
 - name: create install directory
   become: yes
   file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ install_path }}
+
+- name: disable SELinux
+  become: yes
+  selinux: conf=/etc/selinux/config state=disabled
+  when: ansible_distribution == "CentOS"
+
+- name: update ssh config
+  become: yes
+  template: src=ssh_config dest=/etc/ssh/sshd_config backup=yes
+  notify:
+  - restart ssh service
+
+- meta: flush_handlers
+

@@ -1,3 +1,7 @@
 ---
 # roles/system_setup/defaults/main.yml
 install_path: /opt/install
+sftp_location: /usr/lib/openssh/sftp-server
+# use /usr/libexec/openssh/sftp-server for CentOS 7
+ssh: ssh
+# use sshd for CentOS 7

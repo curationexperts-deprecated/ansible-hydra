@@ -1,9 +1,0 @@
----
-# Role: app-config
-# roles/app-config/tasks/main.yml
-
-- name: log rotation and ssh config
-  include: systems.yml
-
-- name: custom initializers
-  include: initializers.yml
