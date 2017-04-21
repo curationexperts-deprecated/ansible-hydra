@@ -63,6 +63,10 @@
     regexp: "8080"
     replace: "{{ tomcat_port }}"
 
+- name: add log rotation for catalina.out (tomcat/fedora logs)
+  become: yes
+  template: src=logrotate-tomcat dest=/etc/logrotate.d/{{ servlet }} backup=yes
+
 - name: restart servlet
   become: yes
   service: name={{ servlet }} enabled=yes state=restarted

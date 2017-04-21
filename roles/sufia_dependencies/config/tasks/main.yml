@@ -12,3 +12,14 @@
       - redis.yml
       - resque-pool.yml
       - secrets.yml
+
+- name: create shared initializers
+  become: yes
+  template: src={{ item }}.j2 dest={{ shared_root }}/config/initializers/{{ item }} owner={{ capistrano_user }} group={{ capistrano_group }} backup=no
+  with_items:
+      - blacklight_initializer.rb
+      - devise.rb
+
+- name: add log rotation for production logs
+  become: yes
+  template: src=logrotate-rails.j2 dest=/etc/logrotate.d/rails
