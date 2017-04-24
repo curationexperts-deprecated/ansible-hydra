@@ -1,0 +1,25 @@
+---
+# ROLE: ansible-history
+# roles/ansible-history/tasks/main.yml
+#
+# records the date, time, commit, and repo Ansible last used to update the target machine(s)
+#
+# You must set 
+# gather_facts: true
+# in your playbook to use this role successfully
+# You must also run the playbook from the root of your git repo
+
+- name: find the repo used by ansible
+  local_action: command {{ git_exec }} config --get remote.origin.url
+  register: repo_used
+
+- name: find the commit used by ansible
+  local_action: command {{ git_exec }} log -1
+  register: commit_used
+
+- name: create ansible-history directory
+  become: yes
+  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory path={{ ansible_history_dir }}
+
+- name: record the repo and commit used by ansible
+  template: src=ansible-history.yml owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest="{{ ansible_history_dir }}/ansible-history-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}:{{ ansible_date_time.minute }}"

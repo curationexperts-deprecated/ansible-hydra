@@ -1,0 +1,5 @@
+---
+
+ansible_history_dir: /opt/ansible-history
+git_exec: /usr/local/bin/git
+# override with the result of 'which git' if necessary
