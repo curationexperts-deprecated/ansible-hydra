@@ -13,5 +13,6 @@ solr_context: solr
 solr_core: collection1
 solr_port: 8983
 solr_version: 6.4.1
-solr_min_mem: 512m
-solr_max_mem: 1024m
+#Solr mem values are in MB.
+solr_min_mem: 512
+solr_max_mem: 1024
