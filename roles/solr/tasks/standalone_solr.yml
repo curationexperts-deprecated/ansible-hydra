@@ -42,6 +42,20 @@
   become: yes
   file: src={{ app_root }}/solr/config/solrconfig.xml dest=/var/solr/data/{{ solr_core }}/conf/solrconfig.xml state=link force=yes
 
+- name: Set JVM heap size
+  become: yes
+  lineinfile:
+    path: /etc/default/solr.in.sh
+    state: present
+    regexp: '^#SOLR_JAVA_MEM|^SOLR_JAVA_MEM'
+    line: SOLR_JAVA_MEM="-Xms{{ solr_min_mem }}m -Xmx{{ solr_max_mem }}m"
+
+- name: restart solr service
+  become: yes
+  service: 
+    name: solr
+    state: restarted
+
 - name: set solr to restart on reboot
   become: yes
   service: name=solr enabled=yes
