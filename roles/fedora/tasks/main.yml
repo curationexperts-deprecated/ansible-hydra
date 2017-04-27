@@ -59,7 +59,7 @@
 - name: set port for tomcat
   become: yes
   replace:
-    dest: /etc/tomcat/server.xml
+    dest: /etc/{{ servlet }}/server.xml
     regexp: "8080"
     replace: "{{ tomcat_port }}"
 
