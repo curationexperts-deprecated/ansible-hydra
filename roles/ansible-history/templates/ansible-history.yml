@@ -1,0 +1,11 @@
+Ansible created or updated this system at
+
+{{ ansible_date_time.date }} {{ ansible_date_time.hour }}:{{ ansible_date_time.minute }}
+
+using this commit
+
+{{ commit_used.stdout }}
+
+of the repo
+
+{{ repo_used.stdout }}
