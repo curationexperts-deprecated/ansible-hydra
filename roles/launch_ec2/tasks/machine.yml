@@ -12,7 +12,7 @@
     aws_secret_key: '{{ ec2_secret_key }}'
     vpc_subnet_id: '{{ vpc_subnet_id }}'
     assign_public_ip: yes
-    groups: ['{{ ec2_security_group }}', '{{ internal_network }}']
+    group_id: '{{ new_group.group_id }}'
     instance_type: '{{ ec2_instance_type }}'
     image: '{{ ec2_image }}'
     wait: true

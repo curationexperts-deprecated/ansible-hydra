@@ -12,26 +12,22 @@
       region: '{{ region }}'
       vpc_id: '{{ vpc_id }}'
       state: present
-
-  - name: Assign security rules
-#This runs the same module a second time so we can use the group_id name to assign rules
-    ec2_group:
-      name: '{{ internal_network }}'
-      description: Internal networking
-      aws_access_key: '{{ ec2_access_key }}'
-      aws_secret_key: '{{ ec2_secret_key }}'
-      region: '{{ region }}'
-      vpc_id: '{{ vpc_id }}'
-      state: present    
       rules:
-        - proto: tcp
-          from_port: '{{ fedora_port }}'
-          to_port: '{{ fedora_port }}'
-          group_id: '{{ internal_network }}'
-          
-        - proto: tcp
-          from_port: '{{ solr_port }}'
-          to_port: '{{ solr_port }}'
-          group_id: '{{ internal_network }}'
+      - proto: tcp
+        from_port: 22
+        to_port: 0.0.0.0/0
+        group_id: '{{ internal_network }}'
 
-...
+      - proto: tcp
+        from_port: '{{ fedora_port }}'
+        to_port: '{{ fedora_port }}'
+        group_id: '{{ internal_network }}'
+          
+      - proto: tcp
+        from_port: '{{ solr_port }}'
+        to_port: '{{ solr_port }}'
+        group_id: '{{ internal_network }}'
+    register: new_group
+
+  - name: debug new_group
+    debug: var=new_group
