@@ -1,6 +1,8 @@
 ---
-  # This role only works on Ubuntu/Debian
-  # if you are building a CentOS 7 box, use Solr 5.x
+# This role only works on Ubuntu/Debian
+# if you are building a CentOS 7 box, use Solr >= 5.x
+# Solr 4.x is incompatible with Marmotta under tomcat due to logging conflicts
+# if you need Marmotta, use Solr >= 5.x
 - name: install servlet container package
   become: yes
   package: name={{ servlet }} state=present
