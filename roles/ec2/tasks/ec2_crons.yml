@@ -3,6 +3,7 @@
 # TODO
 # add backup and cleanup scripts to crontab
 # be sure backup_opt runs at least an hour after the postgres backups
+# This does not work with the new mount_disks role, do not use this.
 
 - name: get EC2 instance_id
   action: ec2_facts
@@ -19,6 +20,9 @@
     device_name: /dev/sdf
     state: present
   register: ec2_vol_1
+
+- debug:
+    var: ec2_vol_1
 
 - name: add ec2 directory
   become: yes
@@ -47,7 +51,8 @@
 - name: add snapshot cleanup cron job
   become: yes
   cron: name="delete ec2 old snapshots" user=root job="/etc/ec2-backups/clean_up_snapshots.sh" minute="5" hour="2" state=present
-
+  
 - name: add snapshot create cron job
   become: yes
   cron: name="ec2 snapshot backup" user=root job="/etc/ec2-backups/backup_opt.sh" minute="15" hour="1" state=present
+  

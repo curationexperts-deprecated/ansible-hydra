@@ -7,8 +7,10 @@
 - name: ec2-consistent-snapshot
   include: ec2_housekeeping.yml
 
-- name: snapshot scripts and cron jobs
-  include: ec2_crons.yml
+# These have been commented out due to the mount_disks role.
+# This will be fixed as part of a broader improvement on backup options.
+#- name: snapshot scripts and cron jobs
+#  include: ec2_crons.yml
 
 - name: ubuntu user keys
   include: ec2_ubuntu_user.yml

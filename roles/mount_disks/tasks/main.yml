@@ -1,0 +1,30 @@
+---
+# ROLE: mount_disks
+# roles/mount_disks/tasks/main.yml
+#
+# Allows seperate drives to be defined in your playbook
+# the setting is optional, leave it out if you want only a single disk.
+#
+# USAGE
+# In your playbook
+#   - { role: mount_disks } # put disk data in groupvars or edit both the defaults in this role and launch_ec2
+
+- name: format volume(s) 
+  become: yes
+  filesystem: fstype="{{ item.value.fs }}" dev="{{ item.key }}"
+  with_dict: "{{ aws_vol }}"
+
+- name: mount volume(s)
+  become: yes
+  mount: name="{{ item.value.mount }}" src="{{ item.key }}" fstype="{{ item.value.fs }}" state=mounted
+  with_dict: "{{ aws_vol }}"
+
+- name: Set filesystem permissions
+  become: yes
+  file: 
+    path: "{{ item.value.mount }}"
+    owner: "{{ item.value.owner }}" 
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.perm }}"
+    state: directory
+  with_dict: "{{ aws_vol }}"
