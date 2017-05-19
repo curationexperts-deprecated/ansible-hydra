@@ -1,0 +1,11 @@
+#These defaults also need to be changed in the launch_ec2 role which builds the volume.
+aws_vol:
+  /dev/xvdf:
+    size: 40
+    type: gp2
+    delete: Yes
+    mount: /opt
+    fs: ext4
+    perm: 755
+    owner: ubuntu
+    group: ubuntu

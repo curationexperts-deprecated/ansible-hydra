@@ -29,5 +29,4 @@
     # - { role: RIIIF }
     - { role: webserver/install }
     - { role: webserver/config }
-    - { role: app-config }
     - { role: deploy }

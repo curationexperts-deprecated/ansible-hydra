@@ -7,3 +7,10 @@ aws_tag: staging
 solr_port: 8983
 fedora_port: 8080
 internal_network: Internal Network
+aws_vol:
+  /dev/xvdf:
+    size: 40
+    type: gp2
+    delete: Yes
+    mount: /opt
+    
