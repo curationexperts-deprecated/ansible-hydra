@@ -9,7 +9,8 @@
     - python-mysqldb
   notify:
     - set mysql password
-    - create mysql data directory
+    - record new mysql root password
+    # - create mysql data directory
     - set mysql character set to utf8
     - restart mysql to reset config
     - create mysql hydra database
