@@ -1,4 +1,7 @@
 #These defaults also need to be changed in the launch_ec2 role which builds the volume.
+disk_owner: "{{ ansible_ssh_user }}"
+disk_group: "{{ ansible_ssh_user }}"
+
 aws_vol:
   /dev/xvdf:
     size: 40
@@ -7,5 +10,5 @@ aws_vol:
     mount: /opt
     fs: ext4
     perm: 755
-    owner: ubuntu
-    group: ubuntu
+    owner: "{{ disk_owner }}"
+    group: "{{ disk_group }}"
