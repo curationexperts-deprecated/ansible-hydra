@@ -43,9 +43,9 @@
   when: solr_main_version == 4
   service: name=tomcat7 state=restarted
 
-- name: restart solr 5.x
+- name: restart solr >= 5.x
   become: true
-  when: solr_main_version == 5
+  when: solr_main_version >= 5
   service: name=solr state=restarted
 
 - name: restart apache
