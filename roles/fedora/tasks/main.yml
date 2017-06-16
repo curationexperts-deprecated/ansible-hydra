@@ -23,7 +23,7 @@
 
 - name: download fedora
   become: yes
-  get_url: url=https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
+  get_url: url=https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fcrepo_version }}/fcrepo-webapp-{{ fcrepo_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fcrepo_version }}.war timeout=100
 
 - name: make fedora data dir
   file: owner={{ servlet }} group={{ servlet }} state=directory path=/opt/fedora-data
@@ -36,14 +36,14 @@
 
 - name: copy over fedora.war
   become: yes
-  command: cp {{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war {{ servlet_path }}/webapps/fedora.war
+  command: cp {{ install_path }}/fcrepo-webapp-{{ fcrepo_version }}.war {{ servlet_path }}/webapps/fedora.war
   when: fedora_war.stat.exists == False
 
 - name: create tomcat config and java options for Fedora 4-4.5
   become: yes
   template: src=tomcat7.j2 dest="{{ fedora_config_file }}" backup=yes
   when: 
-    - fedora_version | match("^4\.[0-5]\.[0-9]")
+    - fcrepo_version | match("^4\.[0-5]\.[0-9]")
 
 - name: create tomcat config and java options for Fedora 4.6-4.7
   become: yes
@@ -54,7 +54,7 @@
     group: "{{ servlet }}"
     backup: yes
   when:
-    - fedora_version | match("^4\.[6-9]\.[0-9]")
+    - fcrepo_version | match("^4\.[6-9]\.[0-9]")
 
 - name: set port for tomcat
   become: yes
