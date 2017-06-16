@@ -23,7 +23,7 @@
 
 - name: download fedora
   become: yes
-  get_url: url=http://repo1.maven.org/maven2/org/fcrepo/fcrepo-webapp/{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
+  get_url: url=https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} dest={{ install_path }}/fcrepo-webapp-{{ fedora_version }}.war timeout=100
 
 - name: make fedora data dir
   file: owner={{ servlet }} group={{ servlet }} state=directory path=/opt/fedora-data
