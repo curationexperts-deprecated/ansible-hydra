@@ -33,7 +33,7 @@
   roles:
     - { role: networking }
     - { role: packages }
-    - { role: mount_opt, data_device: /dev/xvdf }
+    - { role: mount_disks }
     - { role: set_timezone }
     - { role: system_setup }
     - { role: capistrano_setup }
