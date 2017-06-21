@@ -2,6 +2,7 @@
 packages:
   # Development Tools group - manual install would be:
   # sudo yum -y groupinstall "Development Tools"
+  - acl
   - autoconf
   - automake
   - binutils
