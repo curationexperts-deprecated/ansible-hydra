@@ -1,5 +1,6 @@
 ---
 packages:
+  - acl
   - build-essential
   - git
   - git-core
