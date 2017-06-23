@@ -9,3 +9,5 @@ ssh_timeout: 600
 # time, in seconds, before an idle ssh session will be terminated
 server_name: 127.0.0.1
 #Also used in the webserver config
+syslog_keep_daily: 7
+utility_log_keep_weekly: 4

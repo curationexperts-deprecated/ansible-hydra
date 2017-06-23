@@ -31,6 +31,10 @@
   notify:
   - restart ssh service
 
+- name: set rotation for system logs
+  become: yes
+  template: src=logrotate-sys.j2 dest=/etc/logrotate.d/rsyslog backup=yes
+
 - name: Set hostname
   become: yes
   hostname: name={{ server_name }}
