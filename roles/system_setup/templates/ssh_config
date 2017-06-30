@@ -59,11 +59,15 @@ PasswordAuthentication no
 #GSSAPIAuthentication no
 #GSSAPICleanupCredentials yes
 
+# manage inactive ssh sessions
+TCPKeepAlive no
+ClientAliveInterval {{ ssh_timeout }}
+ClientAliveCountMax 0
+
 X11Forwarding yes
 X11DisplayOffset 10
 PrintMotd no
 PrintLastLog yes
-TCPKeepAlive yes
 #UseLogin no
 
 #MaxStartups 10:30:60
