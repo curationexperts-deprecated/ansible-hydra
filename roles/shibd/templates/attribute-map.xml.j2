@@ -1,0 +1,7 @@
+<Attributes xmlns="urn:mace:shibboleth:2.0:attribute-map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+{% for attribute in shibboleth_attributes %}
+    <Attribute name="{{ attribute.saml2_attribute_name }}" id="{{ attribute.saml2_attribute_id }}"/>
+{% endfor %}
+
+</Attributes>

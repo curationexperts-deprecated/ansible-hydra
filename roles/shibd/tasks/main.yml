@@ -1,0 +1,43 @@
+---
+# ROLE: shibd
+# roles/shibd/tasks/main.yml
+#
+# installs the shibboleth SP daemon for connecting to an IDP server
+#
+- name: install apache2-mod-shib2 package
+  become: yes
+  package: name=libapache2-mod-shib2 state=installed
+
+- name: install shibd apache module
+  become: yes
+  apache2_module: name=shib2 state=present
+
+- name: generate keys for the SP
+  become: yes
+  command: shib-keygen creates=/etc/shibboleth/sp-key.pem
+
+- name: add attributes to attribute map
+  become: yes
+  template:
+    src: attribute-map.xml.j2
+    dest: /etc/shibboleth/attribute-map.xml
+
+- name: configure shibd for apache
+  become: yes
+  template: src=shibd.conf.j2 dest=/etc/apache2/conf-available/shibd.conf
+
+- name: enable shibd.conf
+  become: yes
+  command: a2enconf shibd.conf
+
+- name: restart apache to pick up config changes
+  become: yes
+  service: name={{ apache }} state=restarted
+
+- name: add /etc/shibboleth/shibboleth2.xml
+  become: yes
+  template: src=shibboleth2.xml.j2 dest=/etc/shibboleth/shibboleth2.xml
+
+- name: restart shibd
+  become: yes
+  service: name=shibd state=restarted
