@@ -56,11 +56,11 @@
   when: not elastic
 
 - name: Add all instance public IPs to in-memory host group
-  add_host: hostname='{{ instance_pip.public_ip }}' groups=newboxes
+  add_host: hostname='{{ instance_pip.public_ip }}' groups='{{ newbox_group }}'
   with_items: '{{ ec2.instances }}'
 
 - name: Add all instance public IPs to on-disc host group
-  lineinfile: dest=hosts line='{{ instance_pip.public_ip }}' insertafter=ec2hosts
+  lineinfile: dest=hosts line='{{ instance_pip.public_ip }}' insertafter='{{ host_group }}'
   with_items: '{{ ec2.instances }}'
 
 - name: give ssh time to come up
