@@ -10,9 +10,9 @@ aws_vol:
 ec2_region: us-east-1
 ec2_instance_type: m4.medium # a moderate instance size 
 ec2_image: ami-a95f79c3 # ubuntu 14.04 LTS 64-bit for us-east-1
-fedora_port: 8080
 host_group: ec2hosts
 internal_network: Internal Network
 newbox_group: newboxes
 solr_port: 8983
+tomcat_port: 8080
     

@@ -25,8 +25,8 @@
       state: present    
       rules:
         - proto: tcp
-          from_port: '{{ fedora_port }}'
-          to_port: '{{ fedora_port }}'
+          from_port: '{{ tomcat_port }}'
+          to_port: '{{ tomcat_port }}'
           group_id: '{{ internal_network }}'
           
         - proto: tcp
