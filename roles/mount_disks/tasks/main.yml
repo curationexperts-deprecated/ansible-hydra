@@ -7,7 +7,7 @@
 #
 # USAGE
 # In your playbook
-#   - { role: mount_disks } # put disk data in groupvars or edit both the defaults in this role and launch_ec2
+#   - { role: mount_disks }
 
 - name: format volume(s) 
   become: yes
