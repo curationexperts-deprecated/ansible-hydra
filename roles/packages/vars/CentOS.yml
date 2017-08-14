@@ -19,15 +19,16 @@ packages:
   - rpm-build
   - rpm-sign
   # other packages
-  - ImageMagick-devel
   - curl-devel
   - gdbm-devel
   - git
   - httpd-devel
+  - ImageMagick-devel
   - java-1.8.0-openjdk
   - libffi-devel
-  - libxml2-devel
+  - libreoffice-headless
   - libxslt-devel
+  - libxml2-devel
   - libyaml-devel
   - lsof # needed for solr 5.x service script
   - mysql-devel
@@ -43,6 +44,5 @@ packages:
   # - redis
   # on centos mod_xsendfile is not in the main repos
   # - mod_xsendfile
-  - libreoffice-headless
   # this was in the ubuntu package list
   #    - libxvidcore-dev

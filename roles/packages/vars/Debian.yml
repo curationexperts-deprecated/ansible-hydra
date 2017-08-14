@@ -1,33 +1,35 @@
 ---
 packages:
   - acl
+  - autoconf
+  - automake
+  - bison
   - build-essential
+  - clamav
+  - clamav-daemon
+  - curl
   - git
   - git-core
-  - curl
-  - openssl
+  - imagemagick
+  - libc6-dev
+  - libcurl4-openssl-dev
+  - libmagickwand-dev
   - libreadline6
   - libreadline6-dev
-  - zlib1g
-  - zlib1g-dev
+  - libreoffice
+  - libsqlite3-dev
   - libssl-dev
-  - libyaml-dev
+  - libtool
   - libxml2-dev
   - libxslt-dev
-  - autoconf
-  - libc6-dev
-  - ncurses-dev
-  - automake
-  - libtool
-  - bison
-  - subversion
-  - pkg-config
-  - libmagickwand-dev
-  - imagemagick
-  - libcurl4-openssl-dev
   - libxvidcore-dev
+  - libyaml-dev
+  - ncurses-dev
+  - openssl
+  - pkg-config
   - redis-server
-  - xfsprogs
-  - libsqlite3-dev
-  - libreoffice
+  - subversion
   - vim
+  - xfsprogs
+  - zlib1g
+  - zlib1g-dev
