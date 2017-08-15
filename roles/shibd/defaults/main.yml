@@ -3,6 +3,8 @@
 apache: apache2
 # use httpd for CentOS 7
 callback_url: /users/auth/shibboleth/callback
+idp_check_Address: false #true caused errors for VPN users 
+idp_cookie_Props: https
 idp_discovery_url: https://{{ idp_url }}/DS/WAYF
 idp_entity_id: https://{{ idp_url }}/idp/shibboleth
 idp_url: shibboleth.curationexperts.com
