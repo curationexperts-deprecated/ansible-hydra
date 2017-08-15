@@ -1,12 +1,54 @@
 ---
+# ROLE: launch_ec2
 # roles/launch_ec2/defaults/main.yml
-aws_tag: staging
+#
+# If you override these defaults, you must match the device_name(s) of your ec2_instances.volumes
+# to the aws_vol keys in the mount_disks role
+# see roles/mount_disks/defaults/main.yml for an example
+#
 ec2_region: us-east-1
-ec2_instance_type: m4.medium # a moderate instance size 
+ec2_instances:
+  - apache:
+    aws_name: 'apache'
+    ec2_instance_type: 'm4.xlarge'
+    security_groups: 
+      - 'ssh'
+      - 'apache'
+    volumes:
+      - device_name: /dev/xvdf
+        volume_type: gp2
+        volume_size: 50
+        delete_on_termination: true
+  - fedora:
+    aws_name: 'fedora'
+    ec2_instance_type: 'm4.xlarge'
+    security_groups:
+      - 'ssh'
+      - 'fedora'
+    volumes:
+      - device_name: /dev/xvdf
+        volume_type: gp2
+        volume_size: 100
+        delete_on_termination: false
+  - solr:
+    aws_name: 'solr'
+    ec2_instance_type: 'm4.large'
+    security_groups: 
+      - 'ssh'
+      - 'solr'
+    volumes:
+      - device_name: /dev/xvdf
+        volume_type: gp2
+        volume_size: 40
+        delete_on_termination: true
 ec2_image: ami-a95f79c3 # ubuntu 14.04 LTS 64-bit for us-east-1
-host_group: ec2hosts
-internal_network: Internal Network
-newbox_group: newboxes
+external_security_groups:
+    - { name: 'ssh', cidr_ip: '0.0.0.0/0', description: 'opens ssh for Ansible', open_from_port: 22, open_to_port: 22}
+    - { name: 'apache', cidr_ip: '0.0.0.0/0', description: 'opens web ports', open_from_port: 80, open_to_port: 80}
 solr_port: 8983
 tomcat_port: 8080
-    
+vpc_security_groups:
+    - { name: 'fedora', description: 'opens tomcat/fedora port', open_from_port: '{{ tomcat_port }}', open_to_port: '{{ tomcat_port }}'}
+    - { name: 'solr', description: 'opens jetty/solr port', open_from_port: '{{ solr_port }}', open_to_port: '{{ solr_port }}'}
+# you must also provide values for vpc_id and vpc_subnet_id
+# be sure the subnet you specify belongs to the vpc_id you specify
