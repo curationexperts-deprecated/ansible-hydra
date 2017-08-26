@@ -15,3 +15,8 @@
   apt: name={{ item }} state=latest
   with_items:
     - avahi-daemon
+    
+- name: set the interface for rails webservers to listen on
+  lineinfile:
+    path: /etc/environment
+    line: 'HOME="0.0.0.0"'
