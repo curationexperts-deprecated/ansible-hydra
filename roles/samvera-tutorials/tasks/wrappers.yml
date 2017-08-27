@@ -1,6 +1,6 @@
 ---
-# ROLE: hydra-tutorials
-# roles/hydra-tutorials/tasks/wrappers.yml
+# ROLE: samvera-tutorials
+# roles/samvera-tutorials/tasks/wrappers.yml
 #
 # pre-download Solr & Fedora runtime files to save time in workshops
 #

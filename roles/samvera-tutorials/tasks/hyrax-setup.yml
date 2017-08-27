@@ -1,0 +1,54 @@
+---
+# ROLE: samvera-tutorials
+# roles/samvera-tutorials/tasks/hyrax-setup.yml
+#
+# Pre-load gem dependencies required by Hyrax-based tutorials
+#
+
+- name: generate demo app
+  command: ".rvm/bin/rvm all do rails new hyrax-sample"
+
+- name: add Hyrax dependency to gemfile
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/hyrax-sample/Gemfile 
+    state: present
+    line: "gem 'hyrax', github: 'https://github.com/samvera/hyrax.git', ref: 'e0bd9d32a4'"
+  
+- name: install Hyrax dependencies
+  command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/hyrax-sample/Gemfile" 
+  
+- name: pre-run the Hyrax generator
+  command: bash -lc "cd ~/hyrax-sample/ && rails generate 'hyrax:install', '-f'"  
+
+- name: pre-run the db migrations for Hyrax
+  command: bash -lc "cd ~/hyrax-sample/ && rails db:migrate"  
+  
+- name: set solr_wrapper download directory
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/hyrax-sample/.solr_wrapper
+    state: present
+    line: "download_dir: /var/tmp"
+
+- name: set solr_wrapper to use {{ solr_version }}
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/hyrax-sample/.solr_wrapper
+    state: present
+    line: "version: {{ solr_version }}"
+
+- name: set fcrepo_wrapper download directory
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/hyrax-sample/.fcrepo_wrapper
+    state: present
+    line: "download_dir: /var/tmp"
+
+- name: set fcrepo_wrapper to use {{ fcrepo_version }}
+  lineinfile:
+    dest: /home/{{ ansible_ssh_user }}/hyrax-sample/.fcrepo_wrapper
+    state: present
+    line: "version: {{ fcrepo_version }}"
+    
+- name: run redis
+  service: name=redis-server state=started
+  
+- name: install FITS
+  include: ../../sufia_dependencies/install/tasks/fits.yml
