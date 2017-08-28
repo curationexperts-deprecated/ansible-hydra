@@ -9,4 +9,4 @@
   include: wrappers.yml
   
 - name: Setup Hyrax sample application
-  include: hyrax-sample.yml
+  include: hyrax-setup.yml

@@ -15,6 +15,13 @@
     url: http://downloads.sourceforge.net/project/libpng/libpng16/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz 
     dest: "{{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
     force: no
+  ignore_errors: yes  # drop through to alternate download location if download fails
+
+- name: check alternate libpng download source if not found in primary location
+  get_url: 
+    url: http://downloads.sourceforge.net/project/libpng/libpng16/older-releases/{{ libpng_ver }}/libpng-{{ libpng_ver }}.tar.gz 
+    dest: "{{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz"
+    force: no
 
 - name: unzip libpng source
   unarchive: src={{ magick_path }}/libpng-{{ libpng_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/libpng-{{ libpng_ver }} copy=no

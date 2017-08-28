@@ -11,9 +11,15 @@
 - name: Import GPG keys
   command: 'gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3'
   
-- name: Install rvm
-  shell: "curl -sSL https://get.rvm.io | bash -s stable --ruby={{ ruby_version }}"
+#- name: Install rvm
+#  shell: "curl -sSL https://get.rvm.io | bash -s stable --ruby={{ ruby_version }}"
   
+# temporary workaround for the rvm installer to use the stable branch installer while get.rvm.io points to master 
+# (see discussion on https://github.com/rvm/rvm/issues/4107)  
+# i.e. the get.rvm.io installer fails with "__rvm_print_headline: command not found"
+- name: Install rvm workaround
+  shell: "curl -sSL https://raw.githubusercontent.com/rvm/rvm/stable/binscripts/rvm-installer | bash -s stable --ruby={{ ruby_version }}"
+
 - name: Install rails version to use for Hydra tutorials
   command: ".rvm/bin/rvm all do gem install rails -v {{ rails_version }}"
 

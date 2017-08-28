@@ -5,20 +5,20 @@
 # Pre-load gem dependencies required by Hyrax-based tutorials
 #
 
-- name: generate demo app
+- name: generate demo Hyrax app
   command: ".rvm/bin/rvm all do rails new hyrax-sample"
 
 - name: add Hyrax dependency to gemfile
   lineinfile:
     dest: /home/{{ ansible_ssh_user }}/hyrax-sample/Gemfile 
     state: present
-    line: "gem 'hyrax', github: 'https://github.com/samvera/hyrax.git', ref: 'e0bd9d32a4'"
+    line: "gem 'hyrax', github: 'samvera/hyrax', ref: 'e0bd9d32a4'"
   
 - name: install Hyrax dependencies
   command: "~/.rvm/bin/rvm all do bundle install --gemfile ~/hyrax-sample/Gemfile" 
   
 - name: pre-run the Hyrax generator
-  command: bash -lc "cd ~/hyrax-sample/ && rails generate 'hyrax:install', '-f'"  
+  command: bash -lc "cd ~/hyrax-sample/ && rails generate hyrax:install -f"  
 
 - name: pre-run the db migrations for Hyrax
   command: bash -lc "cd ~/hyrax-sample/ && rails db:migrate"  

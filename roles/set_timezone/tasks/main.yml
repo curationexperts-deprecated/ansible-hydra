@@ -18,5 +18,6 @@
     enabled: yes
 
 - name: set timezone on machine
+  become: yes
   timezone:
-    name: {{ timezone }}
+    name: "{{ timezone }}"

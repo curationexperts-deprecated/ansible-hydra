@@ -17,6 +17,7 @@
     - avahi-daemon
     
 - name: set the interface for rails webservers to listen on
+  become: yes
   lineinfile:
     path: /etc/environment
-    line: 'HOME="0.0.0.0"'
+    line: 'HOST="0.0.0.0"'
