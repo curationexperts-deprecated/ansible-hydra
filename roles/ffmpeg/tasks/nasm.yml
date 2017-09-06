@@ -1,0 +1,19 @@
+---
+- name: download nasm source
+  get_url: url=http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.bz2 dest={{ ffmpeg_path }}/nasm-2.13.01.tar.bz2
+
+- name: unzip nasm source
+  unarchive: src={{ ffmpeg_path }}/nasm-2.13.01.tar.bz2 dest={{ ffmpeg_path }}/ creates={{ ffmpeg_path }}/nasm-2.13.01/nasm.txt copy=no
+
+- name: nasm autogen
+  shell: cd {{ ffmpeg_path }}/nasm-2.13.01 && ./autogen.sh
+
+- name: configure nasm
+  shell: cd {{ ffmpeg_path }}/nasm-2.13.01 && ./configure
+
+- name: make nasm
+  shell: cd {{ ffmpeg_path }}/nasm-2.13.01 && make
+
+- name: install nasm
+  become: yes
+  shell: cd {{ ffmpeg_path }}/nasm-2.13.01 && make install

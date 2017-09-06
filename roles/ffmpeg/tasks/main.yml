@@ -1,9 +1,13 @@
 ---
 # ROLE: ffmpeg
 # roles/ffmpeg/tasks/main.yml 
+# largely follows the steps outlined at https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 
 - name: ffmpeg libraries
   include: ff_libraries.yml
+
+- name: nasm
+  include: nasm.yml
 
 - name: yasm
   include: yasm.yml
