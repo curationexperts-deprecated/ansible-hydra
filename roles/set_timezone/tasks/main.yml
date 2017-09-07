@@ -11,13 +11,3 @@
   become: yes
   timezone:
     name: "{{ timezone }}"
-
-- name: ensure NTP service is installed
-  package:
-    name: ntp
-    state: latest
-
-- name: ensure NTP service is running 
-  service:
-    name: ntp
-    enabled: yes
