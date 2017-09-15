@@ -1,0 +1,4 @@
+---
+# roles/ec2/defaults/main.yml
+ec2_region: us-east-1
+ec2_snapshot_tag: samvera

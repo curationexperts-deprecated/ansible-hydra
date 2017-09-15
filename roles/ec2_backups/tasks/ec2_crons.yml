@@ -1,9 +1,7 @@
 ---
-# Note: These are dependent on the /opt mount created in ec2_housekeeping
-# TODO
-# add backup and cleanup scripts to crontab
-# be sure backup_opt runs at least an hour after the postgres backups
-# This does not work with the new mount_disks role, do not use this.
+# Note: These are dependent on the /opt mount, which is 
+# created in launch_ec2
+# and mounted in mount_disks
 
 - name: get EC2 instance_id
   action: ec2_facts

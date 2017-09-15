@@ -1,0 +1,12 @@
+---
+# Role: ec2
+# roles/ec2/tasks/main.yml
+#
+# sets up standard users, backups, and cron jobs for production (-like) enviroronment
+
+- name: ec2-consistent-snapshot
+  include: ec2_housekeeping.yml
+
+# TODO this task will need to extend along with the mount_disks role
+- name: snapshot scripts and cron jobs
+  include: ec2_crons.yml
