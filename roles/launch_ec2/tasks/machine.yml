@@ -2,37 +2,37 @@
 # ROLE: launch_ec2
 # roles/launch_ec2/tasks/main.yml
 #
-# Launches a new ec2 instance and attaches dedicated data volume
+# Launches new ec2 instances, adds ec2 volumes, and assigns VPC security groups
 
-- name: provision an ec2 instance
+- name: provision ec2 instances
   ec2:
-    key_name: '{{ ec2_key }}' 
+    key_name: '{{ ec2_key }}'
     region: '{{ ec2_region }}'
     aws_access_key: '{{ ec2_access_key }}'
     aws_secret_key: '{{ ec2_secret_key }}'
     vpc_subnet_id: '{{ vpc_subnet_id }}'
     assign_public_ip: yes
-    groups: ['{{ ec2_security_group }}', '{{ internal_network }}']
-    instance_type: '{{ ec2_instance_type }}'
+    group: '{{ item.security_groups }}'
+    instance_type: '{{ item.ec2_instance_type }}'
     image: '{{ ec2_image }}'
     wait: true
-    count: 1
     state: present
-    count_tag:
-      Name: '{{ aws_tag }}'
-    instance_tags: 
-      Name: '{{ aws_tag }}'
-  register: ec2
+    volumes: '{{ item.volumes }}'
+    instance_tags:
+      Name: '{{ item.aws_name }}'
+  with_items: "{{ ec2_instances }}"
+  register: new_instances
 
-- name: associate EIP with instance
+- name: associate EIPs with instances
   ec2_eip:
     in_vpc: yes
     reuse_existing_ip_allowed: yes
     state: present
-    device_id: '{{ ec2.instance_ids[0] }}'
+    device_id: '{{ item.instance_ids[0] }}'
     region: '{{ ec2_region }}'
     aws_access_key: '{{ ec2_access_key }}'
     aws_secret_key: '{{ ec2_secret_key }}'
+  with_items: "{{ new_instances.results }}"
   register: instance_pip
   when: elastic
 
@@ -43,16 +43,16 @@
   when: not elastic
 
 - name: Add all instance public IPs to in-memory host group
-  add_host: hostname='{{ instance_pip.public_ip }}' groups='{{ newbox_group }}'
-  with_items: '{{ ec2.instances }}'
+  add_host: hostname='{{ item.public_ip }}' groups='{{ item.item.instances[0].tags.Name }}'
+  with_items: '{{ instance_pip.results }}'
 
 - name: Add all instance public IPs to on-disc host group
-  lineinfile: dest=hosts line='{{ instance_pip.public_ip }}' insertafter='{{ host_group }}'
-  with_items: '{{ ec2.instances }}'
+  lineinfile: dest=hosts line='{{ item.public_ip }}' insertafter='{{ item.item.instances[0].tags.Name }}'
+  with_items: '{{ instance_pip.results }}'
 
 - name: give ssh time to come up
-  wait_for: host='{{ instance_pip.public_ip }}' port=22 state=started
-  with_items: '{{ ec2.instances }}'
+  wait_for: host='{{ item.public_ip }}' port=22 state=started
+  with_items: '{{ instance_pip.results }}'
 
 - name: pause another few seconds for other services to start
   pause: seconds=5

@@ -2,13 +2,13 @@
 # ROLE: mount_disks
 # roles/mount_disks/tasks/main.yml
 #
-# Allows seperate drives to be defined in your playbook
+# Allows separate drives to be defined in your playbook
 # the setting is optional, leave it out if you want only a single disk.
 #
 # USAGE
 # In your playbook
 #   - { role: mount_disks }
-
+#
 - name: format volume(s) 
   become: yes
   filesystem: fstype="{{ item.value.fs }}" dev="{{ item.key }}"

@@ -1,14 +1,17 @@
-#These defaults also need to be changed in the launch_ec2 role which builds the volume.
-disk_owner: "{{ ansible_ssh_user }}"
-disk_group: "{{ ansible_ssh_user }}"
-
+# ROLE: mount_disks
+# roles/mount_disks/defaults/main.yml
+#
+# If you override these defaults, and you're using the launch_ec2 role
+# you must match the aws_vol keys here (e.g. /dev/xvdf) to the device_name in your ec2_instances.volumes list
+# see roles/launch_ec2/defaults/main.yml for an example
+#
 aws_vol:
   /dev/xvdf:
-    size: 40
-    type: gp2
-    delete: Yes
     mount: /opt
     fs: ext4
     perm: 755
     owner: "{{ disk_owner }}"
     group: "{{ disk_group }}"
+disk_owner: "{{ ansible_ssh_user }}"
+disk_group: "{{ ansible_ssh_user }}"
+
