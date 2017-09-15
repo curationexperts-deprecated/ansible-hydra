@@ -9,10 +9,11 @@ fedora_database: file-simple
 # for fcrepo 4.6.x, use minimal-default
 fcrepo_version: 4.7.3
 fcdb_pass: admin123
-# fcdb_port: 5432
-# if/when we implement db options for Fcrepo (levelDB, postgres, mysql)
-# we will need to configure the fcdb_port
-# 5432 is the default port for postgresql 
+#5432 for Postgres, 3306 for mysql
+fcdb_port: 5432
+fcdb_host: localhost
+#
+fcdb_user: admin
 fcdb_user: admin
 java_home: /usr/lib/jvm/java-7-openjdk-amd64
 # on Ubuntu 16 (where Java 8 is installed by default), set java_home to: 

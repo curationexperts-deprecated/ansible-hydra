@@ -45,7 +45,7 @@
   when: 
     - fcrepo_version | match("^4\.[0-5]\.[0-9]")
 
-- name: create tomcat config and java options for Fedora 4.6-4.7
+- name: create leveldb tomcat config and java options for Fedora 4.6-4.7
   become: yes
   template:
     src: tomcat7_leveldb.j2
@@ -55,6 +55,59 @@
     backup: yes
   when:
     - fcrepo_version | match("^4\.[6-9]\.[0-9]")
+    - fedora_database == "file-simple"
+
+- name: create leveldb tomcat config and java options for Fedora 4.6-4.7
+  become: yes
+  template:
+    src: tomcat7_leveldb.j2
+    dest: "{{ fedora_config_file }}"
+    owner: "{{ servlet }}"
+    group: "{{ servlet }}"
+    backup: yes
+  when:
+    - fcrepo_version | match("^4\.[6-9]\.[0-9]")
+    - fedora_database == "postgresql" OR "mysql"
+
+- name: create mysql database:
+  posgtresql_db:
+    name: fcrepo
+    encoding: utf8
+    state: present
+  when:
+    - fedora_database == "mysql"
+
+- name: create the fcrepo user for postgres
+  postgresql_user:
+    name: "{{ fcdb_user }}"
+    password: "{{ fcdb_pass }}"
+    state: present
+    login_user: postgres
+    login_host: "{{ fcdb_host }}"
+    login_password: "{{ db_pass }}"
+  when:
+    - fedora_database == "postgresql"
+
+- name: create fcrepo database:
+  posgtresql_db:
+    name: fcrepo
+    encoding: UTF-8
+    state: present
+    owner: "{{ fcdb_user }}"
+  when:
+    - fedora_database == "postgresql"
+
+- name: create the fcrepo user for mysql
+  mysql_user:
+    name: "{{ fcdb_user }}"
+    password: "{{ fcdb_pass }}"
+    state: present
+    login_user: root
+    login_host: "{{ fcdb_host }}"
+    login_password: "{{ db_pass }}"
+    priv: 'fcrepo.*:ALL'
+  when:
+    - fedora_database == "mysql"
 
 - name: set port for tomcat
   become: yes
