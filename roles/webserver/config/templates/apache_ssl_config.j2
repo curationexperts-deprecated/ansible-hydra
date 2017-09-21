@@ -6,6 +6,11 @@
 
 ServerName {{ server_name }}
 
+<VirtualHost *:80>
+  DocumentRoot {{ app_root }}/public
+  Redirect permanent / https://{{ server_name }}/
+</VirtualHost>
+
 <VirtualHost *:443>
   PassengerAppEnv {{ rails_env }}
   # !!! Be sure to point DocumentRoot to 'public'!
@@ -31,7 +36,7 @@ ServerName {{ server_name }}
   </Directory>
 
   SSLEngine on
-  SSLCertificateFile {{ ssl_crt_location }}
-  SSLCertificateKeyFile {{ ssl_key_location }}
-  {{ ssl_intermediate_directive | default("")}}
+{% for cred in ssl_creds.values() %}
+  {{ cred.apache_directive }} {{ cred.destination }}
+{% endfor %}
 </VirtualHost>
