@@ -43,8 +43,26 @@ ec2_instances:
         delete_on_termination: true
 ec2_image: ami-a95f79c3 # ubuntu 14.04 LTS 64-bit for us-east-1
 external_security_groups:
-    - { name: 'ssh', cidr_ip: '0.0.0.0/0', description: 'opens ssh for Ansible', open_from_port: 22, open_to_port: 22}
-    - { name: 'apache', cidr_ip: '0.0.0.0/0', description: 'opens web ports', open_from_port: 80, open_to_port: 80}
+    - ssh:
+      name: 'ssh'
+      description: 'opens ssh for Ansible'
+      rules:
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: '0.0.0.0/0'
+    - web:
+      name: 'web'
+      description: 'opens web ports'
+      rules:
+        - proto: tcp
+          from_port: 80
+          to_port: 80
+          cidr_ip: '0.0.0.0/0'
+        - proto: tcp
+          from_port: 443
+          to_port: 443
+          cidr_ip: '0.0.0.0/0'
 solr_port: 8983
 tomcat_port: 8080
 vpc_security_groups:

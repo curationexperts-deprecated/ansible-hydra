@@ -3,7 +3,7 @@
 # roles/launch_ec2/tasks/security_group.yml
 #
 # Creates VPC security rules, internal and external
-# allows single-machine or multipel-machine setups
+# allows single-machine or multiple-machine setups
 
 - name: Build external security groups
   ec2_group:
@@ -14,11 +14,7 @@
     region: '{{ ec2_region }}'
     vpc_id: '{{ vpc_id }}'
     state: present
-    rules:
-      - proto: tcp
-        from_port: '{{ item.open_from_port }}'
-        to_port: '{{ item.open_to_port }}'
-        cidr_ip: '{{ item.cidr_ip }}'
+    rules: '{{ item.rules }}'
   with_items: "{{ external_security_groups }}"
   register: external_groups
 
