@@ -1,12 +1,10 @@
 ---
-
+# On Ubuntu 16, the AWS CLI tools are in the main repos
+# TODO: generalize this to work on CentOS and Debian
+# the pip installs should be fine, not sure about ec2-consistent-snapshot
 - name: install PPA for ec2-consistent-snapshot
   become: yes
   apt_repository: repo='ppa:alestic'
-
-- name: install PPA for ec2-api-tools
-  become: yes
-  apt_repository: repo='ppa:awstools-dev/awstools'
 
 - name: update apt cache for PPAs
   become: yes
@@ -16,13 +14,13 @@
   become: yes
   package: name=ec2-consistent-snapshot state=present
 
-- name: install ec2-api-tools
-  become: yes
-  package: name=ec2-api-tools state=present
-
 - name: Install Python PIP
   become: yes
   package: pkg=python-pip state=latest
+
+- name: Install awscli via PIP
+  become: yes
+  pip: name=awscli state=latest
 
 - name: Install boto via PIP
   become: yes
