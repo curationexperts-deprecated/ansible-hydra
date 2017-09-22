@@ -1,22 +1,37 @@
 ---
 # roles/webserver/config/defaults/main.yml
-rails_env: production
-project_name: sufia-project
+apache: apache2
+# use apache: httpd for CentOS 7
+apache_default: /etc/apache2/sites-enabled/000-default.conf
+# use apache_default: /etc/httpd/conf.d/welcome.conf for CentOS 7rails_env: production
 app_root: /opt/{{ project_name }}/current
-shared_root: /opt/{{ project_name }}/shared
-server_name: 127.0.0.1
-use_ssl: false
-ssl_crt_location: /etc/ssl/server.crt
-ssl_key_location: /etc/ssl/private/server.key
 capistrano_user: deploy
 capistrano_group: deploy
-# this should be blank / undefined for self-signed certs.
-# provided here just as an example; specify it in a local file if needed.
-#ssl_intermediate_directive: SSLCertificateChainFile /etc/ssl/certs/my-intermediate-cert
-webserver: passenger
 passenger_root: /etc/apache2/sites-available
-# use /etc/httpd/conf.d for CentOS 7
-apache: apache2
-# use httpd for CentOS 7
-apache_default: /etc/apache2/sites-enabled/000-default.conf
-# use /etc/httpd/conf.d/welcome.conf for CentOS 7
+# use passenger_root: /etc/httpd/conf.d for CentOS 7
+project_name: sufia-project
+server_name: 127.0.0.1
+shared_root: /opt/{{ project_name }}/shared
+# to install apache and passenger with SSL, override use_ssl (set it to true)
+# and create a dictionary of your ssl credentials like the sample below
+# for self-signed certs, you only need the first two credentials
+# if you have a bundle certificate, add a third entry like pem_bundle or ca_bundle
+# ssl_creds:
+#   certificate:
+#     local_file: /path/to/name_of_server.crt
+#     destination: /etc/ssl/name_of_server.crt
+#     apache_directive: SSLCertificateFile
+#   key:
+#     local_file: /path/to/name_of_server.key
+#     destination: /etc/ssl/private/name_of_server.key
+#     apache_directive: SSLCertificateKeyFile
+#   pem_bundle:
+#     local_file: /path/to/server_bundle.pem
+#     destination: /etc/ssl/certs/server_bundle.pem
+#     apache_directive: SSLCACertificateFile
+#   ca_bundle:
+#     local_file: /path/to/ca-bundle.crt
+#     destination: /etc/ssl/certs/ca-bundle.crt
+#     apache_directive: SSLCertificateChainFile
+use_ssl: false
+webserver: passenger
