@@ -17,6 +17,7 @@
     - { role: capistrano_setup }
     - { role: ruby }
     - { role: openjdk1_8 }
+    - { role: database, when: application.fedora == True or application.frontend == True }
     - { role: fedora, when: application.fedora == True }
     - { role: solr, when: application.solr == True }
     - { role: frontend, when: application.frontend == True }

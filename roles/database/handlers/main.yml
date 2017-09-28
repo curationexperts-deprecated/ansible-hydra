@@ -1,0 +1,70 @@
+---
+- name: symlink runuser
+  become: yes
+  file: src=/usr/sbin/runuser dest=/usr/bin/runuser state=link
+  when: ansible_distribution == "CentOS"
+
+- name: initialize postgres db
+  become: yes
+  command: postgresql-setup initdb
+  when: ansible_distribution == "CentOS"
+
+- name: start postgres
+  become: yes
+  service: name=postgresql enabled=yes state=started
+  when: ansible_distribution == "CentOS"
+
+- name: set postgres password
+  become: yes
+  become_user: postgres
+  postgresql_user: name=postgres password={{ db_pass }}
+  
+- name: determine postgres directory
+  shell: ls /etc/postgresql
+  register: postgres_version
+  when: 
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
+
+- name: set mysql password
+  become: yes
+  mysql_user: name=root password={{ db_pass }} check_implicit_admin=yes login_user="root" login_password="" state=present
+
+- name: record new mysql root password
+  template: src=mysql_conf.j2 dest=/home/{{ ansible_ssh_user }}/.my.cnf owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+
+- name: configure md5 security Debian
+  become: yes
+  copy: src=pg_hba.conf dest=/etc/postgresql/{{ postgres_version.stdout }}/main/pg_hba.conf group=postgres owner=postgres backup=yes
+  when: 
+      (ansible_distribution == "Ubuntu") or
+      (ansible_distribution == "Debian")
+
+- name: configure md5 security CentOS
+  become: yes
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf group=postgres owner=postgres backup=yes
+  when: ansible_distribution == "CentOS"
+
+- name: restart postgres server
+  become: yes
+  service: name=postgresql enabled=yes state=restarted
+
+- name: set mysql character set to utf8
+  become: yes
+  copy: src=mysql_utf8.cnf dest=/etc/mysql/conf.d/utf8.cnf
+
+- name: restart mysql to reset config
+  become: yes
+  service: name=mysql state=restarted
+
+- name: create pg hydra database
+  postgresql_db: name={{ hydra_db }} state=present login_user=postgres login_password={{ db_pass }}
+
+- name: create mysql hydra database
+  mysql_db: name={{ hydra_db }} config_file=/home/{{ ansible_ssh_user }}/.my.cnf state=present login_user=root login_password={{ db_pass }}
+
+- name: add pg hydra user
+  postgresql_user: db={{ hydra_db }} name={{ hydra_db_user }} password={{ hydra_db_pass }} priv=ALL state=present login_user=postgres login_password={{ db_pass }}
+
+- name: add mysql hydra user
+  mysql_user: name={{ hydra_db_user }} password={{ hydra_db_pass }} login_user="root" login_password={{ db_pass }} priv="{{ hydra_db }}.*:ALL,GRANT" state=present
