@@ -4,9 +4,5 @@
 #
 # Launches a new ec2 instance and attaches dedicated data volume
 
-- name: Set up internal network security group
-  include: internal_group.yml
-
 - name: Build EC2 machines
   include: machine.yml
-
