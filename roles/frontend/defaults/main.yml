@@ -9,15 +9,15 @@ fedora_ip: 127.0.0.1
 # if you're using the launch_ec2 role to create multiple machines,
 # and you want to use the private IP of the newly launched fedora instance
 # look at the order of your ec2_instances variables
-# if the fedora box is the first ec2_instance listed, 
-# set fedora_ip:  '{{ new_instances.results.instances[0].private_ip }}' 
+# if the fedora box is the first ec2_instance listed, set
+# fedora_ip: "{{ hostvars.localhost.new_instances.results[0].instances[0].private_ip }}"
 solr_ip: 127.0.0.1
 # if you're using the launch_ec2 role to create multiple machines,
 # and you want to use the private IP of the newly launched solr instance
 # from the localhost play
 # look at the order of your ec2_instances variables
-# if the solr box is the second ec2_instance listed, 
-# set solr_ip: "{{ hostvars['localhost']['new_instances.results.instances[1].private_ip']' }}"
+# if the solr box is the second ec2_instance listed, set:
+# solr_ip: "{{ hostvars.localhost.new_instances.results[1].instances[0].private_ip }}"
 solr_context: solr
 # running Solr 4.x under tomcat, solr_context is the name of the tomcat config file
 # for Solr 4.x use "hydra" to distinguish the tomcat config file hydra.xml from core config solr.xml
