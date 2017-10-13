@@ -1,14 +1,14 @@
 ---
 # ROLE: deploy
-# roles/deploy/tasks/main.yml 
+# roles/deploy/tasks/main.yml
 #
 # Does a minimal install of a codebase in development mode to bootstrap a capistrano deployment
 # The codebase being deployed must be capified and have a config/deploy/{{ deploy_target }}.rb file
 
 - name: create deployment keypair for connection user
-  user: 
+  user:
       name: "{{ ansible_ssh_user }}"
-      generate_ssh_key: yes 
+      generate_ssh_key: yes
       ssh_key_file: .ssh/id_rsa
 
 - name: read public key
@@ -18,19 +18,19 @@
 
 - name: add public key to deploy user
   become: yes
-  authorized_key: 
-      user: "{{ capistrano_user }}" 
+  authorized_key:
+      user: "{{ capistrano_user }}"
       key: "{{ public_key.content | b64decode }}"
 
-- name: clone repo 
-  git: 
+- name: clone repo
+  git:
       repo: "{{ repo }}"
       dest: /home/{{ ansible_ssh_user }}/{{ project_name }}
 
 - name: chown extensions dir
   # otherwise bundle install will fail for any gems with native extensions
   become: yes
-  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory recurse=yes path=/usr/local/lib/ruby/gems/{{ ruby_ver | regex_replace (".\d+$", ".0") }}/extensions 
+  file: owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} state=directory recurse=yes path=/usr/local/lib/ruby/gems/{{ ruby_ver | regex_replace (".\d+$", ".0") }}/extensions
 
 - name: setup repo - i.e. bundle install
   shell: bundle install chdir=/home/{{ ansible_ssh_user }}/{{ project_name }}
