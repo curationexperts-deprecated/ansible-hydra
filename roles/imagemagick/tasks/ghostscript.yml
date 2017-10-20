@@ -1,0 +1,35 @@
+---
+- name: remove package ghostscript
+  become: yes
+  package: name=ghostscript state=absent
+
+- name: check for local ghostscript
+  local_action: stat path="{{ local_magick_path }}/ghostscript-{{ ghostscript_ver }}.tar.gz"
+  register: ghostscript
+
+- name: copy ghostscript source
+  copy:
+    src: "{{ local_magick_path }}/ghostscript-{{ ghostscript_ver }}.tar.gz"
+    dest: "{{ magick_path }}/ghostscript-{{ ghostscript_ver }}.tar.gz"
+  when:
+    - ghostscript.stat.exists  == True
+
+- name: download ghostscript source
+  get_url:
+    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs922/ghostscript-{{ ghostscript_ver }}.tar.gz
+    dest: "{{ magick_path }}/ghostscript-{{ ghostscript_ver }}.tar.gz"
+    force: no
+
+- name: unzip ghostscript source
+  unarchive: src={{ magick_path }}/ghostscript-{{ ghostscript_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/ghostscript-{{ ghostscript_ver }} copy=no
+
+- name: configure ghostscript
+  shell: cd {{ magick_path }}/ghostscript-{{ ghostscript_ver }} && ./configure
+
+- name: make ghostscript
+  shell: cd {{ magick_path }}/ghostscript-{{ ghostscript_ver }} && make
+
+- name: install ghostscript
+  become: yes
+  shell: cd {{ magick_path }}/ghostscript-{{ ghostscript_ver }} && make install
+...

@@ -1,10 +1,10 @@
 ---
 
 - name: configure ImageMagick
-  shell: cd {{ im_dir }} && ./configure --prefix=/usr/local --with-modules=yes
+  shell: cd {{ im_dir }} && ./configure --prefix=/usr/local --with-modules=yes --with-gslib=yes
 
 - name: make ImageMagick
-  shell: cd {{ im_dir }} && make 
+  shell: cd {{ im_dir }} && make
 
 - name: install ImageMagick
   become: yes

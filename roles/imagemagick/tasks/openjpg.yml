@@ -4,15 +4,15 @@
   register: openjpg
 
 - name: copy openjpg source
-  copy: 
+  copy:
     src: "{{ local_magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
     dest: "{{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
   when:
     - openjpg.stat.exists  == True
 
 - name: download openjpg source
-  get_url: 
-    url: http://downloads.sourceforge.net/project/openjpeg.mirror/{{ openjpg_ver }}/openjpeg-{{ openjpg_ver }}.tar.gz 
+  get_url:
+    url: https://github.com/uclouvain/openjpeg/archive/v{{ openjpg_ver }}.tar.gz
     dest: "{{ magick_path }}/openjpeg-{{ openjpg_ver }}.tar.gz"
     force: no
 
@@ -23,7 +23,7 @@
   shell: cd {{ magick_path }}/openjpeg-{{ openjpg_ver }} && cmake ./
 
 - name: make openjpg
-  shell: cd {{ magick_path }}/openjpeg-{{ openjpg_ver }} && make 
+  shell: cd {{ magick_path }}/openjpeg-{{ openjpg_ver }} && make
 
 - name: install openjpg
   become: yes

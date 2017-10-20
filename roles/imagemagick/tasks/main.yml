@@ -1,6 +1,6 @@
 ---
 # ROLE: imagemagick
-# roles/imagemagick/tasks/main.yml 
+# roles/imagemagick/tasks/main.yml
 #
 # USAGE:
 # Installs the most recent release of ImageMagick
@@ -19,9 +19,12 @@
 
 - name: build libtiff
   include: libtiff.yml
-  
+
 - name: build libpng
   include: libpng.yml
+
+- name: build ghostscript
+  include: ghostscript.yml
 
 - name: Check for local release # local_im_ver has no default, provide a value to use a local IM zip archive
   local_action: stat path="{{ local_magick_path }}/ImageMagick-{{ local_im_ver }}.tar.xz"
