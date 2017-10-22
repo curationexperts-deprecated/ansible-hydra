@@ -1,18 +1,26 @@
 ---
+- name: remove package libtiff5-dev
+  become: yes
+  package: name=libtiff5-dev state=absent
+
+- name: remove package libtiff5
+  become: yes
+  package: name=libtiff5-dev state=absent
+
 - name: check for local libtiff
   local_action: stat path="{{ local_magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
   register: libtiff
 
 - name: copy libtiff source
-  copy: 
+  copy:
     src: "{{ local_magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
     dest: "{{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
   when:
     - libtiff.stat.exists == True
 
 - name: download libtiff source
-  get_url: 
-    url: http://download.osgeo.org/libtiff/tiff-{{ libtiff_ver }}.tar.gz 
+  get_url:
+    url: http://download.osgeo.org/libtiff/tiff-{{ libtiff_ver }}.tar.gz
     dest: "{{ magick_path }}/tiff-{{ libtiff_ver }}.tar.gz"
     force: no
 
@@ -23,7 +31,7 @@
   shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && ./configure
 
 - name: make libtiff
-  shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && make 
+  shell: cd {{ magick_path }}/tiff-{{ libtiff_ver }} && make
 
 - name: install libtiff
   become: yes

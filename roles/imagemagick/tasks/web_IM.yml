@@ -2,7 +2,7 @@
 # Note: this code assumes that valid imagemagick releases are in tar-zip format.  It appears that future releases may switch to 7zip format...
 
 - name: download list of IM releases
-  uri: 
+  uri:
     url: http://www.imagemagick.org/download/releases/
     method: GET
     return_content: yes

@@ -1,11 +1,11 @@
 ---
 # roles/imagemagick/defaults/main.yml
-imagemagick_ver: '.' # call the role with imagemagick_ver: '6.8' to get the most recent 6.8 release, '.' to match the newest release
+imagemagick_ver: '7.0.7' # call the role with imagemagick_ver: '6.8' to get the most recent 6.8 release, '.' to match the newest release
 install_path: /opt/install
-libtiff_ver: '4.0.8'
-libpng_ver: '1.6.32'
+libtiff_ver: '5.2.3'
+libpng_ver: '1.6.28'
 local_im_ver: '0' # nonsense default - to use a local zip archive, pass a real version
 local_magick_path: ~/Downloads
 magick_path: "{{ install_path }}/imagemagick_sources" # needs double-quotes for yaml syntax
-openjpg_ver: '2.3.0'
+openjpg_ver: '2.1.0'
 ghostscript_ver: '9.22'

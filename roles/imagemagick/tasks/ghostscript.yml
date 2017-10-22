@@ -24,7 +24,7 @@
   unarchive: src={{ magick_path }}/ghostscript-{{ ghostscript_ver }}.tar.gz dest={{ magick_path }}/ creates={{ magick_path }}/ghostscript-{{ ghostscript_ver }} copy=no
 
 - name: configure ghostscript
-  shell: cd {{ magick_path }}/ghostscript-{{ ghostscript_ver }} && ./configure
+  shell: cd {{ magick_path }}/ghostscript-{{ ghostscript_ver }} && ./configure --disable-compile-inits --enable-dynamic --with-system-libtiff
 
 - name: make ghostscript
   shell: cd {{ magick_path }}/ghostscript-{{ ghostscript_ver }} && make
