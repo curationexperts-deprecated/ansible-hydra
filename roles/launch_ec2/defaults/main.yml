@@ -11,7 +11,7 @@ ec2_instances:
   - apache:
     aws_name: 'apache'
     ec2_instance_type: 'm4.xlarge'
-    security_groups: 
+    security_groups:
       - 'ssh'
       - 'apache'
     volumes:
@@ -33,7 +33,7 @@ ec2_instances:
   - solr:
     aws_name: 'solr'
     ec2_instance_type: 'm4.large'
-    security_groups: 
+    security_groups:
       - 'ssh'
       - 'solr'
     volumes:

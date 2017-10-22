@@ -5,6 +5,29 @@
 # Creates VPC security rules, internal and external
 # allows single-machine or multiple-machine setups
 
+# Check to see if ssh security group exists already
+- name: Query for ssh security group
+  ec2_group_facts:
+    aws_access_key: '{{ ec2_access_key }}'
+    aws_secret_key: '{{ ec2_secret_key }}'
+    region: '{{ ec2_region }}'
+    filters:
+      group-name: ssh
+  register: ssh_security_groups
+
+- debug:
+    var: ssh_security_groups
+    # verbosity: 1
+
+- name: Set external security group id from lookup
+  set_fact:
+    ssh_group_id: "{{ ssh_security_groups.security_groups[0].group_id }}"
+  ignore_errors: yes
+
+- debug:
+    var: ssh_group_id
+    # verbosity: 1
+
 - name: Build external security groups
   ec2_group:
     name: '{{ item.name }}'
@@ -17,6 +40,13 @@
     rules: '{{ item.rules }}'
   with_items: "{{ external_security_groups }}"
   register: external_groups
+  when: ssh_group_id is not defined
+
+- name: Set external security group id from create
+  set_fact:
+    ssh_group_id: '{{ external_groups.results[0].group_id }}'
+  when: ssh_group_id is not defined
+
 
 - name: Build internal security groups
   ec2_group:
@@ -31,5 +61,5 @@
       - proto: tcp
         from_port: '{{ item.open_from_port }}'
         to_port: '{{ item.open_to_port }}'
-        group_id: '{{ external_groups.results[0].group_id }}'
+        group_id: '{{ ssh_group_id }}'
   with_items: "{{ vpc_security_groups }}"
