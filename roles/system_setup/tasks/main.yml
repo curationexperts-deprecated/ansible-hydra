@@ -2,7 +2,7 @@
 # ROLE: system_setup
 # roles/system_setup/tasks/main.yml
 
-# these two tasks ensure that the ansible_ssh_user will 
+# these two tasks ensure that the ansible_ssh_user will
 # always belong to a group with the same name
 - name: create install group
   become: yes
@@ -41,10 +41,10 @@
 
 - name: Edit /etc/hosts
   become: yes
-  lineinfile: 
+  lineinfile:
     dest: /etc/hosts
     state: present
-    line: 127.0.1.1 {{ server_name }}
+    line: 127.0.0.1 {{ server_name }}
   when: ( server_name != "127.0.0.1")
 
 - meta: flush_handlers
