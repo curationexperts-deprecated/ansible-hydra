@@ -48,6 +48,11 @@
   when: solr_main_version == 5
   service: name=solr state=restarted
 
+- name: restart solr 6.x
+  become: true
+  when: solr_main_version == 6
+  service: name=solr state=restarted
+
 - name: restart apache
   # restart apache now that solr has loaded the symlinked solrconfig and schema files
   become: true
