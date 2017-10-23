@@ -20,16 +20,6 @@
   service: name={{ redis }} state=started
   become: yes
 
-- name: copy resque init script
-  template: src=pool_q.j2 dest=/etc/init.d/resque-pool mode=0755
-  become: yes
-
-# This doesn't seem to run, and it fails the install.
-# Is resque-pool being installed?
-# - name: start resque
-#   service: name=resque-pool state=started enabled=yes
-#   become: yes
-
 - name: set CentOS redis and resque-pool to restart on reboot
   become: yes
   service: name={{ item }} enabled=yes
