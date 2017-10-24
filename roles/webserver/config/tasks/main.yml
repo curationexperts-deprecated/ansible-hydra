@@ -44,6 +44,7 @@
     mode: 0644
     backup: yes
   with_dict: "{{ ssl_creds }}"
+  when: use_ssl
 
 - name: create apache SSL vhosts file
   become: yes
