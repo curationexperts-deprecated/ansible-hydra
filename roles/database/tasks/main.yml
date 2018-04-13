@@ -1,0 +1,9 @@
+---
+# installs sql database and supporting libraries - used for Fedora and Samvera
+- name: mysql
+  include: mysql.yml
+  when: db == "mysql"
+
+- name: postgresql
+  include: postgresql.yml
+  when: db == "postgresql"

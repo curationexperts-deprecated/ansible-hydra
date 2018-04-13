@@ -1,7 +1,7 @@
 ---
 # ROLE: hydra-stack
 # roles/hydra-stack/install/tasks/fedora.yml
-#
+
 - name: install servlet container package
   become: yes
   package: name={{ servlet }} state=present
@@ -45,7 +45,7 @@
   when: 
     - fcrepo_version | match("^4\.[0-5]\.[0-9]")
 
-- name: create tomcat config and java options for Fedora 4.6-4.7
+- name: create leveldb tomcat config and java options for Fedora 4.6-4.7
   become: yes
   template:
     src: tomcat7_leveldb.j2
@@ -55,6 +55,62 @@
     backup: yes
   when:
     - fcrepo_version | match("^4\.[6-9]\.[0-9]")
+    - fedora_database == "file-simple"
+
+- name: create sql tomcat config and java options for Fedora 4.6-4.7
+  become: yes
+  template:
+    src: tomcat7_sqldb.j2
+    dest: "{{ fedora_config_file }}"
+    owner: "{{ servlet }}"
+    group: "{{ servlet }}"
+    backup: yes
+  when:
+    - fcrepo_version | match("^4\.[6-9]\.[0-9]")
+    - fedora_database != "file-simple"
+
+- name: create mysql database
+  mysql_db:
+    name: fcrepo
+    encoding: utf8
+    state: present
+  when:
+    - fedora_database == "mysql"
+
+- name: create the fcrepo user for mysql
+  mysql_user:
+    name: "{{ fcdb_user }}"
+    password: "{{ fcdb_pass }}"
+    state: present
+    login_user: root
+    login_host: "{{ fcdb_host }}"
+    login_password: "{{ db_pass }}"
+    priv: 'fcrepo.*:ALL'
+  when:
+    - fedora_database == "mysql"
+
+- name: create the fcrepo user for postgres
+  postgresql_user:
+    name: "{{ fcdb_user }}"
+    password: "{{ fcdb_pass }}"
+    state: present
+    login_user: postgres
+    login_host: "{{ fcdb_host }}"
+    login_password: "{{ db_pass }}"
+  when:
+    - fedora_database == "postgresql"
+
+- name: create fcrepo database for postgres
+  postgresql_db:
+    name: fcrepo
+    encoding: UTF-8
+    state: present
+    owner: "{{ fcdb_user }}"
+    login_user: postgres
+    login_host: "{{ fcdb_host }}"
+    login_password: "{{ db_pass }}"
+  when:
+    - fedora_database == "postgresql"
 
 - name: set port for tomcat
   become: yes

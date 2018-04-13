@@ -1,0 +1,11 @@
+---
+# roles/sufia_dependencies/install/defaults/main.yml
+db: postgresql
+# for mysql, set db to 'mysql'
+db_pass: postgres
+# needed for resque-pool init script
+hydra_db: my_hydra_db
+hydra_db_user: my_hydra_db_user
+hydra_db_pass: my_hydra_db_pass
+install_path: /opt/install
+mysql_data_dir: /var/lib/mysql
